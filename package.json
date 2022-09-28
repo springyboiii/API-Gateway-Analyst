@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "cubejs-cli": "^0.30.75"
+  }
+}
