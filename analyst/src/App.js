@@ -5,6 +5,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import DescriptiveAnalysis from "./pages/descriptive-analysis/DescriptiveAnalysis";
 import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysis";
+import Prediction from "./pages/prediction/Prediction";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     path="exploratory-analysis"
                     element={<ExploratoryAnalysis />}
                 />
+                <Route path="prediction" element={<Prediction />} />
             </Routes>
         </BrowserRouter>
     );
