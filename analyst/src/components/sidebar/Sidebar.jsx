@@ -43,7 +43,12 @@ const Sidebar = () => {
                             <span>Exploratory Analysis</span>
                         </li>
                     </Link>
-
+                    <Link to="/prediction" style={{ textDecoration: "none" }}>
+                        <li>
+                            <DashboardIcon className="icon" />
+                            <span>Prediction</span>
+                        </li>
+                    </Link>
                     <p className="title">LISTS</p>
                     <li>
                         <PersonOutlineOutlinedIcon className="icon" />
