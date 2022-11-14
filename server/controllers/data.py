@@ -9,3 +9,6 @@ class DataController():
         data = DataModel.getSinglePreprocessedData(db)
 
         return jsonify(data)
+    
+    def getPreprocessedDataCount(db):
+        return jsonify(DataModel.getPreprocessedDataCount(db))
