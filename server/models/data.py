@@ -13,6 +13,10 @@ class DataModel():
             })
         return data
     
+    def getPreprocessedDataCount(db):
+        col = db["preprocessed_10_sec"]
+        return col.count_documents({})
+
     def getSinglePreprocessedData(db):
         col = db["preprocessed_10_sec"] 
         data = col.find_one()
@@ -24,7 +28,7 @@ class DataModel():
         }
         
         return doc
-    
+        
     def getSingleTestData(db):
         col = db["test_cpu"] 
         data = col.find_one()
@@ -47,3 +51,30 @@ class DataModel():
         #         "system_cpu_user_pct": doc["system_cpu_user_pct"],
         #     })
         return col.find_one()
+    
+    def getTestCpuData(db, condition={}):
+        col = db["test_cpu"] 
+        data = col.find_one(condition)
+        # data = col.find().sort("timestamp", 1).limit(6)
+        return data
+    
+    def getTestDiskIoData(db, condition={}):
+        col = db["test_disk_io"] 
+        data = col.find_one(condition)
+        return data
+    
+    def getTestJvmData(db, condition={}):
+        col = db["test_jvm"] 
+        data = col.find_one(condition)
+        return data
+    
+    def getTestMemoryData(db, condition={}):
+        col = db["test_memory"] 
+        data = col.find_one(condition)
+        return data
+    
+    def getTestNetowrkIoData(db, condition={}):
+        col = db["test_network_io"] 
+        data = col.find_one(condition)
+        return data
+

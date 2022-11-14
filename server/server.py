@@ -17,16 +17,19 @@ col = db["test_cpu"]
 
 @app.route('/', methods=["GET"])
 def init():
-    print(col.find_one())
     return "HI"
 
 @app.route('/predict', methods=["GET"])
 def predict():
-    pass
+    return PredictController.predictLatest(db)
 
 @app.route('/test', methods=["GET"])
 def getTestData():
     return PredictController.getTestCpuData(db)
+
+@app.route('/preprocessed/count', methods=["GET"])
+def getPreprocessedDataCount():
+    return DataController.getPreprocessedDataCount(db)
 
 @app.route('/preprocessed', methods=["GET"])
 def getPreprocessedData():
