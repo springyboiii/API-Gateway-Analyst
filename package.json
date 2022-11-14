@@ -3,7 +3,11 @@
     "chart.js": "^3.9.1",
     "chartjs": "^0.3.24",
     "cubejs-cli": "^0.30.75",
+    "faker": "^5.5.3",
     "ng2-charts": "^4.0.1",
     "react-chartjs-2": "^4.3.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
   }
 }
