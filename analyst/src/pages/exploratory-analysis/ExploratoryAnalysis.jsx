@@ -7,7 +7,7 @@ import { Line } from 'react-chartjs-2';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import faker from 'faker';
+// import faker from 'faker';
 
 import {
     CategoryScale,
@@ -98,20 +98,20 @@ const ExploratoryAnalysis = () => {
         },
       });
     //   Anomaly-time area chart initialization
-      const labels=['January', 'February', 'March', 'April', 'May', 'June', 'July']
-    set_anomaly_time_area_data({
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            fill: true,
-            label: 'Dataset 2',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    //   const labels=['January', 'February', 'March', 'April', 'May', 'June', 'July']
+    // set_anomaly_time_area_data({
+    //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    //     datasets: [
+    //       {
+    //         fill: true,
+    //         label: 'Dataset 2',
+    //         data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+    //         borderColor: 'rgb(53, 162, 235)',
+    //         backgroundColor: 'rgba(53, 162, 235, 0.5)',
           
-          },
-        ],
-      });
+    //       },
+    //     ],
+    //   });
       set_anomaly_time_area_options({
         responsive: true,
   plugins: {

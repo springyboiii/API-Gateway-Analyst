@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "cubejs-cli": "^0.30.75"
+    "chart.js": "^4.0.1",
+    "cubejs-cli": "^0.30.75",
+    "react-chartjs-2": "^4.3.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
   }
 }
