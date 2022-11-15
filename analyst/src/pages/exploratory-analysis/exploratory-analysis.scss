@@ -5,3 +5,25 @@
         flex: 6;
     }
 }
+.doughnut-container{
+    margin-top: 3vh;
+    position:inherit;
+    height:25vh; 
+    width:25vw;
+}
+
+// .type_doughnut-container{
+//     position: relative;
+//     height:27vh; 
+//     width:27vw;
+// }
+
+.anomaly_time_area-container{
+    margin: 20px;
+    position: relative;
+    height:20vh; 
+    width:60vw;
+}
+.row{
+    display: flex
+}
