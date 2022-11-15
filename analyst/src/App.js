@@ -7,7 +7,21 @@ import DescriptiveAnalysis from "./pages/descriptive-analysis/DescriptiveAnalysi
 import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysis";
 import Prediction from "./pages/prediction/Prediction";
 
+import io from "socket.io-client";
+import { useEffect } from "react";
+
 function App() {
+    // socket.on("connect", function () {
+    //     console.log("connecting");
+    //     socket.send("a");
+    // });
+
+    // socket.on("message", (data) => {
+    //     // console.log("sending ");
+    //     console.log(data);
+    //     socket.send("a");
+    // });
+
     return (
         <BrowserRouter>
             <Routes>

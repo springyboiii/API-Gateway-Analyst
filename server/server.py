@@ -1,12 +1,20 @@
-from flask import Flask, request, jsonify 
+from flask import Flask, request, jsonify, render_template
 from flask_pymongo import PyMongo, ObjectId 
 from flask_cors import CORS 
 import pymongo
+from flask_socketio import SocketIO, emit
+
+# import socket 
+# import threading
+# import time
 
 from controllers.predict import PredictController
 from controllers.data import DataController
 
 app = Flask(__name__)
+app.config['SECRET_KEY']='bruh'
+socketio = SocketIO(app, cors_allowed_origins="*")
+
 # don't hardcode passsword
 mongo = pymongo.MongoClient("mongodb+srv://chathuranga123:chathuranga123@apigatewayanalystcluste.lz68ckp.mongodb.net/?retryWrites=true&w=majority")
 
@@ -17,7 +25,7 @@ col = db["test_cpu"]
 
 @app.route('/', methods=["GET"])
 def init():
-    return "HI"
+    return render_template("index.html")
 
 @app.route('/predict', methods=["GET"])
 def predict():
@@ -35,6 +43,45 @@ def getPreprocessedDataCount():
 def getPreprocessedData():
     return DataController.getPreprocessedData(db)
 
+# socket connections 
+
+@socketio.on("connect")
+def testConnect():
+    print("Connected")
+
+
+@socketio.on("disconnect")
+def testDisconnect():
+    print("Client disconnected")
+
+i=0
+somelist = ["hello","You","there"]
+# @socketio.on("message")
+# def handleMessage(msg):
+#     global i 
+#     if i < len(somelist):
+#         socketio.send(somelist[i])
+#         i+=1
+
+
+@socketio.on("message")
+def handleMessage(msg):
+    print("Message: "+str(msg))
+    global i 
+    if i < 3:
+    # emit("recvMsg", {"message": "msg received"}, broadcast=True)
+        socketio.send(somelist[i])
+        print("finish")
+        i+=1
+
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
-    app.run(debug=True)
+
+    # thread1 = threading.Thread(target=start)
+    # thread1.start()
+
+    # thread2 = threading.Thread(target=send_client_msg)
+    # thread2.start()
+
+    # app.run(debug=True)
+    socketio.run(app)
