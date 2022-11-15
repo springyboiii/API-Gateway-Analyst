@@ -18,19 +18,21 @@ col = db["test_cpu"]
 @app.route('/', methods=["GET"])
 def init():
     print(col.find_one())
-    return "HI"
+    # print(col.find_one())
+    print("ASDasdasdasdas")
+    return "hi"
 
 @app.route('/predict', methods=["GET"])
 def predict():
     pass
 
-@app.route('/test', methods=["GET"])
-def getTestData():
-    return PredictController.getTestCpuData(db)
+# @app.route('/test', methods=["GET"])
+# def getTestData():
+#     return PredictController.getTestCpuData(db)
 
-@app.route('/preprocessed', methods=["GET"])
-def getPreprocessedData():
-    return DataController.getPreprocessedData(db)
+# @app.route('/preprocessed', methods=["GET"])
+# def getPreprocessedData():
+#     return DataController.getPreprocessedData(db)
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
