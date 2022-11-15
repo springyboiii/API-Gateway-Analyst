@@ -35,6 +35,16 @@ def getPreprocessedDataCount():
 def getPreprocessedData():
     return DataController.getPreprocessedData(db)
 
+@app.route('/profile', methods=["GET"])
+def my_profile():
+    print("backend profileeeeeeeeeeeeeeeeeeeeeeee")
+    response_body = {
+        "name": "Nagato",
+        "about" :"Hello! I'm a full stack developer that loves python and javascript"
+    }
+
+    return response_body
+
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
     app.run(debug=True)

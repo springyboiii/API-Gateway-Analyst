@@ -8,6 +8,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 // import faker from 'faker';
+import axios from "axios";
 
 import {
     CategoryScale,
@@ -126,48 +127,96 @@ const ExploratoryAnalysis = () => {
         },
       });
   }, []);
+
+   // new line start
+   const [profileData, setProfileData] = useState(null)
+
+   function getData() {
+     axios({
+       method: "GET",
+       url:"/profile",
+     })
+     .then((response) => {
+       console.log(response)
+       const res =response.data
+       setProfileData(({
+         profile_name: res.name,
+         about_me: res.about}))
+     }).catch((error) => {
+       if (error.response) {
+         console.log(error.response)
+         console.log(error.response.status)
+         console.log(error.response.headers)
+         }
+     })}
+     //end of new line 
   return (
-    <div className="exploratoryAnalysis">
-      <Sidebar />
-      <div className="exploratoryAnalysisContainer">
-        <Navbar />
-        <div className='rows'>
-     <div className='row'> <div className="doughnut-container">
-          <Doughnut
-            data={normal_anomaly_doughnut_data}
-            options={normal_anomaly_doughnut_options}
-          />
-        </div>
-        <div className="type_doughnut-container doughnut-container">
-          <Doughnut
-            data={anomaly_type_doughnut_data}
-            options={anomaly_type_doughnut_options}
-          />
-        </div>
-        <div className="doughnut-container">
-          <Doughnut
-            data={anomaly_type_doughnut_data}
-            options={anomaly_type_doughnut_options}
-          />
-        </div>
-        <div className="doughnut-container">
-          <Doughnut
-            data={anomaly_type_doughnut_data}
-            options={anomaly_type_doughnut_options}
-          />
-        </div>
-        </div>
+//     <div className="exploratoryAnalysis">
+//       <Sidebar />
+//       <div className="exploratoryAnalysisContainer">
+//         <Navbar />
+//         <div className='rows'>
+//      <div className='row'> <div className="doughnut-container">
+//           <Doughnut
+//             data={normal_anomaly_doughnut_data}
+//             options={normal_anomaly_doughnut_options}
+//           />
+//         </div>
+//         <div className="type_doughnut-container doughnut-container">
+//           <Doughnut
+//             data={anomaly_type_doughnut_data}
+//             options={anomaly_type_doughnut_options}
+//           />
+//         </div>
+//         <div className="doughnut-container">
+//           <Doughnut
+//             data={anomaly_type_doughnut_data}
+//             options={anomaly_type_doughnut_options}
+//           />
+//         </div>
+//         <div className="doughnut-container">
+//           <Doughnut
+//             data={anomaly_type_doughnut_data}
+//             options={anomaly_type_doughnut_options}
+//           />
+//         </div>
+//         </div>
         
         
         
-     <div className='row'><div className="anomaly_time_area-container"><Line options={anomaly_time_area_options} data={anomaly_time_area_data} /></div></div>
-     <div className='row'>row3</div>
- </div>
+//      <div className='row'><div className="anomaly_time_area-container"><Line options={anomaly_time_area_options} data={anomaly_time_area_data} /></div></div>
+//      <div className='row'>row3</div>
+//  </div>
        
         
         
-      </div>
+//       </div>
+      <div className="App">
+      <header className="App-header">
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+
+        {/* new line start*/}
+        <p>To get your profile details: </p><button onClick={getData}>Click me</button>
+        {profileData && <div>
+              <p>Profile name: {profileData.profile_name}</p>
+              <p>About me: {profileData.about_me}</p>
+            </div>
+        }
+         {/* end of new line */}
+      </header>
     </div>
+    // </div>
   );
 };
 
