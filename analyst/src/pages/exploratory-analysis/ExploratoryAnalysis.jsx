@@ -48,18 +48,48 @@ const ExploratoryAnalysis = () => {
   useEffect(() => {
     //   Normal and Anomaly Doughnut chart setup using useeffect
     const position="left";
-    set_normal_anomaly_doughnut_data({
-      labels: ["Normal", "Anomaly"],
-      datasets: [
-        {
-        //   label: "# of Votes",
-          data: [150, 50],
-          backgroundColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
-        //   borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
-          borderWidth: 1,
-        },
-      ],
-    });
+    // function getData() {
+      axios({
+        method: "GET",
+        url:"/normal_anomaly_doughnut",
+      })
+      .then((response) => {
+        console.log(response)
+        console.log("response")
+        const res =response.data
+        set_normal_anomaly_doughnut_data({
+          labels: ["Normal", "Anomaly"],
+          datasets: [
+            {
+            //   label: "# of Votes",
+              data: [res.normal, res.anomaly],
+              backgroundColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+            //   borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+              borderWidth: 1,
+            },
+          ],
+        });
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          }
+      })
+    // }
+      //end of new line 
+    // set_normal_anomaly_doughnut_data({
+    //   labels: ["Normal", "Anomaly"],
+    //   datasets: [
+    //     {
+    //     //   label: "# of Votes",
+    //       data: [150, 50],
+    //       backgroundColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+    //     //   borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+    //       borderWidth: 1,
+    //     },
+    //   ],
+    // });
     set_normal_anomaly_doughnut_options({
       responsive: true,
       maintainAspectRatio: false,
@@ -129,81 +159,82 @@ const ExploratoryAnalysis = () => {
   }, []);
 
    // new line start
-   const [profileData, setProfileData] = useState(null)
+  //  const [profileData, setProfileData] = useState(null)
 
-   function getData() {
-     axios({
-       method: "GET",
-       url:"/profile",
-     })
-     .then((response) => {
-       console.log(response)
-       console.log("response")
-       const res =response.data
-       setProfileData(({
-         profile_name: res.count,
-         }))
-     }).catch((error) => {
-       if (error.response) {
-         console.log(error.response)
-         console.log(error.response.status)
-         console.log(error.response.headers)
-         }
-     })}
-     //end of new line 
+  //  function getData() {
+  //    axios({
+  //      method: "GET",
+  //      url:"/normal_anomaly_doughnut",
+  //    })
+  //    .then((response) => {
+  //      console.log(response)
+  //      console.log("response")
+  //      const res =response.data
+  //      setProfileData(({
+  //        profile_name: res.count,
+  //        }))
+  //    }).catch((error) => {
+  //      if (error.response) {
+  //        console.log(error.response)
+  //        console.log(error.response.status)
+  //        console.log(error.response.headers)
+  //        }
+  //    })}
+  //    //end of new line 
   return (
-//     <div className="exploratoryAnalysis">
-//       <Sidebar />
-//       <div className="exploratoryAnalysisContainer">
-//         <Navbar />
-//         <div className='rows'>
-//      <div className='row'> <div className="doughnut-container">
-//           <Doughnut
-//             data={normal_anomaly_doughnut_data}
-//             options={normal_anomaly_doughnut_options}
-//           />
-//         </div>
-//         <div className="type_doughnut-container doughnut-container">
-//           <Doughnut
-//             data={anomaly_type_doughnut_data}
-//             options={anomaly_type_doughnut_options}
-//           />
-//         </div>
-//         <div className="doughnut-container">
-//           <Doughnut
-//             data={anomaly_type_doughnut_data}
-//             options={anomaly_type_doughnut_options}
-//           />
-//         </div>
-//         <div className="doughnut-container">
-//           <Doughnut
-//             data={anomaly_type_doughnut_data}
-//             options={anomaly_type_doughnut_options}
-//           />
-//         </div>
-//         </div>
+    
+    <div className="exploratoryAnalysis">
+      <Sidebar />
+      <div className="exploratoryAnalysisContainer">
+        <Navbar />
+        <div className='rows'>
+     <div className='row'> <div className="doughnut-container">
+          <Doughnut
+            data={normal_anomaly_doughnut_data}
+            options={normal_anomaly_doughnut_options}
+          />
+        </div>
+        <div className="type_doughnut-container doughnut-container">
+          <Doughnut
+            data={anomaly_type_doughnut_data}
+            options={anomaly_type_doughnut_options}
+          />
+        </div>
+        <div className="doughnut-container">
+          <Doughnut
+            data={anomaly_type_doughnut_data}
+            options={anomaly_type_doughnut_options}
+          />
+        </div>
+        <div className="doughnut-container">
+          <Doughnut
+            data={anomaly_type_doughnut_data}
+            options={anomaly_type_doughnut_options}
+          />
+        </div>
+        </div>
         
         
         
-//      <div className='row'><div className="anomaly_time_area-container"><Line options={anomaly_time_area_options} data={anomaly_time_area_data} /></div></div>
-//      <div className='row'>row3</div>
-//  </div>
+     <div className='row'><div className="anomaly_time_area-container"><Line options={anomaly_time_area_options} data={anomaly_time_area_data} /></div></div>
+     {/* <div className='row'><button onClick={getData}>Click me</button></div> */}
+ </div>
        
         
         
-//       </div>
-      <div className="App">
+      </div>
+    {/* //   <div className="App">
      
 
-        {/* new line start*/}
-        <p>To get your profile details: </p><button onClick={getData}>Click me</button>
-        {profileData && <div>
-              <p>Count: {profileData.profile_name}</p>
-            </div>
-        }
-         {/* end of new line */}
-    </div>
-    // </div>
+    //     {/* new line start*/}
+    {/* //     <p>To get your profile details: </p><button onClick={getData}>Click me</button>
+    //     {profileData && <div>
+    //           <p>Count: {profileData.profile_name}</p> */}
+    {/* //         </div> */}
+    {/* //     } */}
+          {/* end of new line */}
+    {/* // </div> */}
+    </div> 
   );
 };
 

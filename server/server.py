@@ -14,7 +14,7 @@ mongo = pymongo.MongoClient("mongodb+srv://chathuranga123:chathuranga123@apigate
 CORS(app)
 
 db = mongo["api_gateway_analyst"]
-col = db["test_cpu"]
+col = db["preprocessed_10_sec"]
 
 @app.route('/', methods=["GET"])
 def init():
@@ -36,20 +36,12 @@ def getPreprocessedDataCount():
 def getPreprocessedData():
     return DataController.getPreprocessedData(db)
 
-@app.route('/profile', methods=["GET"])
-def my_profile():
-    # print("backend profileeeeeeeeeeeeeeeeeeeeeeee")
-    # response_body = {
-    #     "name": "Nagato",
-    #     "about" :"Hello! I'm a full stack developer that loves python and javascript"
-    # }
-    # result=col.find_one({})
-    count=0
-    for x in col.find({},{ "type": 0 }):
-        # print(x)
-        count+=1
-    result={"count":count}
-    print(result,"Counttttttttttttttttttttttttttt")
+@app.route('/normal_anomaly_doughnut', methods=["GET"])
+def normal_anomaly_doughnut():
+    total_count=len(list(col.find({})))
+    normal_count=len(list(col.find({"type":0})))
+    result={"normal":normal_count,"anomaly":total_count-normal_count}
+    print(result)
     return result
 
 if __name__ == "__main__":
