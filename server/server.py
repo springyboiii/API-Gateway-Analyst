@@ -38,7 +38,7 @@ def getPreprocessedData():
 
 @app.route('/normal_anomaly_doughnut', methods=["GET"])
 def normal_anomaly_doughnut():
-    total_count=len(list(col.find({})))
+    total_count=col.count_documents(filter={})
     normal_count=len(list(col.find({"type":0})))
     result={"normal":normal_count,"anomaly":total_count-normal_count}
     print(result)
