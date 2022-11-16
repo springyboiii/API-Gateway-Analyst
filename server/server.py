@@ -5,20 +5,23 @@ import pymongo
 from flask_socketio import SocketIO, emit
 
 # import socket 
-# import threading
-# import time
+import threading
+import time
 
 from controllers.predict import PredictController
 from controllers.data import DataController
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='bruh'
+
+CORS(app, resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
+
 
 # don't hardcode passsword
 mongo = pymongo.MongoClient("mongodb+srv://chathuranga123:chathuranga123@apigatewayanalystcluste.lz68ckp.mongodb.net/?retryWrites=true&w=majority")
 
-CORS(app)
+# CORS(app)
 
 db = mongo["api_gateway_analyst"]
 col = db["test_cpu"]
@@ -44,44 +47,29 @@ def getPreprocessedData():
     return DataController.getPreprocessedData(db)
 
 # socket connections 
-
-@socketio.on("connect")
-def testConnect():
-    print("Connected")
-
+@socketio.on('connect')
+def connected():
+    print(request.sid)
+    print("Client is connected")
+    emit("connect", {
+        "data":f"id:{request.sid} is connected"
+    })
 
 @socketio.on("disconnect")
-def testDisconnect():
-    print("Client disconnected")
+def disconnected():
+    print("User disconnected")
+    emit("disconnect", f"user {request.sid} hs been disconnected", broadcast=True)
 
-i=0
-somelist = ["hello","You","there"]
-# @socketio.on("message")
-# def handleMessage(msg):
-#     global i 
-#     if i < len(somelist):
-#         socketio.send(somelist[i])
-#         i+=1
+@socketio.on("data")
+def sendMsg():
+    for i in range(10):
+        socketio.emit("data", str(i), broadcast=True)
+        time.sleep(2)
 
-
-@socketio.on("message")
-def handleMessage(msg):
-    print("Message: "+str(msg))
-    global i 
-    if i < 3:
-    # emit("recvMsg", {"message": "msg received"}, broadcast=True)
-        socketio.send(somelist[i])
-        print("finish")
-        i+=1
+thread1 = threading.Thread(target=sendMsg)
+thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
 
-    # thread1 = threading.Thread(target=start)
-    # thread1.start()
-
-    # thread2 = threading.Thread(target=send_client_msg)
-    # thread2.start()
-
-    # app.run(debug=True)
     socketio.run(app)

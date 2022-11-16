@@ -6,23 +6,29 @@ import "./home.scss";
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
 
-let socket;
-
-const Home = () => {
+// const Home = ({ socket }) => {
+function Home({ socket }) {
   const [messages, setMessages] = useState([]);
+  //   const [showPrediction, setShowPrediction] = useState(false);
 
-  const sendMessage = (e) => {
-    // e.preventDefault();
-    socket.emit("sendMsg", { message: "hello" });
-  };
+  //   const sendMessage = (e) => {
+  //     // e.preventDefault();
+  //     socket.emit("sendMsg", { message: "hello" });
+  //   };
 
   useEffect(() => {
+    // http://127.0.0.1:5000/
     socket = io.connect("http://127.0.0.1:5000/");
-    socket.on("connect", function () {
-      socket.send("a");
+
+    socket.on("connect", (data) => {
+      console.log(data);
     });
 
-    socket.on("recvMsg", (data) => {
+    socket.on("disconnect", (data) => {
+      console.log(data);
+    });
+
+    socket.on("data", (data) => {
       setMessages([...messages, data]);
       console.log(messages);
     });
@@ -42,7 +48,7 @@ const Home = () => {
         Main Dashboard
         <div className="test">
           <input type="text" placeholder="message" />
-          <button onClick={sendMessage}>Send message</button>
+          <button>Send message</button>
 
           <ul>
             {messages.map((message, index) => {
@@ -53,6 +59,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Home;
