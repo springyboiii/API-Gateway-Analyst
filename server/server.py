@@ -39,14 +39,15 @@ def getPreprocessedData():
 @app.route('/normal_anomaly_doughnut', methods=["GET"])
 def normal_anomaly_doughnut():
     # total_count=col.count_documents(filter={})
+    normal_count=col.count_documents({"type":0})
+
     total_count=col.estimated_document_count()
 
-    anomaly_count=0
-    for type in range(1,8):
-        anomaly_count+=len(list(col.find({"type":type})))
+    # anomaly_count=0
+    # for type in range(1,8):
+    #     anomaly_count+=len(list(col.find({"type":type})))
     
-    result={"normal":total_count-anomaly_count,"anomaly":anomaly_count}
-    print(result)
+    result={"normal":normal_count,"anomaly":total_count-normal_count}
     return result
 
 if __name__ == "__main__":
