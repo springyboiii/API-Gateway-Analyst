@@ -6,7 +6,7 @@ import Login from "./pages/login/Login";
 import DescriptiveAnalysis from "./pages/descriptive-analysis/DescriptiveAnalysis";
 import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysis";
 import Prediction from "./pages/prediction/Prediction";
-
+import Cpu from "./pages/cpu/Cpu";
 function App() {
     return (
         <BrowserRouter>
@@ -26,6 +26,10 @@ function App() {
                 <Route
                     path="exploratory-analysis"
                     element={<ExploratoryAnalysis />}
+                />
+                <Route
+                    path="Cpu"
+                    element={<Cpu />}
                 />
                 <Route path="prediction" element={<Prediction />} />
             </Routes>

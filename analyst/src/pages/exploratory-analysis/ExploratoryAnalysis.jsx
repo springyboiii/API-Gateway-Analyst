@@ -61,6 +61,8 @@ const ExploratoryAnalysis = () => {
     {}
   );
 
+  
+
   useEffect(() => {
     //   Normal and Anomaly Doughnut chart setup using useeffect
     const position = "left"; // CSS for graphs
@@ -158,7 +160,7 @@ const ExploratoryAnalysis = () => {
       });
 
     set_anomaly_type_doughnut_options({
-      responsive: false,
+      responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: { display: false, position: position },
@@ -224,7 +226,7 @@ const ExploratoryAnalysis = () => {
       });
 
     set_scenario_doughnut_options({
-      responsive: false,
+      responsive: true,
       maintainAspectRatio: false,
       plugins: {
           legend: { display: false,position: position },
@@ -356,7 +358,6 @@ const ExploratoryAnalysis = () => {
         <Navbar />
         <div className="rows">
           <div className="row">
-            {" "}
             <div className="doughnut-container">
               <Doughnut
                 data={normal_anomaly_doughnut_data}

@@ -94,6 +94,106 @@ def anomaly_time_area_data():
     
     return result
 
+@app.route('/user_pct_data', methods=["GET"])
+def user_pct_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_cpu_user_pct"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_cpu_user_pct"].append(x["system_cpu_user_pct"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+
+    
+    return result
+
+@app.route('/system_pct_data', methods=["GET"])
+def system_pct_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_cpu_system_pct"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_cpu_system_pct"].append(x["system_cpu_system_pct"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+
+    
+    return result
+
+
+
+
+
+@app.route('/idle_pct_data', methods=["GET"])
+def idle_pct_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_cpu_idle_pct"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_cpu_idle_pct"].append(x["system_cpu_idle_pct"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+
+    
+    return result
+
+@app.route('/iowait_pct_data', methods=["GET"])
+def iowait_pct_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_cpu_iowait_pct"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_cpu_iowait_pct"].append(x["system_cpu_iowait_pct"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+
+    
+    return result
+
+@app.route('/softirq_pct_data', methods=["GET"])
+def softirq_pct_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_cpu_softirq_pct"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_cpu_softirq_pct"].append(x["system_cpu_softirq_pct"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+
+    
+    return result
+
+@app.route('/total_pct_data', methods=["GET"])
+def total_pct_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_cpu_total_pct"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_cpu_total_pct"].append(x["system_cpu_total_pct"])
+        result["type"].append(x["type"])
+    print(result["type"])
+
+    
+    return result   
+
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
     app.run(debug=True)
