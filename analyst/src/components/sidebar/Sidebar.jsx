@@ -7,7 +7,7 @@ import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import SettingsApplicationsOutlinedIcon from "@mui/icons-material/SettingsApplicationsOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
-
+import Cpu from "../../pages/cpu/Cpu";
 const Sidebar = () => {
     return (
         <div className="sidebar">
@@ -41,6 +41,15 @@ const Sidebar = () => {
                         <li>
                             <DashboardIcon className="icon" />
                             <span>Exploratory Analysis</span>
+                        </li>
+                    </Link>
+                    <Link
+                        to="/cpu"
+                        style={{ textDecoration: "none" }}
+                    >
+                        <li>
+                            <DashboardIcon className="icon" />
+                            <span>Cpu</span>
                         </li>
                     </Link>
                     <Link to="/prediction" style={{ textDecoration: "none" }}>
