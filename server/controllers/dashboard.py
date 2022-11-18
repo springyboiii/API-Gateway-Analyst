@@ -1,7 +1,8 @@
 from flask import jsonify
 from flask_pymongo import PyMongo, ObjectId
 import pymongo
-
+import random
+import numpy as np
 
 class DashboardController():
     def normal_anomaly_doughnut(col):
@@ -46,4 +47,27 @@ class DashboardController():
             result["timestamp"].append(x["timestamp"][11:])
             result[feature].append(x[feature])
             result["type"].append(x["type"])
+        return result
+
+    def get_prediction_bar_graph(col, limit):
+        result = dict()
+        result["timestamp"] = []
+        result["prediction"] = []
+        result["bgcolor"]=[]
+        for x in col.find().limit(limit).sort("timestamp", pymongo.DESCENDING):
+            result["timestamp"].append(x["timestamp"][11:])
+            # if x["type"]==0:
+            #     result["prediction"].append(0)
+            # else:
+            #     result["prediction"].append(1)
+        # print([random.choice(range(2)) for i in range(1000)])
+        result["prediction"] = [random.choice(range(2)) for i in range(1000)]
+        result["dummy"]=[1 for x in range(1000)]
+        green="rgba(54, 162, 235, 1)";
+        red="rgba(255, 99, 132, 1)"
+        for x in result["prediction"]:
+            if x==0:
+                result["bgcolor"].append(green)
+            else:
+                result["bgcolor"].append(red)
         return result
