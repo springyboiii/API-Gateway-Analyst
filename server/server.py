@@ -5,6 +5,7 @@ import pymongo
 
 from controllers.predict import PredictController
 from controllers.data import DataController
+from controllers.dashboard import DashboardController
 import certifi
 ca= certifi.where()
 app = Flask(__name__)
@@ -38,161 +39,47 @@ def getPreprocessedData():
 
 @app.route('/normal_anomaly_doughnut_data', methods=["GET"])
 def normal_anomaly_doughnut():
-    # total_count=col.count_documents(filter={})
-    normal_count=col.count_documents({"type":0})
-
-    total_count=col.estimated_document_count()
-
-    # anomaly_count=0
-    # for type in range(1,8):
-    #     anomaly_count+=len(list(col.find({"type":type})))
-    
-    result={"normal":normal_count,"anomaly":total_count-normal_count}
-    return result
+    return DashboardController.normal_anomaly_doughnut(col)
 
 @app.route('/anomaly_type_doughnut_data', methods=["GET"])
 def anomaly_type_doughnut():
-    result=dict()
-    for type in range(1,8):
-        result["type"+str(type)]=col.count_documents({"type":type})
-    # print(result)
-    return result
+    return DashboardController.anomaly_type_doughnut(col)
 
 @app.route('/scenario_doughnut_data', methods=["GET"])
 def scenario_doughnut():
-
-    result=dict()
-    for scenario in range(1,11):
-        result["scenario"+str(scenario)]=col.count_documents({"scenario":scenario})
-    # result={"normal":normal_count,"anomaly":total_count-normal_count}
-    # print(result)
-    return result
-
+    return DashboardController.scenario_doughnut(col)
+#need to change graph
 @app.route('/jvm_metrics_memory_heap_memory_usage_used_data', methods=["GET"])
 def jvm_metrics_memory_heap_memory_usage_used():
-
-    
-    jvm_metrics_memory_heap_memory_usage_used_count=col.count_documents({"jvm_metrics_memory_heap_memory_usage_used":{"$gt": 1.2}})
-    total_count=col.estimated_document_count()
-
-    result={"jvm_memory":jvm_metrics_memory_heap_memory_usage_used_count,"normal":total_count-jvm_metrics_memory_heap_memory_usage_used_count}
-    return result
+    return DashboardController.jvm_metrics_memory_heap_memory_usage_used(col)
 
 @app.route('/anomaly_time_area_data', methods=["GET"])
 def anomaly_time_area_data():
-    result=dict()
-    result["timestamp"]=[]
-    result["system_cpu_user_pct"]=[]
-    result["type"]=[]
-    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
-        result["timestamp"].append(x["timestamp"])
-        result["system_cpu_user_pct"].append(x["system_cpu_user_pct"])
-        result["type"].append(x["type"])
-    # print(result["type"])
-
-    
-    return result
+    return DashboardController.get_recent_line_graph(col,"system_cpu_user_pct",1000)
 
 @app.route('/user_pct_data', methods=["GET"])
 def user_pct_data():
-    result=dict()
-    result["timestamp"]=[]
-    result["system_cpu_user_pct"]=[]
-    result["type"]=[]
-    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
-        result["timestamp"].append(x["timestamp"][11:])
-        result["system_cpu_user_pct"].append(x["system_cpu_user_pct"])
-        result["type"].append(x["type"])
-    # print(result["type"])
-
-    
-    return result
+    return DashboardController.get_recent_line_graph(col,"system_cpu_user_pct",1000)
 
 @app.route('/system_pct_data', methods=["GET"])
 def system_pct_data():
-    result=dict()
-    result["timestamp"]=[]
-    result["system_cpu_system_pct"]=[]
-    result["type"]=[]
-    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
-        result["timestamp"].append(x["timestamp"][11:])
-        result["system_cpu_system_pct"].append(x["system_cpu_system_pct"])
-        result["type"].append(x["type"])
-    # print(result["type"])
-
-    
-    return result
-
-
-
-
+    return DashboardController.get_recent_line_graph(col,"system_cpu_system_pct",1000)
 
 @app.route('/idle_pct_data', methods=["GET"])
 def idle_pct_data():
-    result=dict()
-    result["timestamp"]=[]
-    result["system_cpu_idle_pct"]=[]
-    result["type"]=[]
-    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
-        result["timestamp"].append(x["timestamp"][11:])
-        result["system_cpu_idle_pct"].append(x["system_cpu_idle_pct"])
-        result["type"].append(x["type"])
-    # print(result["type"])
-
-    
-    return result
+    return DashboardController.get_recent_line_graph(col,"system_cpu_idle_pct",1000)
 
 @app.route('/iowait_pct_data', methods=["GET"])
 def iowait_pct_data():
-    result=dict()
-    result["timestamp"]=[]
-    result["system_cpu_iowait_pct"]=[]
-    result["type"]=[]
-    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
-        result["timestamp"].append(x["timestamp"][11:])
-        result["system_cpu_iowait_pct"].append(x["system_cpu_iowait_pct"])
-        result["type"].append(x["type"])
-    # print(result["type"])
-
-    
-    return result
+    return DashboardController.get_recent_line_graph(col,"system_cpu_iowait_pct",1000)
 
 @app.route('/softirq_pct_data', methods=["GET"])
 def softirq_pct_data():
-    result=dict()
-    result["timestamp"]=[]
-    result["system_cpu_softirq_pct"]=[]
-    result["type"]=[]
-    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
-        result["timestamp"].append(x["timestamp"][11:])
-        result["system_cpu_softirq_pct"].append(x["system_cpu_softirq_pct"])
-        result["type"].append(x["type"])
-    # print(result["type"])
-
-    
-    return result
+    return DashboardController.get_recent_line_graph(col,"system_cpu_softirq_pct",1000)
 
 @app.route('/total_pct_data', methods=["GET"])
 def total_pct_data():
-    result=dict()
-    result["timestamp"]=[]
-    result["system_cpu_total_pct"]=[]
-    result["type"]=[]
-    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
-        result["timestamp"].append(x["timestamp"][11:])
-        result["system_cpu_total_pct"].append(x["system_cpu_total_pct"])
-        result["type"].append(x["type"])
-    print(result["type"])
-
-    
-    return result   
+    return DashboardController.get_recent_line_graph(col,"system_cpu_total_pct",1000)
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
