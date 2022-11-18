@@ -81,6 +81,9 @@ def softirq_pct_data():
 def total_pct_data():
     return DashboardController.get_recent_line_graph(col,"system_cpu_total_pct",1000)
 
+@app.route('/prediction_bar_data', methods=["GET"])
+def prediction_bar_data():
+    return DashboardController.get_prediction_bar_graph(col,50)
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
     app.run(debug=True)
