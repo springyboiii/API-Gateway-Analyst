@@ -15,6 +15,8 @@ function Home({ socket }) {
   //     // e.preventDefault();
   //     socket.emit("sendMsg", { message: "hello" });
   //   };
+  console.log("run from begininng")
+  console.log(messages);
 
   useEffect(() => {
     // http://127.0.0.1:5000/
@@ -28,9 +30,9 @@ function Home({ socket }) {
       console.log(data);
     });
 
-    socket.on("data", (data) => {
-      setMessages([...messages, data]);
-      console.log(messages);
+    socket.on("recvMsg", (data) => {
+      setMessages((messages) => [...messages, data]);
+      console.log(data)
     });
 
     return () => {
@@ -38,7 +40,7 @@ function Home({ socket }) {
         console.log("data event was removed");
       });
     };
-  }, [socket, messages]);
+  }, []);
 
   return (
     <div className="home">

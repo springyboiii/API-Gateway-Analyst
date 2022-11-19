@@ -28,7 +28,7 @@ col = db["test_cpu"]
 
 @app.route('/', methods=["GET"])
 def init():
-    return render_template("index.html")
+    return "Hello"
 
 @app.route('/predict', methods=["GET"])
 def predict():
@@ -63,8 +63,17 @@ def disconnected():
 @socketio.on("data")
 def sendMsg():
     for i in range(10):
-        socketio.emit("data", str(i), broadcast=True)
+        socketio.emit("recvMsg", str(i), broadcast=True)
         time.sleep(2)
+
+# make the thread running below func a deamon. So it will stop when main thread finish
+# @socketio.on("prediction")
+# def predictAndSend():
+#     while True: 
+#         latestPrediction = PredictController.predictLatest(db)
+#         socketio.emit("prediction", str(latestPrediction), broadcast=True)
+
+#         time.sleep(10)
 
 thread1 = threading.Thread(target=sendMsg)
 thread1.start()

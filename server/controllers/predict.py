@@ -20,8 +20,9 @@ class PredictController():
     def getLatestInput(db):
         inputs = {}
         
+        # need to read the latest data point
         inputCpu = CpuModel.getTestCpuData(db)
-        
+
         timestamp = inputCpu["timestamp"]
         
         # timestamp for recent minute
@@ -66,9 +67,9 @@ class PredictController():
 
         prediction = Helper.getIndexOfMax(modelOutput)
         print(f"prediction = {prediction}")
-        prediction = 0
+        # prediction = 0
 
-        return inputs
+        return prediction
 
     def getTestCpuData(db):
 
