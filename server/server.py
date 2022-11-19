@@ -66,16 +66,16 @@ def sendMsg():
         socketio.emit("recvMsg", str(i), broadcast=True)
         time.sleep(2)
 
-# make the thread running below func a deamon. So it will stop when main thread finish
-# @socketio.on("prediction")
-# def predictAndSend():
-#     while True: 
-#         latestPrediction = PredictController.predictLatest(db)
-#         socketio.emit("prediction", str(latestPrediction), broadcast=True)
+# make the thread, running below func a deamon. So it will stop when main thread finish
+@socketio.on("prediction")
+def predictAndSend():
+    while True: 
+        latestPrediction = PredictController.predictLatest(db)
+        socketio.emit("prediction", latestPrediction["prediction"], broadcast=True)
 
-#         time.sleep(10)
+        time.sleep(2)
 
-thread1 = threading.Thread(target=sendMsg)
+thread1 = threading.Thread(target=predictAndSend)
 thread1.start()
 
 if __name__ == "__main__":

@@ -35,6 +35,11 @@ function Home({ socket }) {
       console.log(data)
     });
 
+    socket.on("prediction", (data) => {
+      setMessages((messages) => [...messages, data]);
+      console.log(messages)
+    });
+
     return () => {
       socket.off("data", () => {
         console.log("data event was removed");
