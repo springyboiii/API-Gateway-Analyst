@@ -67,9 +67,8 @@ class PredictController():
 
         prediction = Helper.getIndexOfMax(modelOutput)
         print(f"prediction = {prediction}")
-        # prediction = 0
 
-        return prediction
+        return {"prediction": str(prediction)}
 
     def getTestCpuData(db):
 
