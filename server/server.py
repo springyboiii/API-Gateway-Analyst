@@ -11,6 +11,10 @@ import time
 from controllers.predict import PredictController
 from controllers.data import DataController
 
+from ApiGateway import ApiGateway
+from util.Helper import Helper
+from util.ConversionHelper import ConversionHelper
+
 app = Flask(__name__)
 app.config['SECRET_KEY']='bruh'
 
@@ -75,7 +79,36 @@ def predictAndSend():
 
         time.sleep(2)
 
-thread1 = threading.Thread(target=predictAndSend)
+@socketio.on("prediction")
+def readFromGateway():
+    startTimestamp = "2018-01-06 18:54:00"
+    timestamp = ConversionHelper.convertStrToDatetime(startTimestamp)
+
+    while True:
+        readInput = ApiGateway.readData(timestamp)
+        
+        inputs = {}
+        inputs.update(readInput["cpu"])
+        inputs.update(readInput["memory"])
+        inputs.update(readInput["network_io"])
+        inputs.update(readInput["disk_io"])
+        inputs.update(readInput["jvm"])
+
+        # remove timestamp field
+        inputs.pop("timestamp")
+
+        inputs = Helper.orderDict(inputs)
+
+        # return timestamp, inputs
+        prediction = PredictController.predict(str(timestamp), inputs)
+
+        socketio.emit("prediction", prediction, broadcast=True)
+
+        timestamp = Helper.getNextTimestamp(timestamp)
+
+        time.sleep(2)
+    
+thread1 = threading.Thread(target=readFromGateway)
 thread1.start()
 
 if __name__ == "__main__":

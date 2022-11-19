@@ -56,6 +56,20 @@ class PredictController():
 
         return timestamp, inputs
 
+    def predict(timestamp, inputs):
+        inputDataFrame = Helper.getDataFrameFromDict(inputs)
+
+        minMaxScaler = Helper.loadMinMaxScaler()
+        scaledDataFrame = minMaxScaler.transform(inputDataFrame)
+
+        loadedModel = Helper.loadModel()
+
+        modelOutput = loadedModel.predict(scaledDataFrame)
+
+        predictions = Helper.getIndexOfMax(modelOutput)
+
+        return {"timestamp": timestamp, "prediction": str(predictions[0])}
+
     def predictLatest(db):
         timestamp, inputs = PredictController.getLatestInput(db)
 

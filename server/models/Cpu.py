@@ -9,6 +9,14 @@ class CpuModel():
         data = CpuModel.getJsonOfCpu(data)
         return data
     
+    def insertCpuData(db, data):
+        """
+            data: is a dictionary containing field names : value
+        """
+        col = db["test_cpu"] 
+        res = col.insert_one(data)
+        return res 
+
     def getJsonOfCpu(data):
         if (data is None): return None
 

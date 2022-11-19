@@ -15,7 +15,7 @@ function Home({ socket }) {
   //     // e.preventDefault();
   //     socket.emit("sendMsg", { message: "hello" });
   //   };
-  console.log("run from begininng")
+  // console.log("run from begininng")
   console.log(messages);
 
   useEffect(() => {
@@ -36,8 +36,8 @@ function Home({ socket }) {
     });
 
     socket.on("prediction", (data) => {
-      setMessages((messages) => [...messages, data]);
-      console.log(messages)
+      setMessages((messages) => [...messages, data['prediction']]);
+      console.log(data['timestamp'])
     });
 
     return () => {
