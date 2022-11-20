@@ -85,6 +85,7 @@ def readFromGateway():
     timestamp = ConversionHelper.convertStrToDatetime(startTimestamp)
 
     while True:
+    # for i in range (1):
         readInput = ApiGateway.readData(timestamp)
         
         inputs = {}
@@ -98,11 +99,23 @@ def readFromGateway():
         inputs.pop("timestamp")
 
         inputs = Helper.orderDict(inputs)
-
-        # return timestamp, inputs
+        
+        # predict 
         prediction = PredictController.predict(str(timestamp), inputs)
 
         socketio.emit("prediction", prediction, broadcast=True)
+
+        # prepare input to be stored
+        storeData = {}
+        for key in inputs:
+            storeData[key] = inputs[key][0]
+        
+        # add scenario and type for input 
+        storeData['scenario'] = int(prediction["prediction"])
+        storeData['type'] = ConversionHelper.getTypeOfScenario(storeData['scenario'])
+
+        # store inputs
+        PredictController.insertData(db, str(timestamp), storeData)
 
         timestamp = Helper.getNextTimestamp(timestamp)
 

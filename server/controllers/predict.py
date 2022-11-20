@@ -17,6 +17,16 @@ from tensorflow import keras
 
 class PredictController():
 
+    def insertData(db, timestamp, inputs):
+        # timestamp - str 
+        # data - dict 
+        data = inputs 
+        data.update({'timestamp': timestamp})
+
+        res = DataModel.instertData(db, data)
+
+        return res
+
     def getLatestInput(db):
         inputs = {}
         
