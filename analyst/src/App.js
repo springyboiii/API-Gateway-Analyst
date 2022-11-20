@@ -7,6 +7,7 @@ import DescriptiveAnalysis from "./pages/descriptive-analysis/DescriptiveAnalysi
 import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysis";
 import Prediction from "./pages/prediction/Prediction";
 import Cpu from "./pages/cpu/Cpu";
+import Memory from "./pages/memory/Memory";
 function App() {
     return (
         <BrowserRouter>
@@ -31,6 +32,22 @@ function App() {
                     path="Cpu"
                     element={<Cpu />}
                 />
+                <Route
+                    path="memory"
+                    element={<Memory />}
+                />
+                {/* <Route
+                    path="Cpu"
+                    element={<Cpu />}
+                />
+                <Route
+                    path="Cpu"
+                    element={<Cpu />}
+                />
+                <Route
+                    path="Cpu"
+                    element={<Cpu />}
+                /> */}
                 <Route path="prediction" element={<Prediction />} />
             </Routes>
         </BrowserRouter>

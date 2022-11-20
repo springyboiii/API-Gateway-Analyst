@@ -49,7 +49,43 @@ const Sidebar = () => {
                     >
                         <li>
                             <DashboardIcon className="icon" />
-                            <span>Cpu</span>
+                            <span>CPU</span>
+                        </li>
+                    </Link>
+                    <Link
+                        to="/disk"
+                        style={{ textDecoration: "none" }}
+                    >
+                        <li>
+                            <DashboardIcon className="icon" />
+                            <span>Disk</span>
+                        </li>
+                    </Link>
+                    <Link
+                        to="/jvm"
+                        style={{ textDecoration: "none" }}
+                    >
+                        <li>
+                            <DashboardIcon className="icon" />
+                            <span>JVM</span>
+                        </li>
+                    </Link>
+                    <Link
+                        to="/memory"
+                        style={{ textDecoration: "none" }}
+                    >
+                        <li>
+                            <DashboardIcon className="icon" />
+                            <span>Memory</span>
+                        </li>
+                    </Link>
+                    <Link
+                        to="/network"
+                        style={{ textDecoration: "none" }}
+                    >
+                        <li>
+                            <DashboardIcon className="icon" />
+                            <span>Network</span>
                         </li>
                     </Link>
                     <Link to="/prediction" style={{ textDecoration: "none" }}>
