@@ -10,6 +10,7 @@ import Prediction from "./pages/prediction/Prediction";
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 
+import Cpu from "./pages/cpu/Cpu";
 function App() {
   const [socketInstance, setSocketInstance] = useState("");
   // const [loading, setLoading] = useState(true);
@@ -52,13 +53,23 @@ function App() {
         <Route path="users">
           {/* <Route index element={<List />} />
                     <Route path=":userId" element={<Single />} /> */}
-        </Route>
-        <Route path="descriptive-analysis" element={<DescriptiveAnalysis />} />
-        <Route path="exploratory-analysis" element={<ExploratoryAnalysis />} />
-        <Route path="prediction" element={<Prediction />} />
-      </Routes>
-    </BrowserRouter>
-  );
+                </Route>
+                <Route
+                    path="descriptive-analysis"
+                    element={<DescriptiveAnalysis />}
+                />
+                <Route
+                    path="exploratory-analysis"
+                    element={<ExploratoryAnalysis />}
+                />
+                <Route
+                    path="Cpu"
+                    element={<Cpu />}
+                />
+                <Route path="prediction" element={<Prediction />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;

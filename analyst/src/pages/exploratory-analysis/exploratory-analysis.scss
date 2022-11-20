@@ -1,7 +1,39 @@
 .exploratoryAnalysis {
     display: flex;
     width: 100%;
-    .exploratoryAnalysisContainer {
+.exploratoryAnalysisContainer {
         flex: 6;
     }
+}
+.doughnut-container{
+    margin-top: 3vh;
+    position:inherit;
+    height:25vh; 
+    width:25vw;
+}
+
+.type_doughnut-container{
+    position: relative;
+    height:27vh; 
+    width:27vw;
+}
+
+.anomaly_time_area-container{
+    margin: 20px;
+    // position: relative
+    // height:20vh; 
+    // width:60vw;
+    height:60vh; 
+    width:100vw;
+}
+.prediction_bar{
+    margin: 20px;
+    position: relative;
+    // height:20vh; 
+    // width:60vw;
+    height:100px; 
+    width:80vw;
+}
+.row{
+    display: flex
 }
