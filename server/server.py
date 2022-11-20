@@ -184,9 +184,8 @@ def total_pct_data():
     # print(result["type"])
     return result   
 
+
 # memory
-
-
 @app.route('/memory_used_pct', methods=["GET"])
 def memory_used_pct_data():
     result=dict()
@@ -197,6 +196,70 @@ def memory_used_pct_data():
         # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_memory_used_pct"].append(x["system_memory_used_pct"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# disk
+# system_diskio_iostat_await
+@app.route('/diskio_iostat_await', methods=["GET"])
+def diskio_iostat_await_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_diskio_iostat_await"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_diskio_iostat_await"].append(x["system_diskio_iostat_await"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+# system_diskio_iostat_queue_avg_size
+@app.route('/diskio_iostat_queue_avg_size', methods=["GET"])
+def diskio_iostat_queue_avg_size_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_diskio_iostat_queue_avg_size"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_diskio_iostat_queue_avg_size"].append(x["system_diskio_iostat_queue_avg_size"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# system_diskio_iostat_read_per_sec_bytes
+@app.route('/diskio_iostat_read_per_sec_bytes', methods=["GET"])
+def diskio_iostat_read_per_sec_bytes_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_diskio_iostat_read_per_sec_bytes"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_diskio_iostat_read_per_sec_bytes"].append(x["system_diskio_iostat_read_per_sec_bytes"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# system_diskio_iostat_write_per_sec_bytes
+@app.route('/diskio_iostat_write_per_sec_bytes', methods=["GET"])
+def diskio_iostat_write_per_sec_bytes_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_diskio_iostat_write_per_sec_bytes"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_diskio_iostat_write_per_sec_bytes"].append(x["system_diskio_iostat_write_per_sec_bytes"])
         result["type"].append(x["type"])
     # print(result["type"])
     return result 

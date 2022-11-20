@@ -8,6 +8,7 @@ import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysi
 import Prediction from "./pages/prediction/Prediction";
 import Cpu from "./pages/cpu/Cpu";
 import Memory from "./pages/memory/Memory";
+import Disk from "./pages/disk/Disk";
 function App() {
     return (
         <BrowserRouter>
@@ -36,11 +37,11 @@ function App() {
                     path="memory"
                     element={<Memory />}
                 />
-                {/* <Route
-                    path="Cpu"
-                    element={<Cpu />}
-                />
                 <Route
+                    path="disk"
+                    element={<Disk />}
+                />
+                {/* <Route
                     path="Cpu"
                     element={<Cpu />}
                 />

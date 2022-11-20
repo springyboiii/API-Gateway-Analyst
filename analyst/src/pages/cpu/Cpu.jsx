@@ -31,26 +31,32 @@ function Cpu() {
     datasets: [],
   });
   const [user_pct_options, set_user_pct_options] = useState({});
+  
   const [system_pct_data, set_system_pct_data] = useState({
     datasets: [],
   });
   const [system_pct_options, set_system_pct_options] = useState({});
+  
   const [idle_pct_data, set_idle_pct_data] = useState({
     datasets: [],
   });
   const [idle_pct_options, set_idle_pct_options] = useState({});
+  
   const [iowait_pct_data, set_iowait_pct_data] = useState({
     datasets: [],
   });
   const [iowait_pct_options, set_iowait_pct_options] = useState({});
+
   const [softirq_pct_data, set_softirq_pct_data] = useState({
     datasets: [],
   });
   const [softirq_pct_options, set_softirq_pct_options] = useState({});
+  
   const [total_pct_data, set_total_pct_data] = useState({
     datasets: [],
   });
   const [total_pct_options, set_total_pct_options] = useState({});
+  
   useEffect(() => {
     axios({
       method: "GET",
