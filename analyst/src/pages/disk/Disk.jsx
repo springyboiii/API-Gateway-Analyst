@@ -61,8 +61,8 @@ function Disk() {
           datasets: [
             {
               fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_user_pct,
+              // label: '
+              data: res.system_diskio_iostat_await,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
               tension: 0.4,
@@ -83,6 +83,7 @@ function Disk() {
       plugins: {
         legend: {
           position: "top",
+          display: "flase"
         },
         title: {
           display: true,
@@ -109,8 +110,8 @@ function Disk() {
           datasets: [
             {
               fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_system_pct,
+              // label: 'system_diskio_iostat_queue_avg_size',
+              data: res.system_diskio_iostat_queue_avg_size,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
               tension: 0.4,
@@ -157,8 +158,8 @@ function Disk() {
             datasets: [
               {
                 fill: true,
-                // label: 'system_cpu_user_pct',
-                data: res.system_cpu_idle_pct,
+                // label: 'system_diskio_iostat_read_per_sec_bytes',
+                data: res.system_diskio_iostat_read_per_sec_bytes,
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
                 tension: 0.4,
@@ -206,8 +207,8 @@ function Disk() {
             datasets: [
               {
                 fill: true,
-                // label: 'system_cpu_user_pct',
-                data: res.system_cpu_softirq_pct,
+                // label: 'system_diskio_iostat_write_per_sec_bytes',
+                data: res.system_diskio_iostat_write_per_sec_bytes,
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
                 tension: 0.4,

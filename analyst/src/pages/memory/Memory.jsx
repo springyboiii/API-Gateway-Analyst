@@ -1,5 +1,4 @@
 import React from "react";
-import "../cpu/Cpu.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
@@ -46,8 +45,8 @@ function Memory() {
           datasets: [
             {
               fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_user_pct,
+              // label: 'system_memory_used_pct',
+              data: res.system_memory_used_pct,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
               tension: 0.4,

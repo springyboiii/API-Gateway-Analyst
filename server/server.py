@@ -265,6 +265,166 @@ def diskio_iostat_write_per_sec_bytes_data():
     return result 
 
 
+# jvm
+# jvm_metrics_gc_psms_collection_count
+@app.route('/psms_collection_count', methods=["GET"])
+def psms_collection_count_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["jvm_metrics_gc_psms_collection_count"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["jvm_metrics_gc_psms_collection_count"].append(x["jvm_metrics_gc_psms_collection_count"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+# jvm_metrics_gc_psms_collection_time
+@app.route('/psms_collection_time', methods=["GET"])
+def psms_collection_time_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["jvm_metrics_gc_psms_collection_time"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["jvm_metrics_gc_psms_collection_time"].append(x["jvm_metrics_gc_psms_collection_time"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+# jvm_metric_gc_pss_collection_count
+@app.route('/pss_collection_count', methods=["GET"])
+def pss_collection_count_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["jvm_metric_gc_pss_collection_count"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["jvm_metric_gc_pss_collection_count"].append(x["jvm_metric_gc_pss_collection_count"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+# jvm_metrics_gc_pss_collection_time
+@app.route('/pss_collection_time', methods=["GET"])
+def pss_collection_time_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["jvm_metrics_gc_pss_collection_time"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["jvm_metrics_gc_pss_collection_time"].append(x["jvm_metrics_gc_pss_collection_time"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# network
+# system_network_in_bytes
+@app.route('/network_in_bytes', methods=["GET"])
+def pnetwork_in_bytes_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_network_in_bytes"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_network_in_bytes"].append(x["system_network_in_bytes"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+
+# system_network_in_packets
+@app.route('/network_in_packets', methods=["GET"])
+def pnetwork_in_packets_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_network_in_packets"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_network_in_packets"].append(x["system_network_in_packets"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# system_network_in_dropped
+@app.route('/network_in_dropped', methods=["GET"])
+def network_in_dropped_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_network_in_dropped"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_network_in_dropped"].append(x["system_network_in_dropped"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# system_network_out_bytes
+@app.route('/network_out_bytes', methods=["GET"])
+def network_out_bytes_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_network_out_bytes"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_network_out_bytes"].append(x["system_network_out_bytes"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# system_network_out_packets
+@app.route('/network_out_packets', methods=["GET"])
+def network_out_packets_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_network_out_packets"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_network_out_packets"].append(x["system_network_out_packets"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
+# system_network_out_errors
+@app.route('/network_out_errors', methods=["GET"])
+def network_out_errors_data():
+    result=dict()
+    result["timestamp"]=[]
+    result["system_network_out_errors"]=[]
+    result["type"]=[]
+    for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
+        # print(x["timestamp"])
+        result["timestamp"].append(x["timestamp"][11:])
+        result["system_network_out_errors"].append(x["system_network_out_errors"])
+        result["type"].append(x["type"])
+    # print(result["type"])
+    return result 
+
+
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
     app.run(debug=True)
