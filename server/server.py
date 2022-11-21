@@ -102,11 +102,9 @@ def user_pct_data():
     result["system_cpu_user_pct"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_cpu_user_pct"].append(x["system_cpu_user_pct"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result
 
 
@@ -117,11 +115,9 @@ def system_pct_data():
     result["system_cpu_system_pct"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_cpu_system_pct"].append(x["system_cpu_system_pct"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result
 
 
@@ -132,11 +128,9 @@ def idle_pct_data():
     result["system_cpu_idle_pct"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_cpu_idle_pct"].append(x["system_cpu_idle_pct"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result
 
 
@@ -147,11 +141,9 @@ def iowait_pct_data():
     result["system_cpu_iowait_pct"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_cpu_iowait_pct"].append(x["system_cpu_iowait_pct"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result
 
 
@@ -162,11 +154,9 @@ def softirq_pct_data():
     result["system_cpu_softirq_pct"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_cpu_softirq_pct"].append(x["system_cpu_softirq_pct"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result
 
 
@@ -177,11 +167,9 @@ def total_pct_data():
     result["system_cpu_total_pct"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_cpu_total_pct"].append(x["system_cpu_total_pct"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result   
 
 
@@ -193,11 +181,9 @@ def memory_used_pct_data():
     result["system_memory_used_pct"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_memory_used_pct"].append(x["system_memory_used_pct"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -210,11 +196,9 @@ def diskio_iostat_await_data():
     result["system_diskio_iostat_await"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_diskio_iostat_await"].append(x["system_diskio_iostat_await"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 # system_diskio_iostat_queue_avg_size
@@ -225,11 +209,9 @@ def diskio_iostat_queue_avg_size_data():
     result["system_diskio_iostat_queue_avg_size"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_diskio_iostat_queue_avg_size"].append(x["system_diskio_iostat_queue_avg_size"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -241,11 +223,9 @@ def diskio_iostat_read_per_sec_bytes_data():
     result["system_diskio_iostat_read_per_sec_bytes"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_diskio_iostat_read_per_sec_bytes"].append(x["system_diskio_iostat_read_per_sec_bytes"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -257,11 +237,9 @@ def diskio_iostat_write_per_sec_bytes_data():
     result["system_diskio_iostat_write_per_sec_bytes"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_diskio_iostat_write_per_sec_bytes"].append(x["system_diskio_iostat_write_per_sec_bytes"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -274,11 +252,9 @@ def psms_collection_count_data():
     result["jvm_metrics_gc_psms_collection_count"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["jvm_metrics_gc_psms_collection_count"].append(x["jvm_metrics_gc_psms_collection_count"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 # jvm_metrics_gc_psms_collection_time
@@ -289,12 +265,10 @@ def psms_collection_time_data():
     result["jvm_metrics_gc_psms_collection_time"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["jvm_metrics_gc_psms_collection_time"].append(x["jvm_metrics_gc_psms_collection_time"])
         result["type"].append(x["type"])
-    # print(result["type"])
-    return result 
+    return result
 
 # jvm_metric_gc_pss_collection_count
 @app.route('/pss_collection_count', methods=["GET"])
@@ -304,11 +278,9 @@ def pss_collection_count_data():
     result["jvm_metric_gc_pss_collection_count"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["jvm_metric_gc_pss_collection_count"].append(x["jvm_metric_gc_pss_collection_count"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 # jvm_metrics_gc_pss_collection_time
@@ -319,11 +291,9 @@ def pss_collection_time_data():
     result["jvm_metrics_gc_pss_collection_time"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["jvm_metrics_gc_pss_collection_time"].append(x["jvm_metrics_gc_pss_collection_time"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -336,11 +306,9 @@ def pnetwork_in_bytes_data():
     result["system_network_in_bytes"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_network_in_bytes"].append(x["system_network_in_bytes"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -353,11 +321,9 @@ def pnetwork_in_packets_data():
     result["system_network_in_packets"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_network_in_packets"].append(x["system_network_in_packets"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -369,11 +335,9 @@ def network_in_dropped_data():
     result["system_network_in_dropped"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_network_in_dropped"].append(x["system_network_in_dropped"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -385,11 +349,9 @@ def network_out_bytes_data():
     result["system_network_out_bytes"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_network_out_bytes"].append(x["system_network_out_bytes"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -401,11 +363,9 @@ def network_out_packets_data():
     result["system_network_out_packets"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_network_out_packets"].append(x["system_network_out_packets"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 
@@ -417,11 +377,9 @@ def network_out_errors_data():
     result["system_network_out_errors"]=[]
     result["type"]=[]
     for x in col.find().limit(1000).sort("timestamp",pymongo.DESCENDING):
-        # print(x["timestamp"])
         result["timestamp"].append(x["timestamp"][11:])
         result["system_network_out_errors"].append(x["system_network_out_errors"])
         result["type"].append(x["type"])
-    # print(result["type"])
     return result 
 
 

@@ -9,6 +9,7 @@ import Prediction from "./pages/prediction/Prediction";
 import Cpu from "./pages/cpu/Cpu";
 import Memory from "./pages/memory/Memory";
 import Disk from "./pages/disk/Disk";
+import Jvm from "./pages/jvm/Jvm";
 function App() {
     return (
         <BrowserRouter>
@@ -41,14 +42,10 @@ function App() {
                     path="disk"
                     element={<Disk />}
                 />
-                {/* <Route
-                    path="Cpu"
-                    element={<Cpu />}
-                />
                 <Route
-                    path="Cpu"
-                    element={<Cpu />}
-                /> */}
+                    path="jvm"
+                    element={<Jvm />}
+                />
                 <Route path="prediction" element={<Prediction />} />
             </Routes>
         </BrowserRouter>

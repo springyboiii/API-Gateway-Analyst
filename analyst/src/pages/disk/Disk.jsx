@@ -1,5 +1,4 @@
 import React from "react";
-import "../cpu/Cpu.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
