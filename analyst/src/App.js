@@ -10,6 +10,7 @@ import Cpu from "./pages/cpu/Cpu";
 import Memory from "./pages/memory/Memory";
 import Disk from "./pages/disk/Disk";
 import Jvm from "./pages/jvm/Jvm";
+import Network from "./pages/network/Network";
 function App() {
     return (
         <BrowserRouter>
@@ -45,6 +46,10 @@ function App() {
                 <Route
                     path="jvm"
                     element={<Jvm />}
+                />
+                 <Route
+                    path="network"
+                    element={<Network />}
                 />
                 <Route path="prediction" element={<Prediction />} />
             </Routes>

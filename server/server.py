@@ -300,7 +300,7 @@ def pss_collection_time_data():
 # network
 # system_network_in_bytes
 @app.route('/network_in_bytes', methods=["GET"])
-def pnetwork_in_bytes_data():
+def network_in_bytes_data():
     result=dict()
     result["timestamp"]=[]
     result["system_network_in_bytes"]=[]
@@ -315,7 +315,7 @@ def pnetwork_in_bytes_data():
 
 # system_network_in_packets
 @app.route('/network_in_packets', methods=["GET"])
-def pnetwork_in_packets_data():
+def network_in_packets_data():
     result=dict()
     result["timestamp"]=[]
     result["system_network_in_packets"]=[]
