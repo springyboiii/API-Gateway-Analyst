@@ -4,6 +4,9 @@ from flask_cors import CORS
 import pymongo
 from flask_socketio import SocketIO, emit
 
+from bson.json_util import dumps 
+from werkzeug.security import generate_password_hash, check_password_hash 
+
 # import socket 
 import threading
 import time
@@ -11,6 +14,7 @@ import time
 from controllers.predict import PredictController
 from controllers.data import DataController
 from controllers.dashboard import DashboardController
+from controllers.user import UserController
 
 from ApiGateway import ApiGateway
 from util.Helper import Helper
@@ -100,6 +104,11 @@ def total_pct_data():
 def prediction_bar_data():
     return DashboardController.get_prediction_bar_graph(col,50)
 
+@app.route('/users', methods=["POST"])
+def insertUser():
+    return UserController.insertUser(request)
+    pass 
+
 
 # socket connections 
 @socketio.on('connect')
@@ -172,11 +181,10 @@ def readFromGateway():
         timestamp = Helper.getNextTimestamp(timestamp)
 
         time.sleep(2)
-    
-thread1 = threading.Thread(target=readFromGateway)
-thread1.start()
 
-
+# uncomment below prediction sending thread to start
+# thread1 = threading.Thread(target=readFromGateway)
+# thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
