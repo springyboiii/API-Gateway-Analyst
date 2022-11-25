@@ -104,10 +104,14 @@ def total_pct_data():
 def prediction_bar_data():
     return DashboardController.get_prediction_bar_graph(col,50)
 
-@app.route('/users', methods=["POST"])
+@app.route('/users', methods=["GET", "POST"])
 def insertUser():
-    return UserController.insertUser(request)
-    pass 
+    if request.method == "POST":
+        return UserController.insertUser(request)
+    elif request.method == "GET": 
+        return UserController.getUsers()
+    else:
+        pass 
 
 
 # socket connections 
