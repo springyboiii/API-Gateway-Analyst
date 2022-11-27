@@ -1,5 +1,4 @@
 import React from "react";
-import "./Cpu.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
@@ -26,52 +25,52 @@ ChartJS.register(
 
   Filler
 );
-function Cpu() {
-  const [user_pct_data, set_user_pct_data] = useState({
+function Network() {
+  const [network_in_bytes_data, set_network_in_bytes_data] = useState({
     datasets: [],
   });
-  const [user_pct_options, set_user_pct_options] = useState({});
+  const [network_in_bytes_options, set_network_in_bytes_options] = useState({});
   
-  const [system_pct_data, set_system_pct_data] = useState({
+  const [network_in_packets_data, set_network_in_packets_data] = useState({
     datasets: [],
   });
-  const [system_pct_options, set_system_pct_options] = useState({});
+  const [network_in_packets_options, set_network_in_packets_options] = useState({});
   
-  const [idle_pct_data, set_idle_pct_data] = useState({
+  const [network_in_dropped_data, set_network_in_dropped_data] = useState({
     datasets: [],
   });
-  const [idle_pct_options, set_idle_pct_options] = useState({});
+  const [network_in_dropped_options, set_network_in_dropped_options] = useState({});
   
-  const [iowait_pct_data, set_iowait_pct_data] = useState({
+  const [network_out_bytes_data, set_network_out_bytes_data] = useState({
     datasets: [],
   });
-  const [iowait_pct_options, set_iowait_pct_options] = useState({});
+  const [network_out_bytes_options, set_network_out_bytes_options] = useState({});
 
-  const [softirq_pct_data, set_softirq_pct_data] = useState({
+  const [network_out_packets_data, set_network_out_packets_data] = useState({
     datasets: [],
   });
-  const [softirq_pct_options, set_softirq_pct_options] = useState({});
+  const [network_out_packets_options, set_network_out_packets_options] = useState({});
   
-  const [total_pct_data, set_total_pct_data] = useState({
+  const [network_out_errors_data, set_network_out_errors_data] = useState({
     datasets: [],
   });
-  const [total_pct_options, set_total_pct_options] = useState({});
+  const [network_out_errors_options, set_network_out_errors_options] = useState({});
   
   useEffect(() => {
     axios({
       method: "GET",
-      url: "/user_pct_data",
+      url: "/network_in_bytes",
     })
       .then((response) => {
         console.log(response);
         const res = response.data;
-        set_user_pct_data({
+        set_network_in_bytes_data({
           labels: res.timestamp,
           datasets: [
             {
               fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_user_pct,
+              // label: 'system_network_in_bytes',
+              data: res.system_network_in_bytes,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
               tension: 0.4,
@@ -87,7 +86,7 @@ function Cpu() {
         }
       });
 
-    set_user_pct_options({
+      set_network_in_bytes_options({
       responsive: true,
       plugins: {
         legend: {
@@ -95,7 +94,7 @@ function Cpu() {
         },
         title: {
           display: true,
-          text: "System_cpu_user_pct",
+          text: "system_network_in_bytes",
         },
       },
       scales: {
@@ -108,18 +107,18 @@ function Cpu() {
 
     axios({
       method: "GET",
-      url: "/system_pct_data",
+      url: "/network_in_packets",
     })
       .then((response) => {
         console.log(response);
         const res = response.data;
-        set_system_pct_data({
+        set_network_in_packets_data({
           labels: res.timestamp,
           datasets: [
             {
               fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_system_pct,
+              // label: 'system_network_in_packets',
+              data: res.system_network_in_packets,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
               tension: 0.4,
@@ -135,7 +134,7 @@ function Cpu() {
         }
       });
 
-    set_system_pct_options({
+      set_network_in_packets_options({
       responsive: true,
       plugins: {
         legend: {
@@ -143,7 +142,7 @@ function Cpu() {
         },
         title: {
           display: true,
-          text: "System_cpu_system_pct",
+          text: "system_network_in_packets",
         },
       },
       scales: {
@@ -156,18 +155,18 @@ function Cpu() {
 
     axios({
         method: "GET",
-        url: "/idle_pct_data",
+        url: "/network_in_dropped",
       })
         .then((response) => {
           console.log(response);
           const res = response.data;
-          set_idle_pct_data({
+          set_network_in_dropped_data({
             labels: res.timestamp,
             datasets: [
               {
                 fill: true,
-                // label: 'system_cpu_user_pct',
-                data: res.system_cpu_idle_pct,
+                // label: 'system_network_in_dropped',
+                data: res.system_network_in_dropped,
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
                 tension: 0.4,
@@ -183,7 +182,7 @@ function Cpu() {
           }
         });
   
-      set_idle_pct_options({
+        set_network_in_dropped_options({
         responsive: true,
         plugins: {
           legend: {
@@ -191,7 +190,7 @@ function Cpu() {
           },
           title: {
             display: true,
-            text: "System_cpu_idle_pct",
+            text: "system_network_in_dropped",
           },
         },
         scales: {
@@ -204,18 +203,18 @@ function Cpu() {
 
       axios({
         method: "GET",
-        url: "/iowait_pct_data",
+        url: "/network_out_bytes",
       })
         .then((response) => {
           console.log(response);
           const res = response.data;
-          set_iowait_pct_data({
+          set_network_out_bytes_data({
             labels: res.timestamp,
             datasets: [
               {
                 fill: true,
-                // label: 'system_cpu_user_pct',
-                data: res.system_cpu_iowait_pct,
+                // label: 'system_network_out_bytes',
+                data: res.system_network_out_bytes,
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
                 tension: 0.4,
@@ -231,7 +230,7 @@ function Cpu() {
           }
         });
   
-      set_iowait_pct_options({
+        set_network_out_bytes_options({
         responsive: true,
         plugins: {
           legend: {
@@ -239,7 +238,7 @@ function Cpu() {
           },
           title: {
             display: true,
-            text: "System_cpu_iowait_pct",
+            text: "system_network_out_bytes",
           },
         },
         scales: {
@@ -252,18 +251,18 @@ function Cpu() {
 
       axios({
         method: "GET",
-        url: "/softirq_pct_data",
+        url: "/network_out_packets",
       })
         .then((response) => {
           console.log(response);
           const res = response.data;
-          set_softirq_pct_data({
+          set_network_out_packets_data({
             labels: res.timestamp,
             datasets: [
               {
                 fill: true,
-                // label: 'system_cpu_user_pct',
-                data: res.system_cpu_softirq_pct,
+                // label: 'system_network_out_packets',
+                data: res.system_network_out_packets,
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
                 tension: 0.4,
@@ -279,7 +278,7 @@ function Cpu() {
           }
         });
   
-      set_softirq_pct_options({
+        set_network_out_packets_options({
         responsive: true,
         plugins: {
           legend: {
@@ -287,7 +286,7 @@ function Cpu() {
           },
           title: {
             display: true,
-            text: "System_cpu_softirq_pct",
+            text: "system_network_out_packets",
           },
         },
         scales: {
@@ -300,19 +299,19 @@ function Cpu() {
 
       axios({
         method: "GET",
-        url: "/total_pct_data",
+        url: "/network_out_errors",
       })
         .then((response) => {
           console.log(response);
           const res = response.data;
           console.log(res.system_cpu_total_pct)
-          set_total_pct_data({
+          set_network_out_errors_data({
             labels: res.timestamp,
             datasets: [
               {
                 fill: true,
-                // label: 'system_cpu_user_pct',
-                data: res.system_cpu_total_pct,
+                // label: 'system_network_out_errors',
+                data: res.system_network_out_errors,
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.5)",
                 tension: 0.4,
@@ -328,7 +327,7 @@ function Cpu() {
           }
         });
   
-      set_total_pct_options({
+        set_network_out_errors_options({
         responsive: true,
         plugins: {
           legend: {
@@ -336,7 +335,7 @@ function Cpu() {
           },
           title: {
             display: true,
-            text: "System_cpu_total_pct",
+            text: "system_network_out_errors",
           },
         },
         scales: {
@@ -358,24 +357,24 @@ function Cpu() {
         <div className="rows">
           <div className="row">
             <div className="area-container">
-              <Line options={user_pct_options} data={user_pct_data} />
+              <Line options={network_in_bytes_options} data={network_in_bytes_data} />
             </div>
             <div className="area-container">
-              <Line options={idle_pct_options} data={idle_pct_data} />
+              <Line options={network_in_packets_options} data={network_in_packets_data} />
             </div>
             <div className="area-container">
-              <Line options={iowait_pct_options} data={iowait_pct_data} />
+              <Line options={network_in_dropped_options} data={network_in_dropped_data} />
             </div>
           </div>
           <div className="row">
             <div className="area-container">
-              <Line options={system_pct_options} data={system_pct_data} />
+              <Line options={network_out_bytes_options} data={network_out_bytes_data} />
             </div>
             <div className="area-container">
-              <Line options={softirq_pct_options} data={softirq_pct_data} />
+              <Line options={network_out_packets_options} data={network_out_packets_data} />
             </div>
             <div className="area-container">
-              <Line options={total_pct_options} data={total_pct_data} />
+              <Line options={network_out_errors_options} data={network_out_errors_data} />
             </div>
           </div>
         </div>
@@ -384,4 +383,4 @@ function Cpu() {
   );
 }
 
-export default Cpu;
+export default Network;
