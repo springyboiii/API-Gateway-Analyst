@@ -15,6 +15,7 @@ from controllers.predict import PredictController
 from controllers.data import DataController
 from controllers.dashboard import DashboardController
 from controllers.user import UserController
+from controllers.auth import AuthController
 
 from ApiGateway import ApiGateway
 from util.Helper import Helper
@@ -113,6 +114,17 @@ def insertUser():
     else:
         pass 
 
+@app.route("/users/<id>", methods=["GET"])
+def getUser(id):
+    return UserController.getUser(id)
+
+@app.route("/users/<id>", methods=["PUT"])
+def updateUser(id):
+    return UserController.updateUser(request, id)
+
+@app.route("/auth", methods=["POST"])
+def login():
+    return AuthController.login(request)
 
 # socket connections 
 @socketio.on('connect')

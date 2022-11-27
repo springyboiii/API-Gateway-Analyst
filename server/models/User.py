@@ -31,6 +31,16 @@ class User:
         col = db['user']
 
         return col.find(condition)
+    
+    def updateOne(condition, data):
+        db = Database().getConnection() 
+        col = db['user']
+        
+        return col.update_one(condition, {"$set":{
+            "name": data["name"]
+        }})
+
+
 
 class UserSchema(Schema):
 

@@ -1,5 +1,7 @@
 from flask import jsonify 
+from flask_pymongo import ObjectId
 # from flask import request
+from marshmallow import Schema, fields
 
 from bson.json_util import dumps 
 
@@ -45,4 +47,34 @@ class UserController:
 
         return resp 
 
+    def getUser(id):
+        user = User.findOne({"_id": ObjectId(id)})
+        resp = dumps(user)
+        return resp 
+    
+    def updateUser(request, id):
+        # without changing username and password
+        data = request.json
+
+        # validate request
+        errors = UpdateSchema().validate(data) 
+        
+        if errors:
+            res = jsonify(list(errors.values())[0][0])
+            res.status = 400 
+            return res 
+                
+        result = User.updateOne({"_id": ObjectId(id)}, data).raw_result
+        if (result):
+            res = jsonify("User updated successfully")
+            res.status_code = 200
+            return res 
+        else:
+            res = jsonify("User updated failed")
+            res.status_code = 500
+            return res 
+
+class UpdateSchema(Schema):  
+    name = fields.String(required=True) 
+    
     
