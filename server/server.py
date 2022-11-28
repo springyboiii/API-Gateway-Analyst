@@ -17,6 +17,8 @@ from controllers.dashboard import DashboardController
 from controllers.user import UserController
 from controllers.auth import AuthController
 
+from controllers.auth import tokenRequired
+
 from ApiGateway import ApiGateway
 from util.Helper import Helper
 from util.ConversionHelper import ConversionHelper
@@ -188,7 +190,9 @@ def prediction_bar_data():
     return DashboardController.get_prediction_bar_graph(col,50)
 
 @app.route('/users', methods=["GET", "POST"])
-def insertUser():
+@tokenRequired
+def insertUser(currentUser):
+    print(f"currentUser: {currentUser}")
     if request.method == "POST":
         return UserController.insertUser(request)
     elif request.method == "GET": 

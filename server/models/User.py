@@ -1,5 +1,12 @@
 from marshmallow import Schema, fields, post_load, validate, ValidationError, validates
 from util.database import Database  
+import jwt 
+import datetime
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class User:
     def __init__(self, userDetails):
@@ -39,6 +46,14 @@ class User:
         return col.update_one(condition, {"$set":{
             "name": data["name"]
         }})
+    
+    def generateAuthToken(self):
+        assert self.name is not None and self.email is not None and self.password is not None
+
+        token = jwt.encode({"email": self.email, "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)}, os.getenv("SECRET_KEY"), algorithm="HS256")
+        
+        return token
+
 
 
 
