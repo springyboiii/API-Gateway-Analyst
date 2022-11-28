@@ -3,3 +3,4 @@ package-lock.json
 *.cpython*
 server/__pycache__
 server/env
+.env
