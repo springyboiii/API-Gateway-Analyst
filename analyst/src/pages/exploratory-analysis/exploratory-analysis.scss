@@ -7,6 +7,7 @@
 }
 .doughnut-container{
     margin-top: 3vh;
+    margin-left: 5vw;
     position:inherit;
     height:25vh; 
     width:25vw;
@@ -20,19 +21,21 @@
 
 .anomaly_time_area-container{
     margin: 20px;
+    margin-left: 5vw;
+
     // position: relative
     // height:20vh; 
     // width:60vw;
-    height:60vh; 
-    width:100vw;
+    // height:60vh; 
+    width:85vw;
 }
 .prediction_bar{
     margin: 20px;
     position: relative;
     // height:20vh; 
     // width:60vw;
-    height:100px; 
-    width:80vw;
+    height:50px; 
+    width:87vw;
 }
 .row{
     display: flex

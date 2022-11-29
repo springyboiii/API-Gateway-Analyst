@@ -49,6 +49,15 @@ class DashboardController():
             result["type"].append(x["type"])
         return result
 
+    def get_frequency_line_graph(col, feature, limit):
+        result = dict()
+        result["timestamp"] = []
+        result[feature] = []
+        for x in col.find().limit(limit).sort("timestamp", pymongo.DESCENDING):
+            result["timestamp"].append(x["timestamp"][11:])
+            result[feature].append(x[feature])
+        return result
+
     def get_prediction_bar_graph(col, limit):
         result = dict()
         result["timestamp"] = []

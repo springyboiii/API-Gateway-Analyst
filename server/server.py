@@ -16,7 +16,8 @@ CORS(app)
 
 db = mongo["api_gateway_analyst"]
 col = db["preprocessed_10_sec"]
-
+pred_col=db["predictions"]
+preprocessed_4_hour=db["preprocessed_4_hour"]
 @app.route('/', methods=["GET"])
 def init():
     return "HI"
@@ -55,7 +56,7 @@ def jvm_metrics_memory_heap_memory_usage_used():
 
 @app.route('/anomaly_time_area_data', methods=["GET"])
 def anomaly_time_area_data():
-    return DashboardController.get_recent_line_graph(col,"system_cpu_user_pct",1000)
+    return DashboardController.get_frequency_line_graph(preprocessed_4_hour,"total_anomalies",1000)
 
 # cpu
 @app.route('/user_pct_data', methods=["GET"])
@@ -165,7 +166,7 @@ def network_out_errors_data():
 
 @app.route('/prediction_bar_data', methods=["GET"])
 def prediction_bar_data():
-    return DashboardController.get_prediction_bar_graph(col,50)
+    return DashboardController.get_prediction_bar_graph(pred_col,100)
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
