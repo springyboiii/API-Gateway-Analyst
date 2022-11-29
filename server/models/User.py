@@ -67,7 +67,7 @@ class User:
         assert self.name is not None and self.email is not None and self.password is not None
 
         roles = Constant.getRoles()
-        token = jwt.encode({"email": self.email, "type": roles["admin"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)}, os.getenv("SECRET_KEY"), algorithm="HS256")
+        token = jwt.encode({"name": self.name, "email": self.email, "type": roles["admin"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)}, os.getenv("SECRET_KEY"), algorithm="HS256")
         
         return token
 
