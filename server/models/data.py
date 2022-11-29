@@ -1,6 +1,12 @@
 from flask_pymongo import ObjectId
 
 class DataModel():
+    def instertData(db, data):
+        col = db["predictions"]
+
+        res = col.insert_one(data)
+
+        return res
     def getPreprocessedAllData(db):
         col = db["preprocessed_10_sec"]
 

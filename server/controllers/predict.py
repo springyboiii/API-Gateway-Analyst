@@ -13,15 +13,26 @@ from models.Jvm import JvmModel
 
 from util.Helper import Helper
 
-# from tensorflow import keras
+from tensorflow import keras
 
 class PredictController():
+
+    def insertData(db, timestamp, inputs):
+        # timestamp - str 
+        # data - dict 
+        data = inputs 
+        data.update({'timestamp': timestamp})
+
+        res = DataModel.instertData(db, data)
+
+        return res
 
     def getLatestInput(db):
         inputs = {}
         
+        # need to read the latest data point
         inputCpu = CpuModel.getTestCpuData(db)
-        
+
         timestamp = inputCpu["timestamp"]
         
         # timestamp for recent minute
@@ -51,70 +62,43 @@ class PredictController():
         # remove timestamp field
         inputs.pop("timestamp")
 
+        inputs = Helper.orderDict(inputs)
+
         return timestamp, inputs
+
+    def predict(timestamp, inputs):
+        inputDataFrame = Helper.getDataFrameFromDict(inputs)
+
+        minMaxScaler = Helper.loadMinMaxScaler()
+        scaledDataFrame = minMaxScaler.transform(inputDataFrame)
+
+        loadedModel = Helper.loadModel()
+
+        modelOutput = loadedModel.predict(scaledDataFrame)
+
+        predictions = Helper.getIndexOfMax(modelOutput)
+
+        return {"timestamp": timestamp, "prediction": str(predictions[0])}
 
     def predictLatest(db):
         timestamp, inputs = PredictController.getLatestInput(db)
 
-        # colsOrder = ['system.cpu.user.pct', 'system.cpu.system.pct', 'system.cpu.idle.pct',
-        #     'system.cpu.iowait.pct', 'system.cpu.softirq.pct',
-        #     'system.cpu.total.pct', 'system.memory.used.pct',
-        #     'system.network.in.bytes', 'system.network.in.packets',
-        #     'system.network.in.dropped', 'system.network.out.bytes',
-        #     'system.network.out.packets', 'system.network.out.errors',
-        #     'jvm.metrics.memory.heap_memory_usage.committed',
-        #     'jvm.metrics.memory.heap_memory_usage.max',
-        #     'jvm.metrics.memory.heap_memory_usage.used',
-        #     'jvm.metrics.threading.thread_count',
-        #     'jvm.metrics.gc.psms.collection_count',
-        #     'jvm.metrics.gc.psms.collection_time',
-        #     'jvm.metrics.gc.pss.collection_count',
-        #     'jvm.metrics.gc.pss.collection_time', 'system.diskio.iostat.await',
-        #     'system.diskio.iostat.queue.avg_size',
-        #     'system.diskio.iostat.read.per_sec.bytes',
-        #     'system.diskio.iostat.write.per_sec.bytes']
-        
-        # inputArr = []
-        # for col in colsOrder: 
-        #     inputArr.append(inputs[col])
-        
         inputDataFrame = Helper.getDataFrameFromDict(inputs)
 
-        modelOutput = None # load model and predict for dataFrame
+        loadedModel = Helper.loadModel()
+        
+        modelOutput = loadedModel.predict(inputDataFrame) # load model and predict for dataFrame
 
         prediction = Helper.getIndexOfMax(modelOutput)
+        print(f"prediction = {prediction}")
 
-        return {"reslut": 1}
+        return {"prediction": str(prediction)}
 
     def getTestCpuData(db):
-        # data = DataModel.getTestAllData(db)
-        # data = DataModel.getTestCpuData(db)
+
         data = CpuModel.getTestCpuData(db)
         
-        # if (type(data) == Cursor):
-        #     # print("its a cursor")
-        #     res=[]
-        #     for doc in data:
-        #         res.append(PredictController.getJsonOfCpu(doc))
-        #     res = jsonify(res)
-        # else:
-        #     # print("else")
-        #     res = PredictController.getJsonOfCpu(data)
         return data
-    
-    # def getJsonOfCpu(data):
-    #     if (data is None): return None
-
-    #     return {
-    #         "_id": str(ObjectId(data['_id'])),
-    #         "timestamp": data["timestamp"],
-    #         "system_cpu_user_pct": data["system_cpu_user_pct"],
-    #         "system_cpu_system_pct": data["system_cpu_system_pct"],
-    #         "system_cpu_idle_pct": data["system_cpu_idle_pct"],
-    #         "system_cpu_iowait_pct": data["system_cpu_iowait_pct"],
-    #         "system_cpu_softirq_pct": data["system_cpu_softirq_pct"],
-    #         "system_cpu_total_pct": data["system_cpu_total_pct"],
-    #     }
     
 
     

@@ -1,18 +1,40 @@
-from flask import Flask, request, jsonify 
+from flask import Flask, request, jsonify, render_template
 from flask_pymongo import PyMongo, ObjectId 
 from flask_cors import CORS 
 import pymongo
+from flask_socketio import SocketIO, emit
+
+from bson.json_util import dumps 
+from werkzeug.security import generate_password_hash, check_password_hash 
+
+# import socket 
+import threading
+import time
 
 from controllers.predict import PredictController
 from controllers.data import DataController
 from controllers.dashboard import DashboardController
+from controllers.user import UserController
+from controllers.auth import AuthController
+
+from controllers.auth import tokenRequired
+
+from ApiGateway import ApiGateway
+from util.Helper import Helper
+from util.ConversionHelper import ConversionHelper
+
 import certifi
 ca= certifi.where()
 app = Flask(__name__)
-# don't hardcode passsword
+app.config['SECRET_KEY']='bruh'
 
+CORS(app, resources={r"/*":{"origins":"*"}})
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+
+# don't hardcode passsword
 mongo = pymongo.MongoClient("mongodb+srv://chathuranga123:chathuranga123@apigatewayanalystcluste.lz68ckp.mongodb.net/?retryWrites=true&w=majority",tlsCAFile=ca)
-CORS(app)
+# CORS(app)
 
 db = mongo["api_gateway_analyst"]
 col = db["preprocessed_10_sec"]
@@ -20,7 +42,7 @@ pred_col=db["predictions"]
 preprocessed_4_hour=db["preprocessed_4_hour"]
 @app.route('/', methods=["GET"])
 def init():
-    return "HI"
+    return "Hello"
 
 @app.route('/predict', methods=["GET"])
 def predict():
@@ -168,6 +190,106 @@ def network_out_errors_data():
 def prediction_bar_data():
     return DashboardController.get_prediction_bar_graph(pred_col,100)
 
+@app.route('/users', methods=["GET", "POST"])
+@tokenRequired
+def insertUser(currentUser):
+    print(f"currentUser: {currentUser}")
+    if request.method == "POST":
+        return UserController.insertUser(request)
+    elif request.method == "GET": 
+        return UserController.getUsers()
+    else:
+        pass 
+
+@app.route("/users/<id>", methods=["GET"])
+def getUser(id):
+    return UserController.getUser(id)
+
+@app.route("/users/<id>", methods=["PUT"])
+def updateUser(id):
+    return UserController.updateUser(request, id)
+
+@app.route("/auth", methods=["POST"])
+def login():
+    return AuthController.login(request)
+
+# socket connections 
+@socketio.on('connect')
+def connected():
+    print(request.sid)
+    print("Client is connected")
+    emit("connect", {
+        "data":f"id:{request.sid} is connected"
+    })
+
+@socketio.on("disconnect")
+def disconnected():
+    print("User disconnected")
+    emit("disconnect", f"user {request.sid} hs been disconnected", broadcast=True)
+
+@socketio.on("data")
+def sendMsg():
+    for i in range(10):
+        socketio.emit("recvMsg", str(i), broadcast=True)
+        time.sleep(2)
+
+# make the thread, running below func a deamon. So it will stop when main thread finish
+@socketio.on("prediction")
+def predictAndSend():
+    while True: 
+        latestPrediction = PredictController.predictLatest(db)
+        socketio.emit("prediction", latestPrediction["prediction"], broadcast=True)
+
+        time.sleep(2)
+
+@socketio.on("prediction")
+def readFromGateway():
+    startTimestamp = "2018-01-06 18:54:00"
+    timestamp = ConversionHelper.convertStrToDatetime(startTimestamp)
+
+    while True:
+    # for i in range (1):
+        readInput = ApiGateway.readData(timestamp)
+        
+        inputs = {}
+        inputs.update(readInput["cpu"])
+        inputs.update(readInput["memory"])
+        inputs.update(readInput["network_io"])
+        inputs.update(readInput["disk_io"])
+        inputs.update(readInput["jvm"])
+
+        # remove timestamp field
+        inputs.pop("timestamp")
+
+        inputs = Helper.orderDict(inputs)
+        
+        # predict 
+        prediction = PredictController.predict(str(timestamp), inputs)
+
+        socketio.emit("prediction", prediction, broadcast=True)
+
+        # prepare input to be stored
+        storeData = {}
+        for key in inputs:
+            storeData[key] = inputs[key][0]
+        
+        # add scenario and type for input 
+        storeData['scenario'] = int(prediction["prediction"])
+        storeData['type'] = ConversionHelper.getTypeOfScenario(storeData['scenario'])
+
+        # store inputs
+        # uncomment below to store data
+        # PredictController.insertData(db, str(timestamp), storeData)
+
+        timestamp = Helper.getNextTimestamp(timestamp)
+
+        time.sleep(2)
+
+# uncomment below prediction sending thread to start
+# thread1 = threading.Thread(target=readFromGateway)
+# thread1.start()
+
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
-    app.run(debug=True)
+
+    socketio.run(app)
