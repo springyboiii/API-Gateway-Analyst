@@ -16,6 +16,7 @@ from controllers.data import DataController
 from controllers.dashboard import DashboardController
 from controllers.user import UserController
 from controllers.auth import AuthController
+from controllers.admin import AdminController
 
 from controllers.auth import tokenRequired
 
@@ -188,6 +189,17 @@ def network_out_errors_data():
 @app.route('/prediction_bar_data', methods=["GET"])
 def prediction_bar_data():
     return DashboardController.get_prediction_bar_graph(col,50)
+
+@app.route("/admins", methods=["GET", "POST"])
+def handleAdminRoute():
+    if request.method == "POST":
+        return AdminController.insertAdmin(request)
+    elif request.method == "GET": 
+        return AdminController.getAdmins()
+
+@app.route("/admins/<id>", methods=["GET"])
+def getAdmin(id):
+    return AdminController.getAdmin(id)
 
 @app.route('/users', methods=["GET", "POST"])
 @tokenRequired
