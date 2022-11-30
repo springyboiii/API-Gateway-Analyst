@@ -22,6 +22,7 @@ from controllers.auth import tokenRequired
 from ApiGateway import ApiGateway
 from util.Helper import Helper
 from util.ConversionHelper import ConversionHelper
+import ast
 
 import certifi
 ca= certifi.where()
@@ -40,6 +41,10 @@ db = mongo["api_gateway_analyst"]
 col = db["preprocessed_10_sec"]
 pred_col=db["predictions"]
 preprocessed_4_hour=db["preprocessed_4_hour"]
+preprocessed_1_hour=db["preprocessed_hour"]
+preprocessed_2_hour=db["preprocessed_2_hour"]
+preprocessed_30_min=db["preprocessed_30_min"]
+
 @app.route('/', methods=["GET"])
 def init():
     return "Hello"
@@ -76,8 +81,21 @@ def scenario_doughnut():
 def jvm_metrics_memory_heap_memory_usage_used():
     return DashboardController.jvm_metrics_memory_heap_memory_usage_used(col)
 
-@app.route('/anomaly_time_area_data', methods=["GET"])
+@app.route('/anomaly_time_area_data', methods=["POST"])
 def anomaly_time_area_data():
+    data1=request.data
+    dict_str = data1.decode("UTF-8")
+    print(dict_str[9:-2])
+    time=dict_str[9:-2]
+    if time=="DEFAULT" or time=="ul":
+        print("30m")
+        return DashboardController.get_frequency_line_graph(preprocessed_30_min,"total_anomalies",1000)
+    elif time=="1h":
+        return DashboardController.get_frequency_line_graph(preprocessed_1_hour,"total_anomalies",1000)
+    elif time=="2h":
+        return DashboardController.get_frequency_line_graph(preprocessed_2_hour,"total_anomalies",1000)
+    elif time=="4h":
+        return DashboardController.get_frequency_line_graph(preprocessed_4_hour,"total_anomalies",1000)
     return DashboardController.get_frequency_line_graph(preprocessed_4_hour,"total_anomalies",1000)
 
 # cpu

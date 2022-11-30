@@ -20,18 +20,28 @@
 // }
 
 .anomaly_time_area-container{
-    margin: 20px;
-    margin-left: 5vw;
+    // margin: 20px;
+    margin-left: 3vw;
 
     // position: relative
     // height:20vh; 
     // width:60vw;
     // height:60vh; 
-    width:85vw;
+    width:90vw;
+}
+.dropdown-container{
+    width: 100vw;
+    // position: right;
+    // float:right
+
+    // align-content: right;
+}
+.dropdown{
+    margin-left: 45vw;
 }
 .prediction_bar{
     margin: 20px;
-    position: relative;
+    // position: relative;
     // height:20vh; 
     // width:60vw;
     height:50px; 
