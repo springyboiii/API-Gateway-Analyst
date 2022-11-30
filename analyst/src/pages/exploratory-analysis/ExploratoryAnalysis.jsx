@@ -10,6 +10,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 // import faker from 'faker';
 import axios from "axios";
+// import * as React from 'react';
+// import Select from '@mui/material/Select';
+import Select from "react-select";
 
 import {
   CategoryScale,
@@ -30,7 +33,7 @@ ChartJS.register(
   LineElement,
   Title,
   BarElement,
-    Filler
+  Filler
 );
 
 const ExploratoryAnalysis = () => {
@@ -69,16 +72,64 @@ const ExploratoryAnalysis = () => {
   const [prediction_bar_data, set_prediction_bar_data] = useState({
     datasets: [],
   });
+  const options = [
+    { value: "DEFAULT", label: "30m" },
+    // { value: "30m", label: "30m" },
+    { value: "1h", label: "1h " },
+    { value: "2h", label: "2h" },
+    { value: "4h", label: "4h " },
+  ];
+  const [selectedOption, setSelectedOption] = useState("1h");
+  const handleChange = (value) => {
+    axios.post("/anomaly_time_area_data", {
+      
+        data: value,
+        // option:selectedOption,
+        
+      }).then((response)=>{
+        // res=response.data;
+        console.log(response.data)
+        set_anomaly_time_area_data({
+                labels: response.data.timestamp,
+                datasets: [
+                  {
+                    fill: true,
+                    // label: 'system_cpu_user_pct',
+                    data: response.data.total_anomalies,
+                    borderColor: "rgb(53, 162, 235)",
+                    backgroundColor: "rgba(53, 162, 235, 0.5)",
+                    tension: 0.4,
+                  },
+                ],
+              });
+        // setName(response.data[0].name);
+        // setContact(response.data[0].contact_no);
+        // setUsername(response.data[0].username);
+        // setEmail(response.data[0].email);
+        // setLocation(response.data[0].address);
+        // setDescription(response.data[0].about);
+        
+        // alert("succesful insert");
+        
+      });
+    return ;
+  }
+
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setAge(event.target.value as string);
+  // };
   // const [prediction_bar_options, set_prediction_bar_options] = useState({});
 
   // const [bgcolor_bar_data, set_bgcolor_bar_data] = useState([]
-    
+
   // );
 
   useEffect(() => {
+    // {console.log(selectedOption)}
     //   Normal and Anomaly Doughnut chart setup using useeffect
     const position = "left"; // CSS for graphs
-
+    // {console.log(selectedOption)}
+    handleChange(null)
     axios({
       method: "GET",
       url: "/normal_anomaly_doughnut_data",
@@ -112,9 +163,10 @@ const ExploratoryAnalysis = () => {
     set_normal_anomaly_doughnut_options({
       responsive: true,
       maintainAspectRatio: false,
+      
       plugins: {
         legend: { display: false, position: position },
-
+          
         title: {
           display: true,
           text: "Anomaly vs Normal",
@@ -307,33 +359,53 @@ const ExploratoryAnalysis = () => {
         },
       },
     });
-    axios({
-      method: "GET",
-      url: "/anomaly_time_area_data",
-    })
-      .then((response) => {
-        const res = response.data;
-        set_anomaly_time_area_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_user_pct,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "/anomaly_time_area_data",
+    //   data:selectedOption,
+    
+    // })
+    //   .then((response) => {
+    //     {console.log(selectedOption)}
+    //     const res = response.data;
+    //     set_anomaly_time_area_data({
+    //       labels: res.timestamp,
+    //       datasets: [
+    //         {
+    //           fill: true,
+    //           // label: 'system_cpu_user_pct',
+    //           data: res.total_anomalies,
+    //           borderColor: "rgb(53, 162, 235)",
+    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
+    //           tension: 0.4,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //       console.log(error.response.status);
+    //       console.log(error.response.headers);
+    //     }
+    //   });
+
+    // axios.post("/anomaly_time_area_data", {
+      
+    //   data: selectedOption,
+      
+    // }).then((response)=>{
+    //   console.log(response.data)
+    //   // setName(response.data[0].name);
+    //   // setContact(response.data[0].contact_no);
+    //   // setUsername(response.data[0].username);
+    //   // setEmail(response.data[0].email);
+    //   // setLocation(response.data[0].address);
+    //   // setDescription(response.data[0].about);
+      
+    //   // alert("succesful insert");
+      
+    // });
 
     set_anomaly_time_area_options({
       responsive: true,
@@ -343,15 +415,15 @@ const ExploratoryAnalysis = () => {
         },
         title: {
           display: true,
-          text: "System_cpu_user_pct",
+          text: "No of Anomalies",
         },
       },
-      scales: {
-        y: {
-          suggestedMin: 0,
-          suggestedMax: 1,
-        },
-      },
+      // scales: {
+      //   y: {
+      //     suggestedMin: 0,
+      //     suggestedMax: 1,
+      //   },
+      // },
     });
 
     axios({
@@ -360,29 +432,29 @@ const ExploratoryAnalysis = () => {
     })
       .then((response) => {
         const res = response.data;
+        console.log(res)
         // set_bgcolor_bar_data(res.bgcolor)
         // console.log(res.bgcolor)
-      //   console.log(res.prediction[2]);
-      //   // var index=0;
-      //   for(let index=0;index<res.prediction.length;index++){
-      //     console.log(1)
-      //     var green="rgba(54, 162, 235, 1)";
-      //     var red="rgba(255, 99, 132, 1)"
-      //     console.log(res.prediciton[index])
-      //     res.prediction[index]==0? set_bgcolor_bar_data([...bgcolor_bar_data,green]): set_bgcolor_bar_data([...bgcolor_bar_data,red])
-      //     //You can check for bars[i].value and put your conditions here
-   
-   
-      //  }
-      //  console.log(bgcolor_bar_data)
+        //   console.log(res.prediction[2]);
+        //   // var index=0;
+        //   for(let index=0;index<res.prediction.length;index++){
+        //     console.log(1)
+        //     var green="rgba(54, 162, 235, 1)";
+        //     var red="rgba(255, 99, 132, 1)"
+        //     console.log(res.prediciton[index])
+        //     res.prediction[index]==0? set_bgcolor_bar_data([...bgcolor_bar_data,green]): set_bgcolor_bar_data([...bgcolor_bar_data,red])
+        //     //You can check for bars[i].value and put your conditions here
+
+        //  }
+        //  console.log(bgcolor_bar_data)
         set_prediction_bar_data({
           labels: res.timestamp,
           datasets: [
             {
               barPercentage: 1,
-      categoryPercentage: 1,
+              categoryPercentage: 1,
               // axis:"y",
-              label: "Predictions",
+              label: "Real time prediction",
               data: res.dummy,
               // data:[0,1,1,0,1,0],
               backgroundColor: res.bgcolor,
@@ -425,36 +497,66 @@ const ExploratoryAnalysis = () => {
         <div className="rows">
           <div className="row">
             <div className="prediction_bar">
-            <Bar
-              data={prediction_bar_data}
-              options={{
-                maintainAspectRatio:false,
-            //     plugins:{
-            //     tooltips: {
-            //       enabled: false
-            //  },},
-                responsive: true,
-                // indexAxis: 'y' ,
-                title: { text: "THICCNESS SCALE", display: true },
-                scales: {
-                  x: {
-                    grid: {
-                      display: false,
-                    }
-                  },
-                  y: {
-                    grid: {
-                      display: false
+              <Bar
+                data={prediction_bar_data}
+                options={
+                  {
+                  // tooltips: {
+                  //   // callbacks: {
+                  //   //   title: function(tooltipItem, data) {
+                  //   //     return data['labels'][tooltipItem[0]['index']];
+                  //   //   },
+                  //   //   label: function(tooltipItem, data) {
+                  //   //     return data['datasets'][0]['data'][tooltipItem['index']];
+                  //   //   },
+                  //   //   afterLabel: function(tooltipItem, data) {
+                  //   //     var dataset = data['datasets'][0];
+                  //   //     var percent = Math.round((dataset['data'][tooltipItem['index']] / dataset["_meta"][0]['total']) * 100)
+                  //   //     return '(' + percent + '%)';
+                  //   //   }
+                  //   // },
+                  //   backgroundColor: '#000000',
+                  //   titleFontSize: 16,
+                  //   titleFontColor: '#0066ff',
+                  //   bodyFontColor: '#000',
+                  //   bodyFontSize: 14,
+                  //   enabled:false
+                  //   // displayColors: false
+                  // },
+                  maintainAspectRatio: false,
+                      plugins:{
+                      tooltips: {
+                        // enabled: false
+                        backgroundColor:"#fff"
+                   },},
+                  responsive: true,
+                  plugins:{
+                  tooltips: {
+                    // enabled: false
+                    backgroundColor:"#fff"
+               },},
+                  // indexAxis: 'y' ,
+                  title: { text: "THICCNESS SCALE", display: true },
+                  scales: {
+                    x: {
+                      grid: {
+                        display: false,
+                      },
+                      ticks: {
+                        display: false, //this will remove only the label
+                      },
                     },
-                    ticks: {
-                      display: false //this will remove only the label
-  
+                    y: {
+                      grid: {
+                        display: false,
+                      },
+                      ticks: {
+                        display: false, //this will remove only the label
+                      },
+                    },
                   }
-                  },
-                }
-                
-              }}
-            />
+                }}
+              />
             </div>
           </div>
           <div className="row">
@@ -476,15 +578,36 @@ const ExploratoryAnalysis = () => {
                 options={scenario_doughnut_options}
               />
             </div>
-            <div className="doughnut-container">
+            {/* <div className="doughnut-container">
               <Doughnut
                 data={jvm_metrics_memory_heap_memory_usage_used_data}
                 options={jvm_metrics_memory_heap_memory_usage_used_options}
               />
-            </div>
+            </div> */}
           </div>
 
+          <div className="row dropdown-container">
+            <div className="dropdown">
+            <Select
+              options={options}
+              defaultValue={options}
+              onChange={(e) => {
+                setSelectedOption(e.value);
+                // console.log(selectedOption)
+
+                handleChange(e.value);
+                console.log("e.value")
+                console.log(e.value)
+
+                console.log("selectedOption")
+                console.log(selectedOption)
+
+                // console.log("select")
+              }}
+            /></div>
+          </div>
           <div className="row">
+          
             <div className="anomaly_time_area-container">
               <Line
                 options={anomaly_time_area_options}
