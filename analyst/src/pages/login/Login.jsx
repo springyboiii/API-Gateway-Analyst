@@ -13,7 +13,7 @@ const initialState = {
 const Login = () => {
     const [values, setValues] = useState(initialState)
 
-    const hangleChange = (e) => {
+    const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
 
@@ -39,7 +39,7 @@ const Login = () => {
                     type="text"
                     name="name"
                     value={values.name}
-                    hangleChange={hangleChange}
+                    handleChange={handleChange}
                 />
 
                 {/* email input */}
@@ -47,16 +47,16 @@ const Login = () => {
                     type="email"
                     name="email"
                     value={values.email}
-                    hangleChange={hangleChange}
+                    handleChange={handleChange}
                 />
                 {/* password input */}
                 <FormRow
                     type="password"
                     name="password"
                     value={values.password}
-                    hangleChange={hangleChange}
+                    handleChange={handleChange}
                 />
-                <button type="sumbit" className="btn btn-block">
+                <button type="submit" className="btn btn-block">
                     sumbit
                 </button>
             </form>
