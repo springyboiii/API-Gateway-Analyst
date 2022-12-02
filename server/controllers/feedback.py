@@ -3,7 +3,7 @@ from flask_pymongo import ObjectId
 from util.Constant import Constant 
 
 
-from models.Feedback import Feedback, FeedbackSchema
+from models.Feedback import Feedback, FeedbackSchema, FeedbackAdmin
 
 class FeedbackController:
 
@@ -31,9 +31,10 @@ class FeedbackController:
 
         # store feedback
         feedbackObj = Feedback(data)
-        feedbackObj.save() 
+        feedbackId = feedbackObj.save().inserted_id 
 
         # store to feedbackAdmin as well
+        FeedbackAdmin.insertFeedbackForAllAdmin(feedbackId)
 
         res = jsonify("feedback added successfully")
         res.status_code = 200         

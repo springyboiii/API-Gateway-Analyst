@@ -60,16 +60,31 @@ class FeedbackAdmin:
         adminIds = Admin.find({})
 
         insertedCount = 0
-        for adminId in adminIds:
+        # for adminId in adminIds:
             
-            col.insert_one({
-                "feedbackId": feedbackId,
-                "adminId": adminId,
-                "checked": False
-            })
-            insertedCount += 1
+        #     col.insert_one({
+        #         "feedbackId": feedbackId,
+        #         "adminId": adminId,
+        #         "checked": False
+        #     })
+        #     insertedCount += 1
         
         return insertedCount 
+
+    def insertFeedbackForAllAdmin(feedbackId):
+        # feedbackId : ObjectId
+        db = Database().getConnection()
+        col = db[FeedbackAdmin.col_name]
+
+        adminIds = Admin.find({}, {"_id":1})
+
+        queryList = []
+
+        for adminId in adminIds:
+            queryList.append({"feedbackId": feedbackId, "adminId": adminId["_id"], "checked": False})
+        
+        return col.insert_many(queryList)
+        
 
     def updateOneChecked(condition):
         db = Database().getConnection()

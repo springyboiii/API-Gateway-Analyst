@@ -40,11 +40,11 @@ class Admin:
 
         return col.find_one(condition)
     
-    def find(condition={}):
+    def find(condition={}, projections={}):
         db = Database().getConnection() 
         col = db['admin']
 
-        return col.find(condition)
+        return col.find(condition, projections)
 
     def findOneGetObj(condition):
         db = Database().getConnection() 
