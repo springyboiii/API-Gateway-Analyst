@@ -40,17 +40,6 @@ class FeedbackController:
         res.status_code = 200         
          
         return res
-    
-    def markChecked(currentUser, request): 
-        data = request.json
-
-        data["feedbackAdminId"] = ObjectId(data["feedbackAdminId"])
-        FeedbackAdmin.updateOneChecked(data["feedbackAdminId"])
-
-        res = jsonify("feedback mark checked successfully")
-        res.status_code = 200         
-         
-        return res
 
 
         
