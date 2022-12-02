@@ -6,3 +6,4 @@ venv
 server/__pycache__
 server/env
 .env
+/dse_env

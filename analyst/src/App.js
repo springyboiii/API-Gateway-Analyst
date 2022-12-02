@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
+// import Login from "./pages/login/Login";
 import DescriptiveAnalysis from "./pages/descriptive-analysis/DescriptiveAnalysis";
 import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysis";
 import Prediction from "./pages/prediction/Prediction";
@@ -10,11 +10,13 @@ import Prediction from "./pages/prediction/Prediction";
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 
+
 import Cpu from "./pages/cpu/Cpu";
 import Memory from "./pages/memory/Memory";
 import Disk from "./pages/disk/Disk";
 import Jvm from "./pages/jvm/Jvm";
 import Network from "./pages/network/Network";
+import Welcome from "./pages/welcome/Welcome";
 function App() {
   const [socketInstance, setSocketInstance] = useState("");
   // const [loading, setLoading] = useState(true);
@@ -52,7 +54,7 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Home socket={socketInstance} />} />
-          <Route path="login" element={<Login />} />
+          <Route path="welcome" element={<Welcome />} />
         </Route>
         <Route path="users">
           {/* <Route index element={<List />} />
