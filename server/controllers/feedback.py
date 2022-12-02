@@ -1,8 +1,7 @@
 from flask import jsonify, request
-
+from flask_pymongo import ObjectId
 from util.Constant import Constant 
 
-from bson import ObjectId
 
 from models.Feedback import Feedback, FeedbackSchema
 
@@ -27,12 +26,15 @@ class FeedbackController:
             res.status_code = 400  
             return res 
         
+        # convert userId into ObjectId 
+        data["userId"] = ObjectId(data["userId"])
+
         # store feedback
         feedbackObj = Feedback(data)
         feedbackObj.save() 
 
         # store to feedbackAdmin as well
-        
+
         res = jsonify("feedback added successfully")
         res.status_code = 200         
          

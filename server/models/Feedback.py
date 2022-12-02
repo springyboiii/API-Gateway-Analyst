@@ -1,4 +1,5 @@
 from marshmallow import Schema, fields, validate
+from flask_pymongo import ObjectId
 
 from models.Admin import Admin
 
