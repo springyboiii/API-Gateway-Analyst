@@ -56,7 +56,7 @@ class Admin:
         assert res is not None
 
         return Admin({
-            "_id": res["_id"],
+            "_id": str(res["_id"]),
             "name": res["name"],
             "email": res["email"],
             "password": res["password"],
@@ -68,7 +68,7 @@ class Admin:
         roles = Constant.getRoles()
 
         tokenData = {
-            "_id": dumps(self._id), 
+            "_id": self._id, 
             "name": self.name, 
             "email": self.email, 
             "type": roles["admin"], 

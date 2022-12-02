@@ -47,7 +47,7 @@ class User:
         assert res is not None
 
         return User({
-            "_id": res["_id"],
+            "_id": str(res["_id"]),
             "name": res["name"],
             "email": res["email"],
             "password": res["password"],
@@ -73,13 +73,13 @@ class User:
         roles = Constant.getRoles()
 
         tokenData = {
-            "_id": dumps(self._id), 
+            "_id": self._id, 
             "name": self.name, 
             "email": self.email, 
             "type": roles["user"], 
             "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)
             }
-        # print(f"dumps: {}")
+        
         token = jwt.encode(tokenData, os.getenv("SECRET_KEY"), algorithm="HS256")
         
         return token
