@@ -86,11 +86,12 @@ class FeedbackAdmin:
         return col.insert_many(queryList)
         
 
-    def updateOneChecked(condition):
+    def updateOneChecked(feedbackAdminId):
+        # feedbackAdminId : ObjectId
         db = Database().getConnection()
         col = db[FeedbackAdmin.col_name] 
 
-        return col.update_one(condition, {"$set": {
+        return col.update_one({"_id": feedbackAdminId}, {"$set": {
             "checked": True
         }})
     
