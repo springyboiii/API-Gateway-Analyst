@@ -52,9 +52,11 @@ class AuthController:
 
         email = data["email"]
 
-        currentUser = User.findOneGetObj({"email": email})
-        currentUser = Admin.findOneGetObj({"email": email})
+        user = User.findOneGetObj({"email": email})
+        admin = Admin.findOneGetObj({"email": email})
+        currentUser = user or admin
         print(f"user: {currentUser}")
+
         if (not currentUser):
             res = jsonify("Invalid email or password")
             res.status_code = 400 
@@ -69,6 +71,7 @@ class AuthController:
          
         validlPassword = check_password_hash(currentUser.password, data["password"])
         print(f"validlPassword: {validlPassword}")
+        
         if (not validlPassword):
             res = jsonify("Invalid email or password")
             res.status_code = 400 
