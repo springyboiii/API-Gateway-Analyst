@@ -17,6 +17,7 @@ from controllers.dashboard import DashboardController
 from controllers.user import UserController
 from controllers.auth import AuthController
 from controllers.admin import AdminController
+from controllers.feedback import FeedbackController
 
 from controllers.auth import tokenRequired
 
@@ -238,6 +239,11 @@ def getUser(id):
 @app.route("/users/<id>", methods=["PUT"])
 def updateUser(id):
     return UserController.updateUser(request, id)
+
+@app.route("/feedbacks", methods=["POST"])
+@tokenRequired
+def insertFeedback(currentUser):
+    return FeedbackController.insertFeedback(currentUser, request)
 
 @app.route("/auth", methods=["POST"])
 def login():
