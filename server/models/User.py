@@ -3,6 +3,8 @@ import jwt
 import datetime
 import os
 
+from bson.json_util import dumps, loads
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -11,6 +13,7 @@ from util.Constant import Constant
 
 class User:
     def __init__(self, userDetails):
+        self._id = userDetails.get("_id")
         self.name = userDetails['name'] 
         self.email = userDetails['email'] 
         self.password = userDetails['password'] 
@@ -42,8 +45,9 @@ class User:
         
         if (res is None): return None
         assert res is not None
-        print(res)
+
         return User({
+            "_id": res["_id"],
             "name": res["name"],
             "email": res["email"],
             "password": res["password"],
@@ -67,7 +71,16 @@ class User:
         assert self.name is not None and self.email is not None and self.password is not None
 
         roles = Constant.getRoles()
-        token = jwt.encode({"name": self.name, "email": self.email, "type": roles["admin"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)}, os.getenv("SECRET_KEY"), algorithm="HS256")
+
+        tokenData = {
+            "_id": dumps(self._id), 
+            "name": self.name, 
+            "email": self.email, 
+            "type": roles["user"], 
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)
+            }
+        # print(f"dumps: {}")
+        token = jwt.encode(tokenData, os.getenv("SECRET_KEY"), algorithm="HS256")
         
         return token
 

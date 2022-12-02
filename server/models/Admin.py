@@ -1,8 +1,12 @@
 from marshmallow import Schema, fields, post_load, validate, ValidationError, validates
 
+from flask_pymongo import ObjectId 
+
 import jwt
 import datetime 
 import os
+
+from bson.json_util import dumps, loads
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,6 +16,7 @@ from util.Constant import Constant
 
 class Admin:
     def __init__(self, adminDetails):
+        self._id = adminDetails.get("_id")
         self.name = adminDetails["name"]
         self.email = adminDetails["email"]
         self.password = adminDetails["password"]
@@ -51,6 +56,7 @@ class Admin:
         assert res is not None
 
         return Admin({
+            "_id": res["_id"],
             "name": res["name"],
             "email": res["email"],
             "password": res["password"],
@@ -60,7 +66,16 @@ class Admin:
         assert self.name is not None and self.email is not None and self.password is not None
 
         roles = Constant.getRoles()
-        token = jwt.encode({"name": self.name, "email": self.email, "type": roles["admin"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)}, os.getenv("SECRET_KEY"), algorithm="HS256")
+
+        tokenData = {
+            "_id": dumps(self._id), 
+            "name": self.name, 
+            "email": self.email, 
+            "type": roles["admin"], 
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)
+        }
+
+        token = jwt.encode(tokenData, os.getenv("SECRET_KEY"), algorithm="HS256")
         
         return token
     
