@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from models.Admin import Admin, AdminSchema
 from models.User import User
-from models.Feedback import Feedback, FeedbackAdmin
+from models.Feedback import Feedback
 
 class AdminController:
 
@@ -60,7 +60,9 @@ class AdminController:
         return res 
     
     def getUnreadFeedbacks(id): 
-        feedbackAdmins = FeedbackAdmin.find({"adminId": ObjectId(id)})
+        pass
+
+        # print(feedbacks)
 
         # feedbacks
 

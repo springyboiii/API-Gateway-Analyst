@@ -6,7 +6,53 @@ from util.Constant import Constant
 from models.Feedback import Feedback, FeedbackSchema
 from models.Admin import Admin
 
+from bson.json_util import dumps 
+
 class FeedbackController:
+    
+    def markReadFeedback(currentUser, feedbackId):
+        roles = Constant.getRoles()
+
+        if currentUser["type"] != roles["admin"]: 
+            res = jsonify("Access denied.")
+            res.status_code = 403 
+            return res 
+        
+        result = Admin.markReadFeedback({"_id": ObjectId(currentUser["_id"]), "feedbacks.feedbackId": ObjectId(feedbackId)})
+        if (result):
+            res = jsonify("Feedback marked read successfully.")
+            res.status_code = 200
+            return res 
+        else:
+            res = jsonify("Feedback marked read failed.")
+            res.status_code = 500
+            return res 
+
+    def getUnreadFeedbacks(currentUser): 
+        # output : {"feedbacks": [{...}]}
+        roles = Constant.getRoles()
+
+        if currentUser["type"] != roles["admin"]: 
+            res = jsonify("Access denied.")
+            res.status_code = 403 
+            return res 
+
+        unreadFeedbackIds = Admin.find({
+            "_id": ObjectId(currentUser["_id"]),
+            "feedbacks.checked": False
+        }, {"feedbacks": 1, "_id": 0})
+
+        unreadFeedbackIdObjs = unreadFeedbackIds[0]["feedbacks"]
+
+        print(unreadFeedbackIdObjs)
+        for unreadFeedbackIdObj in unreadFeedbackIdObjs: 
+            del unreadFeedbackIdObj["checked"]
+            feedback = Feedback.findOne({"_id": unreadFeedbackIdObj["feedbackId"]}, {"_id":0, "message": 1})
+            print(f"feedback: {feedback}")
+            unreadFeedbackIdObj["message"] = feedback["message"]
+
+        print(unreadFeedbackIdObjs)
+        return dumps({"unreadFeedbacks": unreadFeedbackIdObjs})
 
     def insertFeedback(currentUser, request):
         roles = Constant.getRoles()
