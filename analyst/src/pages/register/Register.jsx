@@ -1,9 +1,9 @@
-import React from "react";
 import { useState, useEffect } from "react"
-import "./login.scss";
-import {FormRow, Alert} from "../../components";
-import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../../context/appContext";
+import { FormRow, Alert } from "../../components"
+// import Wrapper from '../assets/wrappers/RegisterPage'
+import  {useAppContext } from "../../context/appContext"
+import { useNavigate } from 'react-router-dom'
+import './login.scss'
 
 const initialState = {
     name: '',
@@ -11,39 +11,55 @@ const initialState = {
     password: '',
 }
 
-const Login = () => {
+const Register = () => {
     const navigate = useNavigate()
 
     const [values, setValues] = useState(initialState)
-
-    const { loginUser, isLoading, showAlert, displayAlert } = useAppContext()
+    // golbal state and useNavigate
+    const {  registerUser, isLoading, showAlert, displayAlert } = useAppContext()
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
     const onClick = (e) => {
-        navigate('/register')
+        navigate('/login')
     }
     const onSubmit = (e) => {
         e.preventDefault()
-        const { email, password } = values
-        if (!email || !password) {
+
+        const { name, email, password } = values
+        if (!email || !password || !name) {
             displayAlert()
             return
         }
-        const currentUser = {email, password }
+        const currentUser = { name, email, password }
         console.log(currentUser)
-        loginUser(currentUser)
+        registerUser(currentUser)
+
+        // console.log(values)
 
     }
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         navigate('/login')
+    //     }, 3000)
+
+    // }, [navigate])
+
     return (
-        <div className="full-page">
+        <div>
             <form className="form" onSubmit={onSubmit}>
                 {/* <Logo /> */}
-                <h3>Login</h3>
+                <h3>Register</h3>
                 {showAlert && <Alert />}
                 {/* name input */}
 
+                <FormRow
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    handleChange={handleChange}
+                />
                 {/* email input */}
                 <FormRow
                     type="email"
@@ -58,14 +74,14 @@ const Login = () => {
                     value={values.password}
                     handleChange={handleChange}
                 />
-               <button type="submit" className="btn btn-block" disabled={isLoading}>
+                <button type="submit" className="btn btn-block" disabled={isLoading} >
                     submit
                 </button>
                 <p>
-                    Not a member?
+                    Already a member?
                     <button type="button" onClick={onClick}
                         className='member-btn'>
-                        Register
+                        Login
                     </button>
                 </p>
             </form>
@@ -73,4 +89,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Register;
