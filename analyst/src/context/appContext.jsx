@@ -35,10 +35,10 @@ const AppProvider = ({ children }) => {
         }, 3000)
     }
 
-    // const addUserToLocalStorage = (user, token ,location) => {
-    //     localStorage.setItem('user', JSON.stringify(user))
-    //     localStorage.setItem('token', token)
-    // }
+    const addUserToLocalStorage = (user, token) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('token', token)
+    }
 
     // const removeUserToLocalStorage = (user, token ,location) => {
     //     localStorage.removeItem('user')
@@ -52,10 +52,12 @@ const AppProvider = ({ children }) => {
         try {
             const response = await axios.post('/admins', currentUser)
             console.log(response)
+            const {name, email } = currentUser
+            const user = {name, email}
             // const { user, token, location } = response.data
             dispatch({
                 type: REGISTER_USER_SUCCESS,
-                // payload: {user, token, location}
+                payload: {user}
                 
         })
         // local storage
@@ -75,13 +77,17 @@ const AppProvider = ({ children }) => {
         dispatch({type: LOGIN_USER_BEGIN})
         try {
             const {data} = await axios.post('auth', currentUser)
-            // dispatch(
-            //     {
-            //         type: LOGIN_USER_SUCCESS,
-            //         payload: {token},
-            //     }
-            // )
             console.log(data)
+            const { user, token} = data
+            // console.log(user)
+            // console.log(token)
+            dispatch(
+                {
+                    type: LOGIN_USER_SUCCESS,
+                    payload: {user, token},
+                }
+            )
+            addUserToLocalStorage(user, token)
         }
         catch (error){
             dispatch({

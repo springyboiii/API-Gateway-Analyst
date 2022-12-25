@@ -39,6 +39,7 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: 'success',
             alertText: 'User Created !',
+            user: action.payload.user
         }
     }
     if (action.type === REGISTER_USER_ERROR) {
@@ -73,6 +74,8 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: 'success',
             alertText: 'User Logined !',
+            user: action.payload.user,
+            token: action.payload.token,
         }
     }
     throw new Error(`no such action : ${action.type}`)

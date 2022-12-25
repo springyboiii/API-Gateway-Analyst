@@ -16,7 +16,7 @@ const Login = () => {
 
     const [values, setValues] = useState(initialState)
 
-    const { loginUser, isLoading, showAlert, displayAlert } = useAppContext()
+    const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
@@ -36,6 +36,13 @@ const Login = () => {
         loginUser(currentUser)
 
     }
+    useEffect(() => {
+        if (user && token) {
+          setTimeout(() => {
+            navigate('/')
+          }, 2000)
+        }
+      }, [user, token, navigate])
     return (
         <div className="full-page">
             <form className="form" onSubmit={onSubmit}>

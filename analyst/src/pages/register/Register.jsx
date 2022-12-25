@@ -16,7 +16,7 @@ const Register = () => {
 
     const [values, setValues] = useState(initialState)
     // golbal state and useNavigate
-    const {  registerUser, isLoading, showAlert, displayAlert } = useAppContext()
+    const { user, registerUser, isLoading, showAlert, displayAlert } = useAppContext()
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
@@ -35,16 +35,17 @@ const Register = () => {
         const currentUser = { name, email, password }
         console.log(currentUser)
         registerUser(currentUser)
-
+        
         // console.log(values)
 
     }
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         navigate('/login')
-    //     }, 3000)
-
-    // }, [navigate])
+    useEffect(() => {
+        if (user) {
+          setTimeout(() => {
+            navigate('/login')
+          }, 3000)
+        }
+      }, [user, navigate])
 
     return (
         <div>
