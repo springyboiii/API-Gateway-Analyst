@@ -79,6 +79,14 @@ class Admin:
             }
         }})
     
+    def markReadFeedback(condition):
+        db = Database().getConnection() 
+        col = db['admin']
+
+        return col.update_one(condition, {
+            "$set": {"feedbacks.$.checked": True}
+        })
+    
     def generateAuthToken(self):
         assert self.name is not None and self.email is not None and self.password is not None
 
