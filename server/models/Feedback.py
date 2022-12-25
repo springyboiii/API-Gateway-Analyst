@@ -23,11 +23,11 @@ class Feedback:
         id = col.insert_one(self.__getInfoDict())
         return id 
 
-    def findOne(condition): 
+    def findOne(condition, projections = {}): 
         db = Database().getConnection()
         col = db["feedback"]
 
-        return col.find_one(condition)
+        return col.find_one(condition, projections)
     
     def findOneGetObj(condition):
         db = Database().getConnection()
@@ -43,11 +43,11 @@ class Feedback:
             "message": res["message"]
         })
     
-    def find(condition={}):
+    def find(condition={}, projections = {}):
         db = Database().getConnection()
         col = db["feedback"]
 
-        return col.find(condition)
+        return col.find(condition, projections)
 
 
 class FeedbackSchema(Schema): 
