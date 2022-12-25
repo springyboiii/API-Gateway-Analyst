@@ -20,12 +20,14 @@ class Admin:
         self.name = adminDetails["name"]
         self.email = adminDetails["email"]
         self.password = adminDetails["password"]
+        self.feedbacks = []
         
     def __getInfoDict(self):
         return {
             'name': self.name,
             'email': self.email,
             'password': self.password,
+            'feedbacks': self.feedbacks
         }
     
     def save(self):
@@ -61,6 +63,21 @@ class Admin:
             "email": res["email"],
             "password": res["password"],
         })
+    
+    def insertFeedback(condition, feedbackId): 
+        # insert feedbackId for all admins 
+        db = Database().getConnection() 
+        col = db['admin']
+
+        return col.update_one(condition, { "$push": {
+            "feedbacks":     {
+                "$each": [{
+                    "feedbackId": feedbackId,
+                    "checked": False
+                }],
+                "$position": 0 
+            }
+        }})
     
     def generateAuthToken(self):
         assert self.name is not None and self.email is not None and self.password is not None

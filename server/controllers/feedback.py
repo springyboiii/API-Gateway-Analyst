@@ -4,6 +4,7 @@ from util.Constant import Constant
 
 
 from models.Feedback import Feedback, FeedbackSchema, FeedbackAdmin
+from models.Admin import Admin
 
 class FeedbackController:
 
@@ -34,7 +35,10 @@ class FeedbackController:
         feedbackId = feedbackObj.save().inserted_id 
 
         # store to feedbackAdmin as well
-        FeedbackAdmin.insertFeedbackForAllAdmin(feedbackId)
+        admins = Admin.find(projections={})
+        for admin in admins: 
+            print(admin)
+            Admin.insertFeedback({"_id":admin.get("_id")}, feedbackId)
 
         res = jsonify("feedback added successfully")
         res.status_code = 200         
