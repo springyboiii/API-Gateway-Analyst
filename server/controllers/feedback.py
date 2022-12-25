@@ -3,7 +3,7 @@ from flask_pymongo import ObjectId
 from util.Constant import Constant 
 
 
-from models.Feedback import Feedback, FeedbackSchema
+from models.Feedback import Feedback, FeedbackSchema, FeedbackAdmin
 from models.Admin import Admin
 
 class FeedbackController:
