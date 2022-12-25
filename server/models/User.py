@@ -85,8 +85,6 @@ class User:
         return token
 
 
-
-
 class UserSchema(Schema):
 
     name = fields.String(validate=validate.Length(min=3), required=True)
