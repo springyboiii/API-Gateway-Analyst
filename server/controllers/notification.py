@@ -71,10 +71,7 @@ class NotificationController:
             # print(user)
             User.insertNotification({"_id": user.get("_id")}, notificationId)
 
-        res = jsonify("notification added successfully")
-        res.status_code = 200 
-
-        return res 
+        return 1 
 
 
 

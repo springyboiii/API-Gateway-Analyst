@@ -341,6 +341,10 @@ def readFromGateway():
         # store inputs
         # uncomment below to store data
         # PredictController.insertData(db, str(timestamp), storeData)
+        
+        # if anomaly detected send an notification
+        if (storeData["scenario"] > 0): 
+            NotificationController.insertNotification(storeData["scenario"])
 
         timestamp = Helper.getNextTimestamp(timestamp)
 
