@@ -58,10 +58,10 @@ function App() {
           {/* <Route index element={<List />} />
                     <Route path=":userId" element={<Single />} /> */}
                 </Route>
-                <Route
+                {/* <Route
                     path="descriptive-analysis"
                     element={<DescriptiveAnalysis />}
-                />
+                /> */}
                 <Route
                     path="exploratory-analysis"
                     element={<ExploratoryAnalysis />}
@@ -86,7 +86,7 @@ function App() {
                     path="network"
                     element={<Network />}
                 />
-                <Route path="prediction" element={<Prediction />} />
+                {/* <Route path="prediction" element={<Prediction />} /> */}
             </Routes>
         </BrowserRouter>
     );
