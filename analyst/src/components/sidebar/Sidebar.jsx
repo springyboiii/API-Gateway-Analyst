@@ -26,7 +26,7 @@ const Sidebar = () => {
                         style={{ textDecoration: "none" }}>
                         <li>
                             <DashboardIcon className="icon" />
-                            <span>Dashboard</span>
+                            <span>Dashboard </span>
                             {/* <iframe title="Report Section" width="1280" height="720" src="https://app.powerbi.com/view?r=eyJrIjoiZjdhNmQ4MTUtNzhkYy00ZDIzLTgwZDctYTY2MDI1MzM4N2I5IiwidCI6ImFhYzBjNTY0LTZjNWUtNGIwNS04ZGMzLTQwODA4N2Y3N2Y3NiIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe> */}
                         </li>
                     </Link>

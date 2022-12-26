@@ -246,7 +246,7 @@ function Jvm() {
     <div className="Cpu">
       <Sidebar />
       <div className="Cpu-container">
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="rows">
           <div className="row">
             <div className="area-container">
