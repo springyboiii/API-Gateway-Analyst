@@ -1,13 +1,16 @@
 .exploratoryAnalysis {
     display: flex;
-    width: 100%;
-.exploratoryAnalysisContainer {
-        flex: 6;
-    }
+    // width: 150px;
+    // width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+// .exploratoryAnalysisContainer {
+//         flex: 6;
+//     }
 }
 .doughnut-container{
     margin-top: 3vh;
-    margin-left: 5vw;
+    margin-left: 5.2vw;
     position:inherit;
     height:25vh; 
     width:25vw;
@@ -21,29 +24,32 @@
 
 .anomaly_time_area-container{
     // margin: 20px;
-    margin-left: 3vw;
+    margin-left: 2vw;
 
     // position: relative
     // height:20vh; 
     // width:60vw;
     // height:60vh; 
-    width:90vw;
+    width:85vw;
 }
 .dropdown-container{
-    width: 100vw;
+    // margin-left: 4vw;
+
+    // width: 100vw;
     // position: right;
     // float:right
 
     // align-content: right;
 }
 .dropdown{
-    margin-left: 45vw;
+    margin-left: 40vw;
 }
 .prediction_bar{
-    margin: 20px;
+    // margin: 20px;
     // position: relative;
     // height:20vh; 
     // width:60vw;
+    margin-top: 20px;
     height:50px; 
     width:87vw;
 }

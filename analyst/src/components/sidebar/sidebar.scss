@@ -3,9 +3,9 @@
     border-right: 0.5px solid rgb(230, 227, 227);
     min-height: 100vh;
     background-color: white;
-
+    max-width: 10%;
     .top {
-        height: 50px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -58,6 +58,8 @@
                     font-weight: 600;
                     color: #888;
                     margin-left: 10px;
+                    margin-right: 38px
+
                 }
             }
         }

@@ -1,6 +1,8 @@
 .Cpu {
     display: flex;
-    width: 100%;
+    // width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 .Cpu-container {
         flex: 6;
     }
