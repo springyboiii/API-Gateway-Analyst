@@ -73,9 +73,9 @@ class NotificationController:
         allNotificationIdObjs = allNotificationIds[0]["notifications"]
 
         for notificationIdObj in allNotificationIdObjs: 
-            del notificationIdObj["checked"]
+
             notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
-            # print(f"notification: {notification}")
+
             notificationIdObj["message"] = notification["message"]
         
         return dumps({"allNotifications": allNotificationIdObjs})
