@@ -82,8 +82,15 @@ class AuthController:
         token = currentUser.generateAuthToken()
         print(f"token: {token}")
 
-        res = jsonify(token)
-        res.status_code = 200         
+        # res = jsonify(token)
+        res= jsonify(
+            user={
+            'name': currentUser.name,
+            'email': currentUser.email,
+            },
+            token=token,
+        )
+        # res.status_code = 200         
          
         return res
         
