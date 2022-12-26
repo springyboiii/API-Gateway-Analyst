@@ -3,6 +3,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
+
 import DescriptiveAnalysis from "./pages/descriptive-analysis/DescriptiveAnalysis";
 import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysis";
 import Prediction from "./pages/prediction/Prediction";
@@ -53,6 +55,8 @@ function App() {
         <Route path="/">
           <Route index element={<Home socket={socketInstance} />} />
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+
         </Route>
         <Route path="users">
           {/* <Route index element={<List />} />

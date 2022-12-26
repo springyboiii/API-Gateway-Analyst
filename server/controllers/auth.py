@@ -3,6 +3,7 @@ from marshmallow import Schema, fields
 from werkzeug.security import generate_password_hash, check_password_hash 
 
 from models.User import User 
+from models.Admin import Admin
 
 from functools import wraps
 
@@ -51,27 +52,45 @@ class AuthController:
 
         email = data["email"]
 
-        user = User.findOne({"email": email})
-        print(f"user: {user}")
-        if (not user):
+        user = User.findOneGetObj({"email": email})
+        admin = Admin.findOneGetObj({"email": email})
+        currentUser = user or admin
+        print(f"user: {currentUser}")
+
+        if (not currentUser):
             res = jsonify("Invalid email or password")
             res.status_code = 400 
             return res 
 
-        validlPassword = check_password_hash(user["password"], data["password"])
+        # validlPassword = check_password_hash(currentUser["password"], data["password"])
+        # print(f"validlPassword: {validlPassword}")
+        # if (not validlPassword):
+        #     res = jsonify("Invalid email or password")
+        #     res.status_code = 400 
+        #     return res
+         
+        validlPassword = check_password_hash(currentUser.password, data["password"])
         print(f"validlPassword: {validlPassword}")
+        
         if (not validlPassword):
             res = jsonify("Invalid email or password")
             res.status_code = 400 
             return res 
         
         # generate token 
-        userObj = User({"name": user["name"], "email": user["email"], "password": user["password"]})
-        token = userObj.generateAuthToken()
-        # print(f"token: {token}")
+        # userObj = currentUser({"name": currentUser["name"], "email": currentUser["email"], "password": currentUser["password"]})
+        token = currentUser.generateAuthToken()
+        print(f"token: {token}")
 
-        res = jsonify(token)
-        res.status_code = 200         
+        # res = jsonify(token)
+        res= jsonify(
+            user={
+            'name': currentUser.name,
+            'email': currentUser.email,
+            },
+            token=token,
+        )
+        # res.status_code = 200         
          
         return res
         

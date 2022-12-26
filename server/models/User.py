@@ -1,15 +1,19 @@
 from marshmallow import Schema, fields, post_load, validate, ValidationError, validates
-from util.database import Database  
 import jwt 
 import datetime
 import os
 
+from bson.json_util import dumps, loads
+
 from dotenv import load_dotenv
 load_dotenv()
 
+from util.database import Database
+from util.Constant import Constant  
 
 class User:
     def __init__(self, userDetails):
+        self._id = userDetails.get("_id")
         self.name = userDetails['name'] 
         self.email = userDetails['email'] 
         self.password = userDetails['password'] 
@@ -32,6 +36,22 @@ class User:
         col = db['user']
 
         return col.find_one(condition)
+    
+    def findOneGetObj(condition):
+        db = Database().getConnection() 
+        col = db['user']
+
+        res = col.find_one(condition)
+        
+        if (res is None): return None
+        assert res is not None
+
+        return User({
+            "_id": str(res["_id"]),
+            "name": res["name"],
+            "email": res["email"],
+            "password": res["password"],
+        })
 
     def find(condition={}):
         db = Database().getConnection() 
@@ -50,7 +70,17 @@ class User:
     def generateAuthToken(self):
         assert self.name is not None and self.email is not None and self.password is not None
 
-        token = jwt.encode({"email": self.email, "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)}, os.getenv("SECRET_KEY"), algorithm="HS256")
+        roles = Constant.getRoles()
+
+        tokenData = {
+            "_id": self._id, 
+            "name": self.name, 
+            "email": self.email, 
+            "type": roles["user"], 
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)
+            }
+        
+        token = jwt.encode(tokenData, os.getenv("SECRET_KEY"), algorithm="HS256")
         
         return token
 
