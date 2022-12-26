@@ -84,6 +84,14 @@ class User:
             }
         }})
     
+    def markReadNotification(condition): 
+        db = Database().getConnection() 
+        col = db['user']
+
+        return col.update_one(condition, {
+            "$set": {"notifications.$.checked": True}
+        })
+    
     def generateAuthToken(self):
         assert self.name is not None and self.email is not None and self.password is not None
 

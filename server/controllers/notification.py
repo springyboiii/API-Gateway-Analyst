@@ -5,7 +5,27 @@ from util.Constant import Constant
 from models.Notification import NotificationSchema, Notification
 from models.User import User 
 
+from bson.json_util import dumps 
+
 class NotificationController: 
+
+    def markReadNotification(currentUser, notificationId): 
+        roles = Constant.getRoles()
+
+        if currentUser["type"] != roles["user"]: 
+            res = jsonify("Access denied.")
+            res.status_code = 403 
+            return res 
+        
+        result = User.markReadNotification({"_id": ObjectId(currentUser["_id"]), "notifications.notificationId": ObjectId(notificationId)})
+        if (result): 
+            res = jsonify("Notification marked read successfully.")
+            res.status_code = 200
+            return res 
+        else:
+            res = jsonify("Notification marked read failed.")
+            res.status_code = 500
+            return res 
 
     def getUnreadNotifications(currentUser): 
         roles = Constant.getRoles()
@@ -17,7 +37,24 @@ class NotificationController:
                 res = jsonify("Access denied.")
                 res.status_code = 403 
                 return res 
-    
+        
+        unreadNotificationIds = User.find({
+            "_id": ObjectId(currentUser["_id"]),
+            "notifications.checked": False
+        }, {"notifications": 1, "_id": 0})
+
+        unreadNotificationIdObjs = unreadNotificationIds[0]["notifications"]
+
+        # print(unreadNotificationIdObjs)
+        for unreadNotificationIdObj in unreadNotificationIdObjs: 
+            del unreadNotificationIdObj["checked"]
+            notification = Notification.findOne({"_id": unreadNotificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
+            # print(f"notification: {notification}")
+            unreadNotificationIdObj["message"] = notification["message"]
+        
+        # print(unreadNotificationIdObjs)
+        return dumps({"unreadNotifications": unreadNotificationIdObjs})
+
     def insertNotification(anomalyType):
         anomalyTypes = Constant.getAnomalyTypes()
 

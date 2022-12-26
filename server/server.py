@@ -260,6 +260,16 @@ def readFeedback(currentUser, feedbackId):
 def insertNotification():
     return NotificationController.insertNotification(1)
 
+@app.route("/notifications/unread", methods=["GET"])
+@tokenRequired 
+def getUnreadNotifications(currentUser): 
+    return NotificationController.getUnreadNotifications(currentUser)
+
+@app.route("/notifications/read/<notificationId>", methods=["PUT"])
+@tokenRequired 
+def readNotification(currentUser, notificationId):
+    return NotificationController.markReadNotification(currentUser, notificationId)
+
 @app.route("/auth", methods=["POST"])
 def login():
     return AuthController.login(request)
