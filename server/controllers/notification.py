@@ -45,7 +45,6 @@ class NotificationController:
 
         result = []
 
-        # print(unreadNotificationIdObjs)
         for notificationIdObj in notificationIdObjs: 
             if notificationIdObj["checked"] == False: 
                 notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
@@ -53,7 +52,6 @@ class NotificationController:
                 notificationIdObj["message"] = notification["message"]
                 result.append({"notificationId": notificationIdObj["notificationId"], "message": notificationIdObj["message"], "checked": notificationIdObj["checked"]})
         
-        # print(unreadNotificationIdObjs)
         return dumps({"unreadNotifications": result})
 
     def getAllNotifications(currentUser): 

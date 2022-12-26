@@ -6,8 +6,6 @@ from util.Constant import Constant
 from models.Feedback import Feedback, FeedbackSchema
 from models.Admin import Admin
 
-import pymongo
-
 from bson.json_util import dumps 
 
 class FeedbackController:
