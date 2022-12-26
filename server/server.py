@@ -246,6 +246,11 @@ def updateUser(id):
 def insertFeedback(currentUser):
     return FeedbackController.insertFeedback(currentUser, request)
 
+@app.route("/feedbacks", methods=["GET"])
+@tokenRequired 
+def getAllFeedbacks(currentUser):
+    return FeedbackController.getAllFeedbacks(currentUser)
+
 @app.route("/feedbacks/unread", methods=["GET"])
 @tokenRequired 
 def getUnreadFeedbacks(currentUser):

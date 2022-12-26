@@ -28,6 +28,28 @@ class FeedbackController:
             res.status_code = 500
             return res 
 
+    def getAllFeedbacks(currentUser): 
+        roles = Constant.getRoles()
+
+        if currentUser["type"] != roles["admin"]: 
+            res = jsonify("Access denied.")
+            res.status_code = 403 
+            return res 
+
+        feedbackIds = Admin.find({
+            "_id": ObjectId(currentUser["_id"]),
+        }, {"feedbacks": 1, "_id": 0})
+
+        feedbackIdObjs = feedbackIds[0]["feedbacks"]
+        
+        for feedbackIdObj in feedbackIdObjs: 
+
+            feedback = Feedback.findOne({"_id": feedbackIdObj["feedbackId"]}, {"_id":0, "message": 1})
+
+            feedbackIdObj["message"] = feedback["message"]
+        
+        return dumps({"feedbacks": feedbackIdObjs})
+
     def getUnreadFeedbacks(currentUser): 
         # output : {"feedbacks": [{...}]}
         roles = Constant.getRoles()
@@ -48,10 +70,9 @@ class FeedbackController:
         for unreadFeedbackIdObj in unreadFeedbackIdObjs: 
             del unreadFeedbackIdObj["checked"]
             feedback = Feedback.findOne({"_id": unreadFeedbackIdObj["feedbackId"]}, {"_id":0, "message": 1})
-            print(f"feedback: {feedback}")
+
             unreadFeedbackIdObj["message"] = feedback["message"]
 
-        print(unreadFeedbackIdObjs)
         return dumps({"unreadFeedbacks": unreadFeedbackIdObjs})
 
     def insertFeedback(currentUser, request):
