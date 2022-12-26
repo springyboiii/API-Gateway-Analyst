@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react"
-import "./login.scss";
+// import "./login.scss";
+import Wrapper from '../../assets/wrappers/RegisterPage'
 import {FormRow, Alert} from "../../components";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
@@ -44,7 +45,7 @@ const Login = () => {
         }
       }, [user, token, navigate])
     return (
-        <div className="full-page">
+        <Wrapper className="full-page">
             <form className="form" onSubmit={onSubmit}>
                 {/* <Logo /> */}
                 <h3>Login</h3>
@@ -76,7 +77,7 @@ const Login = () => {
                     </button>
                 </p>
             </form>
-        </div>
+        </Wrapper>
     )
 }
 

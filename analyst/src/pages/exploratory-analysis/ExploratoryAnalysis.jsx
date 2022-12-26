@@ -1,5 +1,5 @@
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
+// import Navbar from "../../components/navbar/Navbar";
+// import Sidebar from "../../components/sidebar/Sidebar";
 import "./exploratory-analysis.scss";
 
 import React, { useState, useEffect } from "react";
@@ -491,7 +491,7 @@ const ExploratoryAnalysis = () => {
 
   return (
     <div className="exploratoryAnalysis">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="exploratoryAnalysisContainer">
         {/* <Navbar /> */}
         <div className="rows">

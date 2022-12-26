@@ -21,6 +21,8 @@ export const initialState = {
     alertType: '',
     user: user ? JSON.parse(user) : null,
     token: token,
+    showSidebar:false,
+    showLogout:false,
 }
 const AppContext = React.createContext()
 const AppProvider = ({ children }) => {

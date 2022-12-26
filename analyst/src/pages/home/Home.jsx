@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
+// import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./home.scss";
 
@@ -49,9 +49,9 @@ function Home({ socket }) {
 
   return (
     <div className="home">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="homeContainer">
-        <Navbar />
+        {/* <Navbar /> */}
         Main Dashboard
         <div className="test">
           <input type="text" placeholder="message" />
