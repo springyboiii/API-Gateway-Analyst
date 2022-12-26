@@ -55,11 +55,11 @@ class User:
             "password": res["password"],
         })
 
-    def find(condition={}):
+    def find(condition={}, projections= {}):
         db = Database().getConnection() 
         col = db['user']
 
-        return col.find(condition)
+        return col.find(condition, projections)
     
     def updateOne(condition, data):
         db = Database().getConnection() 
@@ -67,6 +67,21 @@ class User:
         
         return col.update_one(condition, {"$set":{
             "name": data["name"]
+        }})
+
+    def insertNotification(condition, notificationId): 
+        db = Database().getConnection() 
+        col = db['user']
+
+
+        return col.update_one(condition, { "$push": {
+            "notifications":     {
+                "$each": [{
+                    "notificationId": notificationId,
+                    "checked": False
+                }],
+                "$position": 0 
+            }
         }})
     
     def generateAuthToken(self):

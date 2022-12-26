@@ -18,6 +18,7 @@ from controllers.user import UserController
 from controllers.auth import AuthController
 from controllers.admin import AdminController
 from controllers.feedback import FeedbackController
+from controllers.notification import NotificationController
 
 from controllers.auth import tokenRequired
 
@@ -255,6 +256,9 @@ def getUnreadFeedbacks(currentUser):
 def readFeedback(currentUser, feedbackId):
     return FeedbackController.markReadFeedback(currentUser, feedbackId)
 
+@app.route("/notifications", methods=["POST"])
+def insertNotification():
+    return NotificationController.insertNotification(1)
 
 @app.route("/auth", methods=["POST"])
 def login():
