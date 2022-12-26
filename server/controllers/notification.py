@@ -33,27 +33,28 @@ class NotificationController:
         if currentUser["type"] != roles["user"]: 
             res = jsonify("Access denied.")
 
-            if currentUser["type"] != roles["user"]: 
-                res = jsonify("Access denied.")
-                res.status_code = 403 
-                return res 
+            res = jsonify("Access denied.")
+            res.status_code = 403 
+            return res     
         
-        unreadNotificationIds = User.find({
-            "_id": ObjectId(currentUser["_id"]),
-            "notifications.checked": False
+        notificationIds = User.find({
+            "_id": ObjectId(currentUser["_id"])
         }, {"notifications": 1, "_id": 0})
 
-        unreadNotificationIdObjs = unreadNotificationIds[0]["notifications"]
+        notificationIdObjs = notificationIds[0]["notifications"]
+
+        result = []
 
         # print(unreadNotificationIdObjs)
-        for unreadNotificationIdObj in unreadNotificationIdObjs: 
-            del unreadNotificationIdObj["checked"]
-            notification = Notification.findOne({"_id": unreadNotificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
-            # print(f"notification: {notification}")
-            unreadNotificationIdObj["message"] = notification["message"]
+        for notificationIdObj in notificationIdObjs: 
+            if notificationIdObj["checked"] == False: 
+                notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
+                # print(f"notification: {notification}")
+                notificationIdObj["message"] = notification["message"]
+                result.append({"notificationId": notificationIdObj["notificationId"], "message": notificationIdObj["message"], "checked": notificationIdObj["checked"]})
         
         # print(unreadNotificationIdObjs)
-        return dumps({"unreadNotifications": unreadNotificationIdObjs})
+        return dumps({"unreadNotifications": result})
 
     def getAllNotifications(currentUser): 
         roles = Constant.getRoles()
