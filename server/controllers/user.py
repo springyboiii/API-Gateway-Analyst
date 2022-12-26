@@ -8,6 +8,7 @@ from bson.json_util import dumps
 from werkzeug.security import generate_password_hash, check_password_hash 
 
 from models.User import User, UserSchema, validateUser
+from models.Admin import Admin
 
 class UserController:
 
@@ -22,12 +23,20 @@ class UserController:
             res.status = 400 
             return res 
         
-        # check email is already in use 
+        # check email is already in use
+        # as a user
         user = User.findOne({'email': data['email']})
         if user:
             res = jsonify("Email already registered")
             res.status = 400
             return res 
+        
+        # as an admin
+        admin = Admin.findOne({"email": data["email"]})
+        if admin: 
+            res = jsonify("Email already registered")
+            res.status = 400
+            return res  
         
         # hash password 
         data['password'] = generate_password_hash(data['password'])
