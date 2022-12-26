@@ -8,7 +8,11 @@ import SettingsApplicationsOutlinedIcon from "@mui/icons-material/SettingsApplic
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import Cpu from "../../pages/cpu/Cpu";
+import { useAppContext } from "../../context/appContext";
+
 const Sidebar = () => {
+    const { logoutUser } = useAppContext()
+
     return (
         <div className="sidebar">
             <div className="top">
@@ -18,14 +22,15 @@ const Sidebar = () => {
             <div className="center">
                 <ul>
                     <p className="title">MAIN</p>
-                    <Link to="/" style={{ textDecoration: "none" }}>
+                    <Link to="/exploratory-analysis"
+                        style={{ textDecoration: "none" }}>
                         <li>
                             <DashboardIcon className="icon" />
-                            <span>Dashboard</span>
+                            <span>Dashboard </span>
                             {/* <iframe title="Report Section" width="1280" height="720" src="https://app.powerbi.com/view?r=eyJrIjoiZjdhNmQ4MTUtNzhkYy00ZDIzLTgwZDctYTY2MDI1MzM4N2I5IiwidCI6ImFhYzBjNTY0LTZjNWUtNGIwNS04ZGMzLTQwODA4N2Y3N2Y3NiIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe> */}
                         </li>
                     </Link>
-                    <Link
+                    {/* <Link
                         to="/descriptive-analysis"
                         style={{ textDecoration: "none" }}
                     >
@@ -33,8 +38,8 @@ const Sidebar = () => {
                             <DashboardIcon className="icon" />
                             <span>Descriptive Analysis</span>
                         </li>
-                    </Link>
-                    <Link
+                    </Link> */}
+                    {/* <Link
                         to="/exploratory-analysis"
                         style={{ textDecoration: "none" }}
                     >
@@ -42,7 +47,7 @@ const Sidebar = () => {
                             <DashboardIcon className="icon" />
                             <span>Exploratory Analysis</span>
                         </li>
-                    </Link>
+                    </Link> */}
                     <Link
                         to="/cpu"
                         style={{ textDecoration: "none" }}
@@ -88,23 +93,23 @@ const Sidebar = () => {
                             <span>Network</span>
                         </li>
                     </Link>
-                    <Link to="/prediction" style={{ textDecoration: "none" }}>
+                    {/* <Link to="/prediction" style={{ textDecoration: "none" }}>
                         <li>
                             <DashboardIcon className="icon" />
                             <span>Prediction</span>
                         </li>
-                    </Link>
-                    <p className="title">LISTS</p>
+                    </Link> */}
+                    {/* <p className="title">LISTS</p> */}
                     <li>
                         <PersonOutlineOutlinedIcon className="icon" />
                         <span>Users</span>
                     </li>
-                    <p className="title">USEFUL</p>
+                    {/* <p className="title">USEFUL</p> */}
                     <li>
                         <NotificationsOutlinedIcon className="icon" />
                         <span>Notifications</span>
                     </li>
-                    <p className="title">SERVICE</p>
+                    {/* <p className="title">SERVICE</p>
                     <li>
                         <PsychologyOutlinedIcon className="icon" />
                         <span>Logs</span>
@@ -112,21 +117,28 @@ const Sidebar = () => {
                     <li>
                         <SettingsApplicationsOutlinedIcon className="icon" />
                         <span>Settings</span>
-                    </li>
+                    </li> */}
                     <li>
                         <AccountCircleOutlinedIcon className="icon" />
                         <span>Profile</span>
                     </li>
-                    <li>
-                        <ExitToAppOutlinedIcon className="icon" />
-                        <span>Logout</span>
-                    </li>
+                    <Link
+                        to='/login'
+                        style={{ textDecoration: "none" }}>
+                        <li>
+                            <ExitToAppOutlinedIcon className="icon" />
+                            <button type='button' onClick={logoutUser}>
+                                logout
+                            </button>
+                        </li>
+                    </Link>
+
                 </ul>
             </div>
-            <div className="bottom">
+            {/* <div className="bottom">
                 <div className="colorOption"></div>
                 <div className="colorOption"></div>
-            </div>
+            </div> */}
         </div>
     );
 };

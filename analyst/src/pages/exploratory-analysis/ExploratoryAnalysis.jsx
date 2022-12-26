@@ -493,7 +493,7 @@ const ExploratoryAnalysis = () => {
     <div className="exploratoryAnalysis">
       <Sidebar />
       <div className="exploratoryAnalysisContainer">
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="rows">
           <div className="row">
             <div className="prediction_bar">

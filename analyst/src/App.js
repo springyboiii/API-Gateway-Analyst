@@ -54,18 +54,19 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Home socket={socketInstance} />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          
 
         </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="users">
           {/* <Route index element={<List />} />
                     <Route path=":userId" element={<Single />} /> */}
                 </Route>
-                <Route
+                {/* <Route
                     path="descriptive-analysis"
                     element={<DescriptiveAnalysis />}
-                />
+                /> */}
                 <Route
                     path="exploratory-analysis"
                     element={<ExploratoryAnalysis />}
@@ -90,7 +91,7 @@ function App() {
                     path="network"
                     element={<Network />}
                 />
-                <Route path="prediction" element={<Prediction />} />
+                {/* <Route path="prediction" element={<Prediction />} /> */}
             </Routes>
         </BrowserRouter>
     );
