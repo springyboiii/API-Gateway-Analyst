@@ -16,13 +16,15 @@ class User:
         self._id = userDetails.get("_id")
         self.name = userDetails['name'] 
         self.email = userDetails['email'] 
-        self.password = userDetails['password'] 
+        self.password = userDetails['password']
+        self.notifications = [] 
     
     def __getInfoDict(self):
         return {
             'name': self.name,
             'email': self.email,
             'password': self.password,
+            'notifications': self.notifications,
         }
 
     def save(self):
