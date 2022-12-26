@@ -18,6 +18,7 @@ from controllers.user import UserController
 from controllers.auth import AuthController
 from controllers.admin import AdminController
 from controllers.feedback import FeedbackController
+from controllers.notification import NotificationController
 
 from controllers.auth import tokenRequired
 
@@ -255,6 +256,24 @@ def getUnreadFeedbacks(currentUser):
 def readFeedback(currentUser, feedbackId):
     return FeedbackController.markReadFeedback(currentUser, feedbackId)
 
+@app.route("/notifications", methods=["POST"])
+def insertNotification():
+    return NotificationController.insertNotification(1)
+
+@app.route("/notifications", methods=["GET"])
+@tokenRequired 
+def getAllNotification(currentUser):
+    return NotificationController.getAllNotifications(currentUser)
+
+@app.route("/notifications/unread", methods=["GET"])
+@tokenRequired 
+def getUnreadNotifications(currentUser): 
+    return NotificationController.getUnreadNotifications(currentUser)
+
+@app.route("/notifications/read/<notificationId>", methods=["PUT"])
+@tokenRequired 
+def readNotification(currentUser, notificationId):
+    return NotificationController.markReadNotification(currentUser, notificationId)
 
 @app.route("/auth", methods=["POST"])
 def login():
@@ -327,6 +346,10 @@ def readFromGateway():
         # store inputs
         # uncomment below to store data
         # PredictController.insertData(db, str(timestamp), storeData)
+        
+        # if anomaly detected send an notification
+        if (storeData["scenario"] > 0): 
+            NotificationController.insertNotification(storeData["scenario"])
 
         timestamp = Helper.getNextTimestamp(timestamp)
 
