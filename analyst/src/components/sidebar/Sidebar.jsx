@@ -8,7 +8,11 @@ import SettingsApplicationsOutlinedIcon from "@mui/icons-material/SettingsApplic
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import Cpu from "../../pages/cpu/Cpu";
+import { useAppContext } from "../../context/appContext";
+
 const Sidebar = () => {
+    const { logoutUser } = useAppContext()
+
     return (
         <div className="sidebar">
             <div className="top">
@@ -18,8 +22,8 @@ const Sidebar = () => {
             <div className="center">
                 <ul>
                     <p className="title">MAIN</p>
-                    <Link  to="/exploratory-analysis"
- style={{ textDecoration: "none" }}>
+                    <Link to="/exploratory-analysis"
+                        style={{ textDecoration: "none" }}>
                         <li>
                             <DashboardIcon className="icon" />
                             <span>Dashboard</span>
@@ -118,10 +122,17 @@ const Sidebar = () => {
                         <AccountCircleOutlinedIcon className="icon" />
                         <span>Profile</span>
                     </li>
-                    <li>
-                        <ExitToAppOutlinedIcon className="icon" />
-                        <span>Logout</span>
-                    </li>
+                    <Link
+                        to='/login'
+                        style={{ textDecoration: "none" }}>
+                        <li>
+                            <ExitToAppOutlinedIcon className="icon" />
+                            <button type='button' onClick={logoutUser}>
+                                logout
+                            </button>
+                        </li>
+                    </Link>
+
                 </ul>
             </div>
             {/* <div className="bottom">
