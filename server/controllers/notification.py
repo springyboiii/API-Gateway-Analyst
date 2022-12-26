@@ -55,6 +55,32 @@ class NotificationController:
         # print(unreadNotificationIdObjs)
         return dumps({"unreadNotifications": unreadNotificationIdObjs})
 
+    def getAllNotifications(currentUser): 
+        roles = Constant.getRoles()
+
+        if currentUser["type"] != roles["user"]: 
+            res = jsonify("Access denied.")
+
+            if currentUser["type"] != roles["user"]: 
+                res = jsonify("Access denied.")
+                res.status_code = 403 
+                return res 
+        
+        allNotificationIds = User.find({
+            "_id": ObjectId(currentUser["_id"])
+        }, {"notifications": 1, "_id": 0})
+
+        allNotificationIdObjs = allNotificationIds[0]["notifications"]
+
+        for notificationIdObj in allNotificationIdObjs: 
+            del notificationIdObj["checked"]
+            notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
+            # print(f"notification: {notification}")
+            notificationIdObj["message"] = notification["message"]
+        
+        return dumps({"allNotifications": allNotificationIdObjs})
+
+
     def insertNotification(anomalyType):
         anomalyTypes = Constant.getAnomalyTypes()
 
