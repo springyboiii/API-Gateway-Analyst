@@ -94,7 +94,7 @@ class NotificationController:
         notificationIdObjs = notificationIds[0]["notifications"]
 
         print(dumps(notificationIdObjs))
-        for notificationIdObj in notificationIdObjs[:10]: 
+        for notificationIdObj in notificationIdObjs[:limit]: 
             notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
             notificationIdObj["message"] = notification["message"]
         print("finished")
