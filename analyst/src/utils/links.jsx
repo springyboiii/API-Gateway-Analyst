@@ -55,8 +55,8 @@ const linksAdmin = [
     
     {
       id: 8,
-      text: 'notification',
-      path: 'notification',
+      text: 'Feedbacks',
+      path: 'feedback',
       icon: <ImProfile />,
     },
 ]
