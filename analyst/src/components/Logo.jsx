@@ -1,7 +1,7 @@
 import logo from '../assets/images/logo.svg'
 
 const Logo = () => {
-    return <img src={logo} alt="jobify"
+    return <img src={logo} alt="API Gateway Analyst"
     className='logo ?'/>
 }
 
