@@ -54,10 +54,11 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Home socket={socketInstance} />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          
 
         </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="users">
           {/* <Route index element={<List />} />
                     <Route path=":userId" element={<Single />} /> */}
