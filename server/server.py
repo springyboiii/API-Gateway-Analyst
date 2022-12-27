@@ -358,7 +358,7 @@ def readFromGateway():
 
         # store inputs
         # uncomment below to store data
-        # PredictController.insertData(db, str(timestamp), storeData)
+        PredictController.insertData(db, str(timestamp), storeData)
         
         # if anomaly detected send an notification
         if (storeData["scenario"] > 0): 
@@ -369,8 +369,8 @@ def readFromGateway():
         time.sleep(2)
 
 # uncomment below prediction sending thread to start
-# thread1 = threading.Thread(target=readFromGateway)
-# thread1.start()
+thread1 = threading.Thread(target=readFromGateway)
+thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
