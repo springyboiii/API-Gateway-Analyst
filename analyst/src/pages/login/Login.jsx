@@ -38,12 +38,12 @@ const Login = () => {
 
     }
     useEffect(() => {
-        if (user && token) {
+        if (user) {
           setTimeout(() => {
             navigate('/')
           }, 2000)
         }
-      }, [user, token, navigate])
+      }, [user, navigate])
     return (
         <Wrapper className="full-page">
             <form className="form" onSubmit={onSubmit}>
