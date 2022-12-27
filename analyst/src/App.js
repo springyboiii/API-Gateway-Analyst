@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Notification from "./pages/notification/notification";
 
 import DescriptiveAnalysis from "./pages/descriptive-analysis/DescriptiveAnalysis";
 import ExploratoryAnalysis from "./pages/exploratory-analysis/ExploratoryAnalysis";
@@ -108,17 +109,17 @@ function App() {
                     }
                 >
 
-                    <Route index element={<Home />} />
+                    {/* <Route path='home' element={<Home />} /> */}
+                    <Route index element={<ExploratoryAnalysis />} />
                     <Route path='network' element={<Network />}></Route>
                     <Route path='cpu' element={<Cpu />}></Route>
                     <Route path='memory' element={<Memory />}></Route>
                     <Route path='disk' element={<Disk />}></Route>
                     <Route path='jvm' element={<Jvm />}></Route>
-                    <Route path="exploratory-analysis" element={<ExploratoryAnalysis />} />
-                    <Route path="descriptive-analysis" element={<DescriptiveAnalysis />} />
+                    <Route path="notification" element={<Notification />} />
                     <Route path='register-user' element={<UserRegister />}></Route>
-
                 </Route>
+
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/*" element={<Error />} />

@@ -43,7 +43,7 @@ const Login = () => {
         if (user) {
           setTimeout(() => {
             navigate('/')
-          }, 2000)
+          }, 500)
         }
       }, [user, navigate])
     return (
