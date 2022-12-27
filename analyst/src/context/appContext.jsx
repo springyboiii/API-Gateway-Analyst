@@ -10,6 +10,7 @@ import {
 
 import axios from 'axios'
 import reducer from './reducer'
+import jwtDecode from 'jwt-decode'
 
 const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
@@ -48,6 +49,14 @@ const AppProvider = ({ children }) => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')
     }
+    const getCurrentUser = (token) => {
+        try {
+            const jwt = token;
+            return jwtDecode(jwt);
+        }catch(error){
+            return null
+        }
+    }
 
     const registerUser = async (currentUser) => {
         // console.log(currentUser)
@@ -81,8 +90,16 @@ const AppProvider = ({ children }) => {
         dispatch({ type: LOGIN_USER_BEGIN })
         try {
             const { data } = await axios.post('auth', currentUser)
-            console.log(data)
-            const { user, token } = data
+            console.log("data", data)
+            const { token } = data
+            // console.log(user)
+            // console.log(data)
+            const {name, email, type} = getCurrentUser(data)
+            const user = {
+                name: name,
+                email: email,
+                type: type,
+            }
             // console.log(user)
             // console.log(token)
             dispatch(
@@ -91,7 +108,7 @@ const AppProvider = ({ children }) => {
                     payload: { user, token },
                 }
             )
-            addUserToLocalStorage(user, token)
+            addUserToLocalStorage(user, data)
         }
         catch (error) {
             dispatch({
@@ -108,6 +125,7 @@ const AppProvider = ({ children }) => {
     const toggleSidebar = () => {
         dispatch({ type: TOGGLE_SIDEBAR })
       }
+    
     return (
         <AppContext.Provider
             value={{

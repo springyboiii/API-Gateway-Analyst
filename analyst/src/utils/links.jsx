@@ -28,6 +28,24 @@ const links = [
       path: 'network',
       icon: <ImProfile />,
     },
+    {
+      id: 5,
+      text: 'jvm',
+      path: 'jvm',
+      icon: <ImProfile />,
+    },
+    {
+      id: 6,
+      text: 'memory',
+      path: 'memory',
+      icon: <ImProfile />,
+    },
+    {
+      id: 7,
+      text: 'Register User',
+      path: 'register_user',
+      icon: <ImProfile />,
+    },
 ]
   
 export default links
