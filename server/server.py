@@ -266,9 +266,9 @@ def readFeedback(currentUser, feedbackId):
     # allowed: admin
     return FeedbackController.markReadFeedback(currentUser, feedbackId)
 
-@app.route("/notifications", methods=["POST"])
-def insertNotification():
-    return NotificationController.insertNotification(1)
+# @app.route("/notifications", methods=["POST"])
+# def insertNotification():
+#     return NotificationController.insertNotification(1)
 
 @app.route("/notifications", methods=["GET"])
 @tokenRequired 

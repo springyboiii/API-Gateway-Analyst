@@ -15,6 +15,7 @@ import {
   Title,
   Filler,
 } from "chart.js";
+import { getAllNotification } from "../../services/notificationService";
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -29,23 +30,21 @@ ChartJS.register(
 );
 
 
-function Feedback() {
-  const [notification, set_notification] = useState({
-    datasets: [],
-  });
+function Notifications() {
+  
 
-  const [feedbacks, setFeedbacks] = useState([]);
+  const [notifications, set_notifications] = useState([]);
 
 
 //   const [user_pct_options, set_user_pct_options] = useState({});
   // const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
   const renderFeedbacks = () => {
-    return feedbacks.map((feedback,i) => {
+    return notifications.map((notification,i) => {
       return <tr >
         {/* key={feedbackId["$oid"]}  */}
         {/* feedback["iod"]["kdsf"] */}
       <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
-      <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{feedback["message"]}</td>
+      <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{notification}</td>
       
     </tr>
     })
@@ -71,12 +70,12 @@ function Feedback() {
   useEffect(() => {
     
       async function fetchdata() {
-        const {data: allFeedbacks} = await getAllFeedbacks();
-        console.log(allFeedbacks);
-        setFeedbacks((feedbacks) => [...feedbacks, ...allFeedbacks["feedbacks"]])
+        const {data: allNotifications} = await getAllNotification();
+        console.log("inaisws")
+        console.log(allNotifications);
+        // set_notifications((notifications) => [...notifications, ...allFeedbacks["notifications"]])
 
       // }
-      // fetchdata()
 
       // async function postData() {
       //   const data = {"message": "nice app"}
@@ -84,21 +83,21 @@ function Feedback() {
       // }
       // postData()
 
-      // async function readFeedback() {
-      //   const feedbackId = "63aae10a5035ea5637d35f28"
-      //   await markFeedbackRead(feedbackId)
-      // }
-      // readFeedback()
+    //   async function readFeedback() {
+    //     const feedbackId = "63aae10a5035ea5637d35f28"
+    //     await markFeedbackRead(feedbackId)
+    //   }
+    //   readFeedback()
     }
-          fetchdata()
+    fetchdata()
 
   }, []);
 
   useEffect(() => {
-    console.log("feedbackssss")
+    console.log("notificationssss")
 
-    console.log(feedbacks[0])
-  }, [feedbacks])
+    // console.log(feedbacks[0])
+  }, [notifications])
 
 
   return (
@@ -108,11 +107,11 @@ function Feedback() {
         {/* <Navbar /> */}
         
           <div className="table">
-      {renderTable()}
+      {/* {renderTable()} */}
      </div>
         </div>
       </div>
   );
 }
 
-export default Feedback;
+export default Notifications;
