@@ -14,6 +14,8 @@ import axios from "axios";
 // import Select from '@mui/material/Select';
 import Select from "react-select";
 
+import io from "socket.io-client";
+
 import {
   CategoryScale,
   LinearScale,
@@ -36,7 +38,7 @@ ChartJS.register(
   Filler
 );
 
-const ExploratoryAnalysis = () => {
+const ExploratoryAnalysis = ({socket}) => {
   const [normal_anomaly_doughnut_data, set_normal_anomaly_doughnut_data] =
     useState({ datasets: [] });
   const [normal_anomaly_doughnut_options, set_normal_anomaly_doughnut_options] =
@@ -72,6 +74,8 @@ const ExploratoryAnalysis = () => {
   const [prediction_bar_data, set_prediction_bar_data] = useState({
     datasets: [],
   });
+  const [messages, setMessages] = useState([]);
+
   const options = [
     { value: "DEFAULT", label: "30m" },
     // { value: "30m", label: "30m" },
@@ -123,6 +127,35 @@ const ExploratoryAnalysis = () => {
   // const [bgcolor_bar_data, set_bgcolor_bar_data] = useState([]
 
   // );
+
+  useEffect(() => {
+    // http://127.0.0.1:5000/
+    socket = io.connect("http://127.0.0.1:5000/");
+
+    socket.on("connect", (data) => {
+      console.log(data);
+    });
+
+    socket.on("disconnect", (data) => {
+      console.log(data);
+    });
+
+    socket.on("recvMsg", (data) => {
+      setMessages((messages) => [...messages, data]);
+      console.log(data)
+    });
+
+    socket.on("prediction", (data) => {
+      setMessages((messages) => [...messages, data['prediction']]);
+      console.log(data['timestamp'])
+    });
+
+    return () => {
+      socket.off("data", () => {
+        console.log("data event was removed");
+      });
+    };
+  }, []);
 
   useEffect(() => {
     // {console.log(selectedOption)}
@@ -425,7 +458,6 @@ const ExploratoryAnalysis = () => {
       //   },
       // },
     });
-
     axios({
       method: "GET",
       url: "/prediction_bar_data",
@@ -487,7 +519,7 @@ const ExploratoryAnalysis = () => {
           console.log(error.response.headers);
         }
       });
-  }, []);
+  }, [messages]);
 
   return (
     <div className="exploratoryAnalysis">
@@ -497,6 +529,11 @@ const ExploratoryAnalysis = () => {
         <div className="rows">
           <div className="row">
             <div className="prediction_bar">
+            {/* <ul>
+            {messages.map((message, index) => {
+              return <li key={index}>{message}</li>;
+            })}
+          </ul> */}
               <Bar
                 data={prediction_bar_data}
                 options={

@@ -275,16 +275,16 @@ def readFeedback(currentUser, feedbackId):
 # def insertNotification():
 #     return NotificationController.insertNotification(1)
 
-@app.route("/notifications", methods=["POST"])
-# @tokenRequired 
-def getAllNotification():
-    print("check")
-    data1=request.data
-    dict_str = data1.decode("UTF-8")
-    print(dict_str)
-
-    # return NotificationController.getAllNotifications(currentUser)
-    return 0
+@app.route("/notifications", methods=["GET"])
+@tokenRequired 
+def getAllNotification(currentUser):
+    # print("check")
+    # data1=request.data
+    # dict_str = data1.decode("UTF-8")
+    # print(dict_str)
+    print("yes")
+    return NotificationController.getAllNotifications(currentUser)
+    # return 0
 
 
 @app.route("/notifications/unread", methods=["GET"])
@@ -369,7 +369,7 @@ def readFromGateway():
 
         # store inputs
         # uncomment below to store data
-        # PredictController.insertData(db, str(timestamp), storeData)
+        PredictController.insertData(db, str(timestamp), storeData)
         
         # if anomaly detected send an notification
         if (storeData["scenario"] > 0): 

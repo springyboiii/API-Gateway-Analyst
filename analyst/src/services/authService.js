@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 
 import http from "./httpService";
 
-const apiEndpoint = process.env.REACT_APP_API_URL + "/auth";
+const apiEndpoint = "http://127.0.0.1:5000/" + "/auth";
 const tokenKey = "token";
 
 http.setJwt(getJwt());

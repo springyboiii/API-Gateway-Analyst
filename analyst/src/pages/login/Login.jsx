@@ -5,6 +5,7 @@ import Wrapper from '../../assets/wrappers/RegisterPage'
 import {FormRow, Alert} from "../../components";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
+import auth from "../../services/authService"
 
 const initialState = {
     name: '',
@@ -25,13 +26,14 @@ const Login = () => {
     const onClick = (e) => {
         navigate('/register')
     }
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
         const { email, password } = values
         if (!email || !password) {
             displayAlert()
             return
         }
+        await auth.loginCustomer(email, password);
         const currentUser = {email, password }
         console.log(currentUser)
         loginUser(currentUser)
