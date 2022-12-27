@@ -53,6 +53,12 @@ preprocessed_averaged_1_hour=db["preprocessed_averaged_1_hour"]
 preprocessed_averaged_2_hour=db["preprocessed_averaged_2_hour"]
 preprocessed_averaged_30_min=db["preprocessed_averaged_30_min"]
 
+db_cols = {'ul':preprocessed_averaged_30_min,
+           'DEFAULT':preprocessed_averaged_30_min,
+           '1h':preprocessed_averaged_1_hour,
+           '2h':preprocessed_averaged_2_hour,
+           '4h':preprocessed_averaged_4_hour}
+
 @app.route('/', methods=["GET"])
 def init():
     return "Hello"
@@ -107,14 +113,49 @@ def anomaly_time_area_data():
     return DashboardController.get_frequency_line_graph(preprocessed_4_hour,"total_anomalies",1000)
 
 # cpu
-@app.route('/user_pct_data', methods=["GET"])
+# @app.route('/user_pct_data', methods=["POST"])
+# def user_pct_data():
+#     data1=request.data
+#     dict_str = data1.decode("UTF-8")
+#     time=dict_str[9:-2]
+#     if time=="DEFAULT" or time=="ul":
+#         print("30m")
+#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_30_min,"system_cpu_user_pct",1000)
+#     elif time=="1h":
+#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_user_pct",1000)
+#     elif time=="2h":
+#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_2_hour,"system_cpu_user_pct",1000)
+#     elif time=="4h":
+#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,"system_cpu_user_pct",1000)
+#     return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,"system_cpu_user_pct",1000)
+
+@app.route('/user_pct_data', methods=["POST"])
 def user_pct_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_user_pct",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_user_pct', limit=1000, db_cols=db_cols)
 
-@app.route('/system_pct_data', methods=["GET"])
+# @app.route('/user_pct_data', methods=["GET"])
+# def user_pct_data():
+#     return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_user_pct",1000)
+
+# @app.route('/system_pct_data', methods=["GET"])
+# def system_pct_data():
+#     return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_system_pct",1000)
+@app.route('/system_pct_data', methods=["POST"])
 def system_pct_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_system_pct",1000)
-
+    data1=request.data
+    dict_str = data1.decode("UTF-8")
+    time=dict_str[9:-2]
+    feature='system_cpu_system_pct'
+    limit=1000
+    if time=="DEFAULT" or time=="ul":
+        return DashboardController.get_frequency_line_graph(preprocessed_averaged_30_min,feature,limit)
+    elif time=="1h":
+        return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,feature,limit)
+    elif time=="2h":
+        return DashboardController.get_frequency_line_graph(preprocessed_averaged_2_hour,feature,limit)
+    elif time=="4h":
+        return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,feature,limit)
+    return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,feature,limit)
 @app.route('/idle_pct_data', methods=["GET"])
 def idle_pct_data():
     return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_idle_pct",1000)
