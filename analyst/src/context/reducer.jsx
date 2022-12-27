@@ -8,6 +8,7 @@ import {
     LOGIN_USER_ERROR,
     LOGIN_USER_SUCCESS,
     LOGOUT_USER,
+    TOGGLE_SIDEBAR,
 } from "./actions"
 
 import { initialState } from './appContext'
@@ -88,6 +89,12 @@ const reducer = (state, action) => {
             token: null,
         }
     }
+    if (action.type === TOGGLE_SIDEBAR) {
+        return {
+          ...state,
+          showSidebar: !state.showSidebar,
+        }
+      }
     throw new Error(`no such action : ${action.type}`)
 }
 export default reducer
