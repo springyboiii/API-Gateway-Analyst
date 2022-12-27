@@ -109,7 +109,7 @@ function App() {
                     }
                 >
 
-                    <Route index element={<Home />} />
+                    <Route path='home' element={<Home />} />
                     <Route path='network' element={<Network />}></Route>
                     <Route path='cpu' element={<Cpu />}></Route>
                     <Route path='memory' element={<Memory />}></Route>
@@ -121,7 +121,7 @@ function App() {
 path="notification"
 element={<Notification />}/>
 
-                    <Route path="exploratory-analysis" element={<ExploratoryAnalysis />} />
+                    <Route index element={<ExploratoryAnalysis />} />
                     <Route path='register-user' element={<UserRegister />}></Route>
                     </Route>
       

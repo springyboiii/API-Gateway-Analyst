@@ -7,7 +7,7 @@ const linksAdmin = [
     {
       id: 1,
       text: 'Home',
-      path: '/',
+      path: 'home',
       icon: <IoBarChartSharp />,
     },
     {
@@ -48,8 +48,8 @@ const linksAdmin = [
     },
     {
       id: 8,
-      text: 'exploratory-analysis',
-      path: 'exploratory-analysis',
+      text: 'dashboard',
+      path: 'dashboard',
       icon: <ImProfile />,
     },
     {
