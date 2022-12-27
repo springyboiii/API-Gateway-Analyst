@@ -1,6 +1,5 @@
 import React from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
@@ -69,7 +68,7 @@ const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppCont
   }, []);
   return (
     <div className="notification">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="notification-container">
         {/* <Navbar /> */}
         <div className="rows">
