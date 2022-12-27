@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { FormRow, Alert } from "../../components"
-import Wrapper from '../../assets/wrappers/RegisterPage'
+import Wrapper from '../../assets/wrappers/UserRegister'
 import  {useAppContext } from "../../context/appContext"
 import { useNavigate } from 'react-router-dom'
 // import './login.scss'
@@ -51,7 +51,7 @@ const UserRegister = () => {
         <Wrapper className="full-page">
             <form className="form" onSubmit={onSubmit}>
                 {/* <Logo /> */}
-                <h3>Register</h3>
+                <h3>Register User</h3>
                 {showAlert && <Alert />}
                 {/* name input */}
 
@@ -76,7 +76,7 @@ const UserRegister = () => {
                     handleChange={handleChange}
                 />
                 <button type="submit" className="btn btn-block" disabled={isLoading} >
-                    submit
+                    Register
                 </button>
                 {/* <p>
                     Already a member?
