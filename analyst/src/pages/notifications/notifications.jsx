@@ -6,7 +6,7 @@ import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
 import { getAllFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/feedbackService";
-
+import "./notifications.scss"
 import {
   CategoryScale,
   LinearScale,
@@ -51,8 +51,8 @@ function Notifications() {
   };
   const renderHeader = () => {
     return <tr>
-      <th>Id</th>
-      <th>Feedback</th>
+      <th>ID</th>
+      <th>Notification</th>
     </tr>
   };
   const renderTable = () => {
