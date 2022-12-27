@@ -5,6 +5,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
+import { getAllFeedbacks, getUnreadFeedbacks } from "../../services/feedbackService";
+
 import {
   CategoryScale,
   LinearScale,
@@ -25,47 +27,36 @@ ChartJS.register(
 
   Filler
 );
+
+
 function Notification() {
   const [notification, set_notification] = useState({
     datasets: [],
   });
+
+  const [feedbacks, setFeedbacks] = useState([]);
+
+
 //   const [user_pct_options, set_user_pct_options] = useState({});
-const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
+  // const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
 
 
   useEffect(() => {
-    // axios({
-    //   method: "POST",
-    //   url: "/notifications",
-    //   data:token,
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     const res = response.data;
-        
-    //   })
-    //   .catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response);
-    //       console.log(error.response.status);
-    //       console.log(error.response.headers);
-    //     }
-    //   });
-    axios.post("/notifications", {
-        data: token,
-        // option:selectedOption,
-        
-      }).then((response)=>{
-        // res=response.data;
-        console.log(response.data)
-           });
+    
+    async function fetchdata() {
+      const {data: allFeedbacks} = await getAllFeedbacks();
+      console.log(allFeedbacks)
+      setFeedbacks((feedbacks) => [...feedbacks, ...allFeedbacks["feedbacks"]])
 
-
-   
-
-
-
+    }
+    fetchdata()
   }, []);
+
+  useEffect(() => {
+    console.log(feedbacks)
+  }, [feedbacks])
+
+
   return (
     <div className="notification">
       {/* <Sidebar /> */}
@@ -74,11 +65,7 @@ const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppCont
         <div className="rows">
           <div className="row">
             <div className="area-container">
-              {/* <Line options={user_pct_options} data={user_pct_data} />
-               */}
-               {console.log}
             </div>
-            
           </div>
 
         </div>
