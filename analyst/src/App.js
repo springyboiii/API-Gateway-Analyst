@@ -112,9 +112,9 @@ function App() {
                     <Route path='cpu' element={<Cpu />}></Route>
                     <Route path='memory' element={<Memory />}></Route>
                     <Route path='disk' element={<Disk />}></Route>
-
                     <Route path='jvm' element={<Jvm />}></Route>
-
+                    <Route path="exploratory-analysis" element={<ExploratoryAnalysis />} />
+                    <Route path="descriptive-analysis" element={<DescriptiveAnalysis />} />
                 </Route>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
