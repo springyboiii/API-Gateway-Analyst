@@ -113,10 +113,10 @@ const AppProvider = ({ children }) => {
 
     }
 
-    const login = async (currentUser) => {
+    const loginUser = async (currentUser) => {
         dispatch({ type: LOGIN_USER_BEGIN })
         try {
-            const { data } = await axios.post('auth', currentUser)
+            const { data } = await axios.post('/auth', currentUser)
             // console.log("data", data)
             const { token } = data
             // console.log(user)
@@ -159,7 +159,7 @@ const AppProvider = ({ children }) => {
                 ...state, displayAlert,
                 registerUser,
                 registerAdmin,
-                login,
+                loginUser,
                 logoutUser,
                 toggleSidebar,
             }}
