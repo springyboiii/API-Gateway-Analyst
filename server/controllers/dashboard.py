@@ -80,12 +80,12 @@ class DashboardController():
                 result["bgcolor"].append(green)
             else:
                 result["bgcolor"].append(red)
-        print("dummy",len(result["dummy"]))
-        print("prediction",len(result["prediction"]))
-        print("tinmestamp",len(result["timestamp"]))
-        print("bgcolor",len(result["bgcolor"]))
-        print(result["dummy"])
-        print(result["prediction"])
+        # print("dummy",len(result["dummy"]))
+        # print("prediction",len(result["prediction"]))
+        # print("tinmestamp",len(result["timestamp"]))
+        # print("bgcolor",len(result["bgcolor"]))
+        # print(result["dummy"])
+        # print(result["prediction"])
 
 
 

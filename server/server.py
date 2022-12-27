@@ -261,14 +261,20 @@ def getUnreadFeedbacks(currentUser):
 def readFeedback(currentUser, feedbackId):
     return FeedbackController.markReadFeedback(currentUser, feedbackId)
 
-@app.route("/notifications", methods=["POST"])
-def insertNotification():
-    return NotificationController.insertNotification(1)
+# @app.route("/notifications", methods=["POST"])
+# def insertNotification():
+#     return NotificationController.insertNotification(1)
 
-@app.route("/notifications", methods=["GET"])
-@tokenRequired 
-def getAllNotification(currentUser):
-    return NotificationController.getAllNotifications(currentUser)
+@app.route("/notifications", methods=["POST"])
+# @tokenRequired 
+def getAllNotification():
+    print("check")
+    data1=request.data
+    dict_str = data1.decode("UTF-8")
+    print(dict_str)
+
+    # return NotificationController.getAllNotifications(currentUser)
+    return 0
 
 @app.route("/notifications/unread", methods=["GET"])
 @tokenRequired 

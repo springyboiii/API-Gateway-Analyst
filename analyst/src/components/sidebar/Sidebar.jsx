@@ -100,15 +100,25 @@ const Sidebar = () => {
                         </li>
                     </Link> */}
                     {/* <p className="title">LISTS</p> */}
+                    
                     <li>
                         <PersonOutlineOutlinedIcon className="icon" />
                         <span>Users</span>
                     </li>
                     {/* <p className="title">USEFUL</p> */}
-                    <li>
+                    <Link
+                        to="/notification"
+                        style={{ textDecoration: "none" }}
+                    >
+                        <li>
                         <NotificationsOutlinedIcon className="icon" />
                         <span>Notifications</span>
                     </li>
+                    </Link>
+                    {/* <li>
+                        <NotificationsOutlinedIcon className="icon" />
+                        <span>Notifications</span>
+                    </li> */}
                     {/* <p className="title">SERVICE</p>
                     <li>
                         <PsychologyOutlinedIcon className="icon" />
