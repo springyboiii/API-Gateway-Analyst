@@ -58,7 +58,7 @@ const AppProvider = ({ children }) => {
         }
     }
 
-    const registerUser = async (currentUser) => {
+    const registerAdmin = async (currentUser) => {
         // console.log(currentUser)
 
         dispatch({ type: REGISTER_USER_BEGIN })
@@ -85,8 +85,35 @@ const AppProvider = ({ children }) => {
         clearAlert()
 
     }
+    const registerUser = async (currentUser) => {
+        // console.log(currentUser)
 
-    const loginUser = async (currentUser) => {
+        dispatch({ type: REGISTER_USER_BEGIN })
+        try {
+            const response = await axios.post('/users', currentUser)
+            console.log(response)
+            const { name, email } = currentUser
+            const user = { name, email }
+            // const { user, token, location } = response.data
+            dispatch({
+                type: REGISTER_USER_SUCCESS,
+                payload: { user }
+
+            })
+            // local storage
+            // addUserToLocalStorage(user, token, location)
+        } catch (error) {
+            console.log(error.response)
+            dispatch({
+                type: REGISTER_USER_ERROR,
+                payload: { msg: error.response },
+            })
+        }
+        clearAlert()
+
+    }
+
+    const login = async (currentUser) => {
         dispatch({ type: LOGIN_USER_BEGIN })
         try {
             const { data } = await axios.post('auth', currentUser)
@@ -131,7 +158,8 @@ const AppProvider = ({ children }) => {
             value={{
                 ...state, displayAlert,
                 registerUser,
-                loginUser,
+                registerAdmin,
+                login,
                 logoutUser,
                 toggleSidebar,
             }}

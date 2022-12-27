@@ -43,7 +43,19 @@ const linksAdmin = [
     {
       id: 7,
       text: 'Register User',
-      path: 'register_user',
+      path: 'register-user',
+      icon: <ImProfile />,
+    },
+    {
+      id: 8,
+      text: 'exploratory-analysis',
+      path: 'exploratory-analysis',
+      icon: <ImProfile />,
+    },
+    {
+      id: 9,
+      text: 'descriptive-analysis',
+      path: 'descriptive-analysis',
       icon: <ImProfile />,
     },
 ]
@@ -82,6 +94,18 @@ const linksUser = [
     id: 6,
     text: 'memory',
     path: 'memory',
+    icon: <ImProfile />,
+  },
+  {
+    id: 7,
+    text: 'exploratory-analysis',
+    path: 'exploratory-analysis',
+    icon: <ImProfile />,
+  },
+  {
+    id: 8,
+    text: 'descriptive-analysis',
+    path: 'descriptive-analysis',
     icon: <ImProfile />,
   },
 ]
