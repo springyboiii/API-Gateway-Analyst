@@ -90,7 +90,7 @@ const AppProvider = ({ children }) => {
         dispatch({ type: LOGIN_USER_BEGIN })
         try {
             const { data } = await axios.post('auth', currentUser)
-            console.log("data", data)
+            // console.log("data", data)
             const { token } = data
             // console.log(user)
             // console.log(data)
