@@ -1,14 +1,14 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
+// import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./descriptive-analysis.scss";
 
 const DescriptiveAnalysis = () => {
     return (
         <div className="descriptiveAnalysis">
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className="descriptiveAnalysisContainer">
-                <Navbar />
+                {/* <Navbar /> */}
 
                 <div className="dashboardBody">
                     <h1 className="title">Descriptive Analysis</h1>

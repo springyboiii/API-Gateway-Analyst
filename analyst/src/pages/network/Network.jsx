@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+// import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
@@ -351,7 +351,7 @@ function Network() {
   }, []);
   return (
     <div className="Cpu">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="Cpu-container">
         {/* <Navbar /> */}
         <div className="rows">

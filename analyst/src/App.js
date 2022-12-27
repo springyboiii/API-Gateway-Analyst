@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
@@ -17,84 +17,111 @@ import Memory from "./pages/memory/Memory";
 import Disk from "./pages/disk/Disk";
 import Jvm from "./pages/jvm/Jvm";
 import Network from "./pages/network/Network";
+import { ProtectedRoute, SharedLayout, Error } from "./pages";
+
 function App() {
-  const [socketInstance, setSocketInstance] = useState("");
-  // const [loading, setLoading] = useState(true);
-  // const [showPrediction, setShowPrediction] = useState(false);
+    const [socketInstance, setSocketInstance] = useState("");
+    // const [loading, setLoading] = useState(true);
+    // const [showPrediction, setShowPrediction] = useState(false);
 
-  // useEffect(() => {
-  //   if (showPrediction === true) {
-  //     const socket = io("http://127.0.0.1:5000/", {
-  //       // transports: ["websocket"],
-  //       cors: {
-  //         origin: "http://localhost:3000/",
-  //       },
-  //     });
+    // useEffect(() => {
+    //   if (showPrediction === true) {
+    //     const socket = io("http://127.0.0.1:5000/", {
+    //       // transports: ["websocket"],
+    //       cors: {
+    //         origin: "http://localhost:3000/",
+    //       },
+    //     });
 
-  //     setSocketInstance(socket);
+    //     setSocketInstance(socket);
 
-  //     socket.on("connect", (data) => {
-  //       console.log(data);
-  //     });
+    //     socket.on("connect", (data) => {
+    //       console.log(data);
+    //     });
 
-  //     setLoading(false);
+    //     setLoading(false);
 
-  //     socket.on("disconnect", (data) => {
-  //       console.log(data);
-  //     });
+    //     socket.on("disconnect", (data) => {
+    //       console.log(data);
+    //     });
 
-  //     return function cleanup() {
-  //       socket.disconnect();
-  //     };
-  //   }
-  // }, [buttonStatus]);
+    //     return function cleanup() {
+    //       socket.disconnect();
+    //     };
+    //   }
+    // }, [buttonStatus]);
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route index element={<Home socket={socketInstance} />} />
-          
+    return (
+        // <BrowserRouter>
+        //   <Routes>
+        //     <Route path="/">
+        //       <Route index element={<Home socket={socketInstance} />} />
 
-        </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="users">
-          {/* <Route index element={<List />} />
-                    <Route path=":userId" element={<Single />} /> */}
+
+        //     </Route>
+        //     <Route path="/login" element={<Login />} />
+        //     <Route path="/register" element={<Register />} />
+        //     <Route path="users">
+        //       {/* <Route index element={<List />} />
+        //                 <Route path=":userId" element={<Single />} /> */}
+        //             </Route>
+        //             {/* <Route
+        //                 path="descriptive-analysis"
+        //                 element={<DescriptiveAnalysis />}
+        //             /> */}
+        //             <Route
+        //                 path="exploratory-analysis"
+        //                 element={<ExploratoryAnalysis />}
+        //             />
+        //             <Route
+        //                 path="Cpu"
+        //                 element={<Cpu />}
+        //             />
+        //             <Route
+        //                 path="memory"
+        //                 element={<Memory />}
+        //             />
+        //             <Route
+        //                 path="disk"
+        //                 element={<Disk />}
+        //             />
+        //             <Route
+        //                 path="jvm"
+        //                 element={<Jvm />
+        //             />
+        //              <Route
+        //                 path="network"
+        //                 element={<Network />}
+        //             />
+        //             {/* <Route path="prediction" element={<Prediction />} /> */}
+        //         </Routes>
+        //     </BrowserRouter>
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path='/'
+                    element={
+                        <ProtectedRoute>
+                            <SharedLayout />
+                        </ProtectedRoute>
+                    }
+                >
+
+                    <Route index element={<Home />} />
+                    <Route path='network' element={<Network />}></Route>
+                    <Route path='cpu' element={<Cpu />}></Route>
+                    <Route path='memory' element={<Memory />}></Route>
+                    <Route path='disk' element={<Disk />}></Route>
+
+                    <Route path='jvm' element={<Jvm />}></Route>
+
                 </Route>
-                {/* <Route
-                    path="descriptive-analysis"
-                    element={<DescriptiveAnalysis />}
-                /> */}
-                <Route
-                    path="exploratory-analysis"
-                    element={<ExploratoryAnalysis />}
-                />
-                <Route
-                    path="Cpu"
-                    element={<Cpu />}
-                />
-                <Route
-                    path="memory"
-                    element={<Memory />}
-                />
-                <Route
-                    path="disk"
-                    element={<Disk />}
-                />
-                <Route
-                    path="jvm"
-                    element={<Jvm />}
-                />
-                 <Route
-                    path="network"
-                    element={<Network />}
-                />
-                {/* <Route path="prediction" element={<Prediction />} /> */}
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/*" element={<Error />} />
             </Routes>
-        </BrowserRouter>
-    );
+        </BrowserRouter >
+    )
 }
 
 export default App;
