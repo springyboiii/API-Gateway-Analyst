@@ -1,13 +1,13 @@
-import Navbar from "../../components/navbar/Navbar";
+// import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./prediction.scss";
 
 const Prediction = () => {
     return (
         <div className="prediction">
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className="predictionContainer">
-                <Navbar />
+                {/* <Navbar /> */}
                 <div className="top">
                     <h1>Input for Prediction</h1>
                 </div>

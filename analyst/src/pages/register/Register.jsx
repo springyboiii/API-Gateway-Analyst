@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { FormRow, Alert } from "../../components"
-// import Wrapper from '../assets/wrappers/RegisterPage'
+import Wrapper from '../../assets/wrappers/RegisterPage'
 import  {useAppContext } from "../../context/appContext"
 import { useNavigate } from 'react-router-dom'
-import './login.scss'
+// import './login.scss'
 
 const initialState = {
     name: '',
@@ -48,7 +48,7 @@ const Register = () => {
       }, [user, navigate])
 
     return (
-        <div>
+        <Wrapper className="full-page">
             <form className="form" onSubmit={onSubmit}>
                 {/* <Logo /> */}
                 <h3>Register</h3>
@@ -86,7 +86,7 @@ const Register = () => {
                     </button>
                 </p>
             </form>
-        </div>
+        </Wrapper>
     )
 }
 
