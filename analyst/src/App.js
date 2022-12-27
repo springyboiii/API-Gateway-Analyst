@@ -18,6 +18,7 @@ import Disk from "./pages/disk/Disk";
 import Jvm from "./pages/jvm/Jvm";
 import Network from "./pages/network/Network";
 import { ProtectedRoute, SharedLayout, Error } from "./pages";
+import UserRegister from "./pages/register/UserRegister";
 
 function App() {
     const [socketInstance, setSocketInstance] = useState("");
@@ -112,8 +113,10 @@ function App() {
                     <Route path='cpu' element={<Cpu />}></Route>
                     <Route path='memory' element={<Memory />}></Route>
                     <Route path='disk' element={<Disk />}></Route>
-
                     <Route path='jvm' element={<Jvm />}></Route>
+                    <Route path="exploratory-analysis" element={<ExploratoryAnalysis />} />
+                    <Route path="descriptive-analysis" element={<DescriptiveAnalysis />} />
+                    <Route path='register-user' element={<UserRegister />}></Route>
 
                 </Route>
                 <Route path="/register" element={<Register />} />

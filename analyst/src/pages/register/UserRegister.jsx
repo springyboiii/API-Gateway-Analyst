@@ -11,19 +11,19 @@ const initialState = {
     password: '',
 }
 
-const Register = () => {
+const UserRegister = () => {
     const navigate = useNavigate()
 
     const [values, setValues] = useState(initialState)
     // golbal state and useNavigate
-    const { user, registerAdmin, isLoading, showAlert, displayAlert } = useAppContext()
+    const { user, registerUser, isLoading, showAlert, displayAlert } = useAppContext()
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
-    const onClick = (e) => {
-        navigate('/login')
-    }
+    // const onClick = (e) => {
+    //     navigate('/login')
+    // }
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -34,18 +34,18 @@ const Register = () => {
         }
         const currentUser = { name, email, password }
         console.log(currentUser)
-        registerAdmin(currentUser)
+        registerUser(currentUser)
         
         // console.log(values)
 
     }
-    useEffect(() => {
-        if (user) {
-          setTimeout(() => {
-            navigate('/login')
-          }, 3000)
-        }
-      }, [user, navigate])
+    // useEffect(() => {
+    //     if (user) {
+    //       setTimeout(() => {
+    //         navigate('/login')
+    //       }, 3000)
+    //     }
+    //   }, [user, navigate])
 
     return (
         <Wrapper className="full-page">
@@ -78,16 +78,16 @@ const Register = () => {
                 <button type="submit" className="btn btn-block" disabled={isLoading} >
                     submit
                 </button>
-                <p>
+                {/* <p>
                     Already a member?
                     <button type="button" onClick={onClick}
                         className='member-btn'>
                         Login
                     </button>
-                </p>
+                </p> */}
             </form>
         </Wrapper>
     )
 }
 
-export default Register;
+export default UserRegister;
