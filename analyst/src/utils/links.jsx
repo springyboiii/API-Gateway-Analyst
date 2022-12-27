@@ -53,6 +53,8 @@ const linksAdmin = [
       icon: <ImProfile />,
     },
     
+    
+    
     // {
     //   id: 9,
     //   text: 'descriptive-analysis',
@@ -95,6 +97,12 @@ const linksUser = [
     id: 6,
     text: 'memory',
     path: 'memory',
+    icon: <ImProfile />,
+  },
+  {
+    id: 8,
+    text: 'Notifications',
+    path: 'notification',
     icon: <ImProfile />,
   },
   // {
