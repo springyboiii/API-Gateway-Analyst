@@ -7,35 +7,13 @@
         flex: 6;
     }
 }
-// .doughnut-container{
-//     margin-top: 3vh;
-//     position:inherit;
-//     height:25vh; 
-//     width:25vw;
-// }
-
-// .type_doughnut-container{
-//     position: relative;
-//     height:27vh; 
-//     width:27vw;
-// }
-
-.area-container{
-    margin-top: 5vh;
-    // position: relative
-    // height:20vh; 
-    // width:60vw;
-    height:30vh; 
-    width:28vw;
+.table{
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right:5px;
+    width:70%;
 }
-// .system_pct_area-container{
-//     margin: 20px,0,0,0;
-//     // position: relative
-//     // height:20vh; 
-//     // width:60vw;
-//     height:40vh; 
-//     width:30vw;
-// }
-.row{
-    display: flex
+
+.table-notification{
+    border: 1px solid black;
 }

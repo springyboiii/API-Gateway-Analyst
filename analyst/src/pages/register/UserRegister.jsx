@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { FormRow, Alert } from "../../components"
-import Wrapper from '../../assets/wrappers/UserRegister'
+import Wrapper from '../../assets/wrappers/RegisterPage'
 import  {useAppContext } from "../../context/appContext"
 import { useNavigate } from 'react-router-dom'
 // import './login.scss'
