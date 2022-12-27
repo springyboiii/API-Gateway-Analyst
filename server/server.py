@@ -379,8 +379,8 @@ def readFromGateway():
         time.sleep(2)
 
 # uncomment below prediction sending thread to start
-# thread1 = threading.Thread(target=readFromGateway)
-# thread1.start()
+thread1 = threading.Thread(target=readFromGateway)
+thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")

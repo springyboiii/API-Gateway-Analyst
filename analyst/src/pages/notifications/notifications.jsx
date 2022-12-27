@@ -43,8 +43,8 @@ function Notifications() {
       return <tr >
         {/* key={feedbackId["$oid"]}  */}
         {/* feedback["iod"]["kdsf"] */}
-      <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
-      <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{notification}</td>
+      <td  >{i}</td>
+      <td >{notification["message"]}</td>
       
     </tr>
     })
@@ -73,7 +73,7 @@ function Notifications() {
         const {data: allNotifications} = await getSomeFeedbacks(10);
         console.log("inaisws")
         console.log(allNotifications);
-        // set_notifications((notifications) => [...notifications, ...allFeedbacks["notifications"]])
+        set_notifications((notifications) => [...notifications, ...allNotifications["notifications"]])
 
       // }
 
@@ -107,7 +107,7 @@ function Notifications() {
         {/* <Navbar /> */}
         
           <div className="table">
-      {/* {renderTable()} */}
+      {renderTable()}
      </div>
         </div>
       </div>
