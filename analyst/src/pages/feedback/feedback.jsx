@@ -5,7 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import { getAllFeedbacks, getUnreadFeedbacks } from "../../services/feedbackService";
+import { getAllFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/feedbackService";
 
 import {
   CategoryScale,
@@ -70,13 +70,26 @@ function Feedback() {
 
   useEffect(() => {
     
-    async function fetchdata() {
-      const {data: allFeedbacks} = await getAllFeedbacks();
-      console.log(allFeedbacks);
-      setFeedbacks((feedbacks) => [...feedbacks, ...allFeedbacks["feedbacks"]])
+      async function fetchdata() {
+        const {data: allFeedbacks} = await getAllFeedbacks();
+        console.log(allFeedbacks);
+        setFeedbacks((feedbacks) => [...feedbacks, ...allFeedbacks["feedbacks"]])
 
+      // }
+      // fetchdata()
+
+      // async function postData() {
+      //   const data = {"message": "nice app"}
+      //   await postFeedback(data);
+      // }
+      // postData()
+
+      async function readFeedback() {
+        const feedbackId = "63aae10a5035ea5637d35f28"
+        await markFeedbackRead(feedbackId)
+      }
+      readFeedback()
     }
-    fetchdata()
   }, []);
 
   useEffect(() => {
