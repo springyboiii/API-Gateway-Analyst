@@ -23,11 +23,11 @@ class Feedback:
         id = col.insert_one(self.__getInfoDict())
         return id 
 
-    def findOne(condition): 
+    def findOne(condition, projections = {}): 
         db = Database().getConnection()
         col = db["feedback"]
 
-        return col.find_one(condition)
+        return col.find_one(condition, projections)
     
     def findOneGetObj(condition):
         db = Database().getConnection()
@@ -43,62 +43,12 @@ class Feedback:
             "message": res["message"]
         })
     
-    def find(condition={}):
+    def find(condition={}, projections = {}):
         db = Database().getConnection()
         col = db["feedback"]
 
-        return col.find(condition)
+        return col.find(condition, projections)
 
-class FeedbackAdmin:
-    col_name = "feedback_admin"
-
-    def insert(feedbackId):
-        db = Database().getConnection()
-        col = db[FeedbackAdmin.col_name]
-
-        # get only the admin ids 
-        adminIds = Admin.find({})
-
-        insertedCount = 0
-        # for adminId in adminIds:
-            
-        #     col.insert_one({
-        #         "feedbackId": feedbackId,
-        #         "adminId": adminId,
-        #         "checked": False
-        #     })
-        #     insertedCount += 1
-        
-        return insertedCount 
-
-    def insertFeedbackForAllAdmin(feedbackId):
-        # feedbackId : ObjectId
-        db = Database().getConnection()
-        col = db[FeedbackAdmin.col_name]
-
-        adminIds = Admin.find({}, {"_id":1})
-
-        queryList = []
-
-        for adminId in adminIds:
-            queryList.append({"feedbackId": feedbackId, "adminId": adminId["_id"], "checked": False})
-        
-        return col.insert_many(queryList)
-        
-
-    def updateOneChecked(condition):
-        db = Database().getConnection()
-        col = db[FeedbackAdmin.col_name] 
-
-        return col.update_one(condition, {"$set": {
-            "checked": True
-        }})
-    
-    def find(condition={}):
-        db = Database().getConnection() 
-        col = db[FeedbackAdmin.col_name]
-
-        return col.find(condition)
 
 class FeedbackSchema(Schema): 
     userId = fields.String(validate=validate.Length(min=3), required=True)
