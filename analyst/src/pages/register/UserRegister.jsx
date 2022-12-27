@@ -3,6 +3,7 @@ import { FormRow, Alert } from "../../components"
 import Wrapper from '../../assets/wrappers/RegisterPage'
 import  {useAppContext } from "../../context/appContext"
 import { useNavigate } from 'react-router-dom'
+import { postUser } from "../../services/userService"
 // import './login.scss'
 
 const initialState = {
@@ -34,7 +35,13 @@ const UserRegister = () => {
         }
         const currentUser = { name, email, password }
         console.log(currentUser)
-        registerUser(currentUser)
+        // registerUser(currentUser)
+
+        async function isnertUser(user) {
+            await postUser(user)
+        }
+        isnertUser(currentUser)
+
         
         // console.log(values)
 
