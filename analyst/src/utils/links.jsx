@@ -53,14 +53,12 @@ const linksAdmin = [
       icon: <ImProfile />,
     },
     
-    
-    
-    // {
-    //   id: 9,
-    //   text: 'descriptive-analysis',
-    //   path: 'descriptive-analysis',
-    //   icon: <ImProfile />,
-    // },
+    {
+      id: 8,
+      text: 'notification',
+      path: 'notification',
+      icon: <ImProfile />,
+    },
 ]
 const linksUser = [
   {
@@ -100,23 +98,13 @@ const linksUser = [
     icon: <ImProfile />,
   },
   {
-    id: 8,
-    text: 'Notifications',
+
+    id: 7,
+    text: 'notification',
     path: 'notification',
     icon: <ImProfile />,
   },
-  // {
-  //   id: 7,
-  //   text: 'exploratory-analysis',
-  //   path: 'exploratory-analysis',
-  //   icon: <ImProfile />,
-  // },
-  // {
-  //   id: 8,
-  //   text: 'descriptive-analysis',
-  //   path: 'descriptive-analysis',
-  //   icon: <ImProfile />,
-  // },
+ 
 ]
   
 export  {linksAdmin, linksUser}

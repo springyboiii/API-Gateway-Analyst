@@ -22,13 +22,44 @@ export const initialState = {
     alertType: '',
     user: user ? JSON.parse(user) : null,
     token: token,
-    showSidebar:false,
-    showLogout:false,
+    showSidebar: false,
+    showLogout: false,
 }
 const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    // axios
+    // const authFetch = axios.create({
+    //     baseURL: '/',
+    // })
+    // // request
 
+    // authFetch.interceptors.request.use(
+    //     (config) => {
+    //         config.headers.common['x-access-token'] = state.token
+    //         return config
+    //     },
+    //     (error) => {
+    //         return Promise.reject(error)
+    //     }
+    // )
+    // // response
+
+    // authFetch.interceptors.response.use(
+    //     (response) => {
+    //         return response
+    //     },
+    //     (error) => {
+    //         // console.log(error.response)
+    //         if (error.response.status === 401) {
+    //             logoutUser()
+    //         }
+    //         return Promise.reject(error)
+    //     }
+    // )
+    function setJwt(token) {
+        axios.defaults.headers.common["x-auth-token"] = token;
+    }
     const displayAlert = () => {
         dispatch({ type: DISPLAY_ALERT })
         clearAlert()
@@ -45,7 +76,7 @@ const AppProvider = ({ children }) => {
         localStorage.setItem('token', token)
     }
 
-    const removeUserToLocalStorage = (user, token ) => {
+    const removeUserToLocalStorage = (user, token) => {
         localStorage.removeItem('user')
         localStorage.removeItem('token')
     }
@@ -53,7 +84,7 @@ const AppProvider = ({ children }) => {
         try {
             const jwt = token;
             return jwtDecode(jwt);
-        }catch(error){
+        } catch (error) {
             return null
         }
     }
@@ -90,7 +121,8 @@ const AppProvider = ({ children }) => {
 
         dispatch({ type: REGISTER_USER_BEGIN })
         try {
-            const response = await axios.post('/users', currentUser)
+            setJwt(state.token)
+            const response = await axios.post('users', currentUser)
             console.log(response)
             const { name, email } = currentUser
             const user = { name, email }
@@ -121,7 +153,7 @@ const AppProvider = ({ children }) => {
             const { token } = data
             // console.log(user)
             // console.log(data)
-            const {name, email, type} = getCurrentUser(data)
+            const { name, email, type } = getCurrentUser(data)
             const user = {
                 name: name,
                 email: email,
@@ -151,8 +183,8 @@ const AppProvider = ({ children }) => {
     }
     const toggleSidebar = () => {
         dispatch({ type: TOGGLE_SIDEBAR })
-      }
-    
+    }
+
     return (
         <AppContext.Provider
             value={{

@@ -22,16 +22,16 @@ const Navbar = () => {
         </div>
 
         <div className='btn-container'>
-          <button type='button' className='btn' onClick={() => setShowLogout(!showLogout)}>
+          <button className='btn' onClick={() => setShowLogout(!showLogout)}>
             <FaUserCircle />
             {user?.name} - {user?.type}
             <FaCaretDown />
           </button>
-          <div className={showLogout? 'dropdown show-dropdown' : 'show-dropdown'}>
-            <button type='button' className='dropdown-btn' onClick={logoutUser} >
-              logout
-            </button>
-          </div>
+          {/* <div className={showLogout? 'dropdown' : 'show-dropdown'}> */}
+          <button className='btn' onClick={logoutUser} >
+            logout
+          </button>
+          {/* </div> */}
 
         </div>
       </div>
