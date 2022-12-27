@@ -92,9 +92,10 @@ class NotificationController:
         }, {"notifications": 1, "_id": 0}, limit=limit)
 
         notificationIdObjs = notificationIds[0]["notifications"]
+        notificationIdObjs = notificationIdObjs[:limit]
 
         print(dumps(notificationIdObjs))
-        for notificationIdObj in notificationIdObjs[:limit]: 
+        for notificationIdObj in notificationIdObjs: 
             notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
             notificationIdObj["message"] = notification["message"]
         print("finished")
