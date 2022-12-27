@@ -3,12 +3,15 @@ import React from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./home.scss";
 
+import { getAllFeedbacks } from "../../services/feedbackService";
+
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
 
 // const Home = ({ socket }) => {
 function Home({ socket }) {
   const [messages, setMessages] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([]);
   //   const [showPrediction, setShowPrediction] = useState(false);
 
   //   const sendMessage = (e) => {
@@ -17,6 +20,11 @@ function Home({ socket }) {
   //   };
   // console.log("run from begininng")
   console.log(messages);
+
+  useEffect(async () => {
+    const { data: allFeedbacks } = await getAllFeedbacks();
+    setFeedbacks((feedbacks) => [...feedbacks, allFeedbacks])
+  })
 
   useEffect(() => {
     // http://127.0.0.1:5000/
@@ -60,6 +68,11 @@ function Home({ socket }) {
           <ul>
             {messages.map((message, index) => {
               return <li key={index}>{message}</li>;
+            })}
+          </ul>
+          <ul>
+            {feedbacks.map((feedback, index) => {
+              return <li key={index}>{feedback}</li>;
             })}
           </ul>
         </div>
