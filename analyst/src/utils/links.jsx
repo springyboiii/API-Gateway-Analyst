@@ -4,11 +4,17 @@ import { FaWpforms } from 'react-icons/fa'
 import { ImProfile } from 'react-icons/im'
 
 const linksAdmin = [
+    // {
+    //   id: 1,
+    //   text: 'Home',
+    //   path: 'home',
+    //   icon: <IoBarChartSharp />,
+    // },
     {
       id: 1,
-      text: 'Home',
+      text: 'dashboard',
       path: '/',
-      icon: <IoBarChartSharp />,
+      icon: <ImProfile />,
     },
     {
       id: 2,
@@ -46,25 +52,20 @@ const linksAdmin = [
       path: 'register-user',
       icon: <ImProfile />,
     },
-    {
-      id: 8,
-      text: 'exploratory-analysis',
-      path: 'exploratory-analysis',
-      icon: <ImProfile />,
-    },
-    {
-      id: 9,
-      text: 'descriptive-analysis',
-      path: 'descriptive-analysis',
-      icon: <ImProfile />,
-    },
+    
+    // {
+    //   id: 9,
+    //   text: 'descriptive-analysis',
+    //   path: 'descriptive-analysis',
+    //   icon: <ImProfile />,
+    // },
 ]
 const linksUser = [
   {
     id: 1,
-    text: 'Home',
+    text: 'dashboard',
     path: '/',
-    icon: <IoBarChartSharp />,
+    icon: <ImProfile />,
   },
   {
     id: 2,
@@ -96,18 +97,18 @@ const linksUser = [
     path: 'memory',
     icon: <ImProfile />,
   },
-  {
-    id: 7,
-    text: 'exploratory-analysis',
-    path: 'exploratory-analysis',
-    icon: <ImProfile />,
-  },
-  {
-    id: 8,
-    text: 'descriptive-analysis',
-    path: 'descriptive-analysis',
-    icon: <ImProfile />,
-  },
+  // {
+  //   id: 7,
+  //   text: 'exploratory-analysis',
+  //   path: 'exploratory-analysis',
+  //   icon: <ImProfile />,
+  // },
+  // {
+  //   id: 8,
+  //   text: 'descriptive-analysis',
+  //   path: 'descriptive-analysis',
+  //   icon: <ImProfile />,
+  // },
 ]
   
 export  {linksAdmin, linksUser}

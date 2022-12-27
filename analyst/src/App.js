@@ -109,26 +109,20 @@ function App() {
                     }
                 >
 
-                    <Route index element={<Home />} />
+                    {/* <Route path='home' element={<Home />} /> */}
+                    <Route index element={<ExploratoryAnalysis />} />
                     <Route path='network' element={<Network />}></Route>
                     <Route path='cpu' element={<Cpu />}></Route>
                     <Route path='memory' element={<Memory />}></Route>
                     <Route path='disk' element={<Disk />}></Route>
                     <Route path='jvm' element={<Jvm />}></Route>
-                    
-               
-                    <Route
-path="notification"
-element={<Notification />}/>
-
-                    <Route path="exploratory-analysis" element={<ExploratoryAnalysis />} />
+                    <Route path="notification" element={<Notification />} />
                     <Route path='register-user' element={<UserRegister />}></Route>
-                    </Route>
-      
+                </Route>
+
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/*" element={<Error />} />
-{/* >>>>>>> origin/main */}
             </Routes>
         </BrowserRouter >
     )
