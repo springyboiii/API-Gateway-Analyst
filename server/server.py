@@ -225,6 +225,7 @@ def getAdmin(id):
 @app.route('/users', methods=["GET", "POST"])
 @tokenRequired
 def insertUser(currentUser):
+    # allowed: admin
     print(f"currentUser: {currentUser}")
     if request.method == "POST":
         return UserController.insertUser(request)
@@ -244,21 +245,25 @@ def updateUser(id):
 @app.route("/feedbacks", methods=["POST"])
 @tokenRequired
 def insertFeedback(currentUser):
+    # allowed: user
     return FeedbackController.insertFeedback(currentUser, request)
 
 @app.route("/feedbacks", methods=["GET"])
 @tokenRequired 
 def getAllFeedbacks(currentUser):
+    # allowed: admin
     return FeedbackController.getAllFeedbacks(currentUser)
 
 @app.route("/feedbacks/unread", methods=["GET"])
 @tokenRequired 
 def getUnreadFeedbacks(currentUser):
+    # allowed: admin
     return FeedbackController.getUnreadFeedbacks(currentUser)
 
 @app.route("/feedbacks/read/<feedbackId>", methods=["PUT"])
 @tokenRequired 
 def readFeedback(currentUser, feedbackId):
+    # allowed: admin
     return FeedbackController.markReadFeedback(currentUser, feedbackId)
 
 # @app.route("/notifications", methods=["POST"])
@@ -276,14 +281,17 @@ def getAllNotification():
     # return NotificationController.getAllNotifications(currentUser)
     return 0
 
+
 @app.route("/notifications/unread", methods=["GET"])
 @tokenRequired 
 def getUnreadNotifications(currentUser): 
+    # allowed: user
     return NotificationController.getUnreadNotifications(currentUser)
 
 @app.route("/notifications/read/<notificationId>", methods=["PUT"])
 @tokenRequired 
 def readNotification(currentUser, notificationId):
+    # allowed: user
     return NotificationController.markReadNotification(currentUser, notificationId)
 
 @app.route("/auth", methods=["POST"])

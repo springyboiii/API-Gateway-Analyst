@@ -46,7 +46,21 @@ class Admin:
         db = Database().getConnection() 
         col = db['admin']
 
-        return col.find(condition, projections)
+        result = col.find(condition, projections)
+
+        return result
+
+    # def findUnreadFeedbacksOfAdmin(adminId): 
+    #     db = Database().getConnection() 
+    #     col = db['admin']
+
+    #     result = col.find({
+    #         "_id": adminId,
+    #         "feedbacks": { "$type": "array" }, "feedbacks.checked": True 
+    #     })
+
+    #     print(result.pretty())
+
 
     def findOneGetObj(condition):
         db = Database().getConnection() 
