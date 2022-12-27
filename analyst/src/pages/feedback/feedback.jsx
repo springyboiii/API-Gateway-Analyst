@@ -29,7 +29,7 @@ ChartJS.register(
 );
 
 
-function Notification() {
+function Feedback() {
   const [notification, set_notification] = useState({
     datasets: [],
   });
@@ -39,13 +39,40 @@ function Notification() {
 
 //   const [user_pct_options, set_user_pct_options] = useState({});
   // const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
+  const renderFeedbacks = () => {
+    return feedbacks.map((feedback,i) => {
+      return <tr >
+        {/* key={feedbackId["$oid"]}  */}
+        {/* feedback["iod"]["kdsf"] */}
+      <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
+      <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{feedback["message"]}</td>
+      
+    </tr>
+    })
+  };
+  const renderHeader = () => {
+    return <tr>
+      <th>Id</th>
+      <th>Feedback</th>
+    </tr>
+  };
+  const renderTable = () => {
+    return (
+      <table>
+        <tbody>
+        {renderHeader()}
 
+          {renderFeedbacks()}
+        </tbody>
+      </table>
+    )
+  };
 
   useEffect(() => {
     
     async function fetchdata() {
       const {data: allFeedbacks} = await getAllFeedbacks();
-      console.log(allFeedbacks)
+      console.log(allFeedbacks);
       setFeedbacks((feedbacks) => [...feedbacks, ...allFeedbacks["feedbacks"]])
 
     }
@@ -53,7 +80,9 @@ function Notification() {
   }, []);
 
   useEffect(() => {
-    console.log(feedbacks)
+    console.log("feedbackssss")
+
+    console.log(feedbacks[0])
   }, [feedbacks])
 
 
@@ -62,16 +91,13 @@ function Notification() {
       {/* <Sidebar /> */}
       <div className="notification-container">
         {/* <Navbar /> */}
-        <div className="rows">
-          <div className="row">
-            <div className="area-container">
-            </div>
-          </div>
-
+        
+          <div className="table">
+      {renderTable()}
+     </div>
         </div>
       </div>
-    </div>
   );
 }
 
-export default Notification;
+export default Feedback;
