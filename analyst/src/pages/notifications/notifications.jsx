@@ -5,7 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import { getAllFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/feedbackService";
+import { getAllFeedbacks,getSomeFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/notificationService";
 import "./notifications.scss"
 import {
   CategoryScale,
@@ -70,7 +70,7 @@ function Notifications() {
   useEffect(() => {
     
       async function fetchdata() {
-        const {data: allNotifications} = await getAllNotification();
+        const {data: allNotifications} = await getSomeFeedbacks(10);
         console.log("inaisws")
         console.log(allNotifications);
         // set_notifications((notifications) => [...notifications, ...allFeedbacks["notifications"]])
