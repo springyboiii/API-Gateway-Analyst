@@ -1,4 +1,3 @@
-import './FormRow.scss';
 
 const FormRow = ({ type, name, value, handleChange, labelText }) => {
     return (

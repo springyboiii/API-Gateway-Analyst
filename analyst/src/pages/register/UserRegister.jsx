@@ -1,10 +1,9 @@
-import React from "react";
 import { useState, useEffect } from "react"
-// import "./login.scss";
+import { FormRow, Alert } from "../../components"
 import Wrapper from '../../assets/wrappers/RegisterPage'
-import {FormRow, Alert} from "../../components";
-import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../../context/appContext";
+import  {useAppContext } from "../../context/appContext"
+import { useNavigate } from 'react-router-dom'
+// import './login.scss'
 
 const initialState = {
     name: '',
@@ -12,46 +11,56 @@ const initialState = {
     password: '',
 }
 
-const Login = () => {
+const UserRegister = () => {
     const navigate = useNavigate()
 
     const [values, setValues] = useState(initialState)
-
-    const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
+    // golbal state and useNavigate
+    const { user, registerUser, isLoading, showAlert, displayAlert } = useAppContext()
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
-    const onClick = (e) => {
-        navigate('/register')
-    }
+    // const onClick = (e) => {
+    //     navigate('/login')
+    // }
     const onSubmit = (e) => {
         e.preventDefault()
-        const { email, password } = values
-        if (!email || !password) {
+
+        const { name, email, password } = values
+        if (!email || !password || !name) {
             displayAlert()
             return
         }
-        const currentUser = {email, password }
+        const currentUser = { name, email, password }
         console.log(currentUser)
-        loginUser(currentUser)
+        registerUser(currentUser)
+        
+        // console.log(values)
 
     }
-    useEffect(() => {
-        if (user) {
-          setTimeout(() => {
-            navigate('/')
-          }, 2000)
-        }
-      }, [user, navigate])
+    // useEffect(() => {
+    //     if (user) {
+    //       setTimeout(() => {
+    //         navigate('/login')
+    //       }, 3000)
+    //     }
+    //   }, [user, navigate])
+
     return (
         <Wrapper className="full-page">
             <form className="form" onSubmit={onSubmit}>
                 {/* <Logo /> */}
-                <h3>Login</h3>
+                <h3>Register</h3>
                 {showAlert && <Alert />}
                 {/* name input */}
 
+                <FormRow
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    handleChange={handleChange}
+                />
                 {/* email input */}
                 <FormRow
                     type="email"
@@ -66,19 +75,19 @@ const Login = () => {
                     value={values.password}
                     handleChange={handleChange}
                 />
-               <button type="submit" className="btn btn-block" disabled={isLoading}>
+                <button type="submit" className="btn btn-block" disabled={isLoading} >
                     submit
                 </button>
-                <p>
-                    Not a member?
+                {/* <p>
+                    Already a member?
                     <button type="button" onClick={onClick}
                         className='member-btn'>
-                        Register
+                        Login
                     </button>
-                </p>
+                </p> */}
             </form>
         </Wrapper>
     )
 }
 
-export default Login;
+export default UserRegister;
