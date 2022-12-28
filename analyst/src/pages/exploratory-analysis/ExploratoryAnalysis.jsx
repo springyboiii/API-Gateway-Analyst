@@ -147,7 +147,7 @@ const ExploratoryAnalysis = ({socket}) => {
 
     socket.on("prediction", (data) => {
       setMessages((messages) => [...messages, data['prediction']]);
-      console.log(data['timestamp'])
+      console.log(data['timestamp'] + " -" + data['prediction'])
     });
 
     return () => {
