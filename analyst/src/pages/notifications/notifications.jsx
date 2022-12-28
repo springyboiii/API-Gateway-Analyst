@@ -5,8 +5,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import { getAllFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/feedbackService";
-
+import { getAllFeedbacks,getSomeFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/notificationService";
+import "./notifications.scss"
 import {
   CategoryScale,
   LinearScale,
@@ -43,16 +43,16 @@ function Notifications() {
       return <tr >
         {/* key={feedbackId["$oid"]}  */}
         {/* feedback["iod"]["kdsf"] */}
-      <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
-      <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{notification}</td>
+      <td  >{i}</td>
+      <td >{notification["message"]}</td>
       
     </tr>
     })
   };
   const renderHeader = () => {
     return <tr>
-      <th>Id</th>
-      <th>Feedback</th>
+      <th>ID</th>
+      <th>Notification</th>
     </tr>
   };
   const renderTable = () => {
@@ -70,10 +70,10 @@ function Notifications() {
   useEffect(() => {
     
       async function fetchdata() {
-        const {data: allNotifications} = await getAllNotification();
+        const {data: allNotifications} = await getSomeFeedbacks(10);
         console.log("inaisws")
         console.log(allNotifications);
-        // set_notifications((notifications) => [...notifications, ...allFeedbacks["notifications"]])
+        set_notifications((notifications) => [...notifications, ...allNotifications["notifications"]])
 
       // }
 
@@ -107,7 +107,7 @@ function Notifications() {
         {/* <Navbar /> */}
         
           <div className="table">
-      {/* {renderTable()} */}
+      {renderTable()}
      </div>
         </div>
       </div>

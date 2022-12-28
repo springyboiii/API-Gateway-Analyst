@@ -8,6 +8,11 @@ export function getAllNotification(){
     return http.get(apiEndPoint)
 }
 
+export function getSomeFeedbacks(limit){
+    console.log("get some notifications")
+    return http.get(`${apiEndPoint}/${limit}`)
+}
+
 export function getUnreadFeedbacks(){
     return http.get(apiEndPoint+"/unread")
 }
