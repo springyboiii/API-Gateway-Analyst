@@ -108,16 +108,13 @@ class NotificationController:
     def insertNotification(anomalyType):
         anomalyTypes = Constant.getAnomalyTypes()
 
-        notificationMessage = { "message": anomalyTypes[anomalyType]}
+        notificationDetails = { "message": anomalyTypes[anomalyType]}
 
         # store notification 
-        notificationObj = Notification(notificationMessage)
+        notificationObj = Notification(notificationDetails)
         notificationId = notificationObj.save().inserted_id
         
-        notificationDetails = {
-            "notificationId": notificationId,
-            "message": notificationMessage["message"],
-        }
+        notificationDetails["notificationId"] = notificationId
 
         # store notification in all users
         users = User.find(projections = {"_id": 1})
