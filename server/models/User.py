@@ -64,30 +64,23 @@ class User:
         else: 
             return col.find(condition, projections).limit(limit)
     
-    def findUnreadNotifications(userId): 
+    def findUnreadNotificationsOfUser(userId): 
         db = Database().getConnection() 
         col = db['user']
         print("find unread notifications")
-        pipeline = [
-            {
-                "$match": {
-                    "_id": userId
+        
+        result = col.find({
+            "_id": userId
+        }, {
+            "notifications": {
+                "$filter": {
+                    "input": "$notifications",
+                    "as": "notification",
+                    "cond": {"$eq": ["$$notification.checked", False]}
                 }
-            },
-            {
-                "$project": {
-                    "notifications": {
-                        "$filter": {
-                            "input": "$notifications",
-                            "as": "notification",
-                            "cond": { "eq": ["$$notification.checked", True] } 
-                                    }
-                                }
-                
-                            }   
             }
-        ]
-        return col.aggregate(pipeline)
+        })
+        return result
 
 
     def updateOne(condition, data):
@@ -98,18 +91,17 @@ class User:
             "name": data["name"]
         }})
 
-    def insertNotification(condition, notificationId): 
+    def insertNotification(condition, notificationDetails): 
         db = Database().getConnection() 
         col = db['user']
-
 
         return col.update_one(condition, { "$push": {
             "notifications":     {
                 "$each": [{
-                    "notificationId": notificationId,
+                    "notificationId": notificationDetails["notificationId"],
+                    "message": notificationDetails["message"],
                     "checked": False
                 }],
-                "$position": 0 
             }
         }})
     

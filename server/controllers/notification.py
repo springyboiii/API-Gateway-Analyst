@@ -37,22 +37,26 @@ class NotificationController:
             res.status_code = 403 
             return res     
         
-        notificationIds = User.find({
-            "_id": ObjectId(currentUser["_id"])
-        }, {"notifications": 1, "_id": 0})
+        # notificationIds = User.find({
+        #     "_id": ObjectId(currentUser["_id"])
+        # }, {"notifications": 1, "_id": 0})
 
-        notificationIdObjs = notificationIds[0]["notifications"]
+        # notificationIdObjs = notificationIds[0]["notifications"]
 
-        result = []
+        # result = []
 
-        for notificationIdObj in notificationIdObjs: 
-            if notificationIdObj["checked"] == False: 
-                notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
-                # print(f"notification: {notification}")
-                notificationIdObj["message"] = notification["message"]
-                result.append({"notificationId": notificationIdObj["notificationId"], "message": notificationIdObj["message"], "checked": notificationIdObj["checked"]})
+        # for notificationIdObj in notificationIdObjs: 
+        #     if notificationIdObj["checked"] == False: 
+        #         notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
+        #         # print(f"notification: {notification}")
+        #         notificationIdObj["message"] = notification["message"]
+        #         result.append({"notificationId": notificationIdObj["notificationId"], "message": notificationIdObj["message"], "checked": notificationIdObj["checked"]})
         
-        return dumps({"unreadNotifications": result})
+        # return dumps({"unreadNotifications": result})
+
+        result = User.findUnreadNotificationsOfUser(ObjectId(currentUser["_id"]))
+        # print(dumps(result))
+        return dumps(result)
 
     def getAllNotifications(currentUser): 
         roles = Constant.getRoles()
@@ -110,12 +114,17 @@ class NotificationController:
         notificationObj = Notification(notificationMessage)
         notificationId = notificationObj.save().inserted_id
         
+        notificationDetails = {
+            "notificationId": notificationId,
+            "message": notificationMessage["message"],
+        }
+
         # store notification in all users
         users = User.find(projections = {"_id": 1})
 
         for user in users: 
             # print(user)
-            User.insertNotification({"_id": user.get("_id")}, notificationId)
+            User.insertNotification({"_id": user.get("_id")}, notificationDetails)
 
         return 1 
 
