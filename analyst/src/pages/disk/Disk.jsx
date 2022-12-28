@@ -164,6 +164,7 @@ function Disk() {
     return;
 
   }
+
   useEffect(() => {
     handleChange(null)
 
@@ -357,6 +358,7 @@ function Disk() {
 
 
   }, []);
+  
   return (
     <div className="Cpu">
       {/* <Sidebar /> */}

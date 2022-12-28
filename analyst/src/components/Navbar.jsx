@@ -22,42 +22,26 @@ const Navbar = () => {
         </div>
 
         <div className='btn-container'>
-          <button className='btn' onClick={() => setShowLogout(!showLogout)}>
-            <FaUserCircle />
-            {user?.name} - {user?.type}
-            <FaCaretDown />
-          </button>
-          {/* <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}> */}
-            <button className='btn' onClick={logoutUser} >
-              logout
-            </button>
+          <div>
+            <p>
+              <button className='btn dropdown1' onClick={() => setShowLogout(!showLogout)}>
+                <FaUserCircle />
+                {user?.name} - {user?.type}
+                <FaCaretDown />
+              </button>
+            </p>
+            {/* "dropdown-content dropdown1-show" */}
+            <div className={showLogout ? 'dropdown-content' : 'dropdown-content dropdown1-show'}>
+              <p>
+                <button className='btn' onClick={logoutUser} >
+                  logout
+                </button>
+              </p>
+            </div>
+          </div>
           {/* </div> */}
-
-          {/* <li>
-            <img src="analyst\src\assets\images\logo.svg" class="profile" />
-            <ul>
-              <li class="sub-item">
-                <span class="material-icons-outlined"> grid_view </span>
-                <p>Dashboard</p>
-              </li>
-              <li class="sub-item">
-                <span class="material-icons-outlined">
-                  format_list_bulleted
-                </span>
-                <p>My Orders</p>
-              </li>
-              <li class="sub-item">
-                <span class="material-icons-outlined"> manage_accounts </span>
-                <p>Update Profile</p>
-              </li>
-              <li class="sub-item">
-                <span class="material-icons-outlined"> logout </span>
-                <p>Logout</p>
-              </li>
-            </ul>
-          </li> */}
-
         </div>
+
       </div>
     </Wrapper>
   )
