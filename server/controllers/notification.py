@@ -7,6 +7,8 @@ from models.User import User
 
 from bson.json_util import dumps 
 
+import datetime
+
 class NotificationController: 
 
     def markReadNotification(currentUser, notificationId): 
@@ -108,8 +110,14 @@ class NotificationController:
     def insertNotification(anomalyType):
         anomalyTypes = Constant.getAnomalyTypes()
 
-        notificationDetails = { "message": anomalyTypes[anomalyType]}
+        currentTime = datetime.datetime.now()
+        currentTimeString = currentTime.strftime("%Y-%m-%d %H:%M:%S")
 
+        notificationDetails = { 
+            "message": anomalyTypes[anomalyType],
+            "timestamp": currentTimeString
+        }
+        
         # store notification 
         notificationObj = Notification(notificationDetails)
         notificationId = notificationObj.save().inserted_id

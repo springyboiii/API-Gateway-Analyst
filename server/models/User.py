@@ -99,6 +99,7 @@ class User:
             "notifications":     {
                 "$each": [{
                     "notificationId": notificationDetails["notificationId"],
+                    "timestamp": notificationDetails["timestamp"],
                     "message": notificationDetails["message"],
                     "checked": False
                 }],
