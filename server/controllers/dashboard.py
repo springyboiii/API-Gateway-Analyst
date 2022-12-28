@@ -90,3 +90,16 @@ class DashboardController():
 
 
         return result
+    
+    def get_avg_line_chart_diff_int(request, feature, limit, db_cols):
+        data1=request.data
+        dict_str = data1.decode("UTF-8")
+        time=dict_str[9:-2]
+        if time=="DEFAULT" or time=="ul":
+            return DashboardController.get_frequency_line_graph(db_cols[time],feature,limit)
+        elif time=="1h":
+            return DashboardController.get_frequency_line_graph(db_cols[time],feature,limit)
+        elif time=="2h":
+            return DashboardController.get_frequency_line_graph(db_cols[time],feature,limit)
+        elif time=="4h":
+            return DashboardController.get_frequency_line_graph(db_cols[time],feature,limit)

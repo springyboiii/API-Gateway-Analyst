@@ -9,6 +9,9 @@ import {
     LOGIN_USER_SUCCESS,
     LOGOUT_USER,
     TOGGLE_SIDEBAR,
+    REGISTER_ADMIN_BEGIN,
+    REGISTER_ADMIN_SUCCESS,
+    REGISTER_ADMIN_ERROR,
 } from "./actions"
 
 import { initialState } from './appContext'
@@ -30,23 +33,23 @@ const reducer = (state, action) => {
             alertText: '',
         }
     }
-    if (action.type === REGISTER_USER_BEGIN) {
+    if (action.type === REGISTER_ADMIN_BEGIN) {
         return {
             ...state,
             isLoading: true,
         }
     }
-    if (action.type === REGISTER_USER_SUCCESS) {
+    if (action.type === REGISTER_ADMIN_SUCCESS) {
         return {
             ...state,
             isLoading: false,
             showAlert: true,
             alertType: 'success',
-            alertText: 'User Created !',
+            alertText: 'Admin Created !',
             user: action.payload.user
         }
     }
-    if (action.type === REGISTER_USER_ERROR) {
+    if (action.type === REGISTER_ADMIN_ERROR) {
         return {
             ...state,
             isLoading: false,
@@ -95,6 +98,31 @@ const reducer = (state, action) => {
           showSidebar: !state.showSidebar,
         }
       }
+      if (action.type === REGISTER_USER_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        }
+    }
+    if (action.type === REGISTER_USER_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: 'success',
+            alertText: 'User Created !',
+            user: action.payload.user
+        }
+    }
+    if (action.type === REGISTER_USER_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: 'danger',
+            alertText: action.payload.msg.data,
+        }
+    }
     throw new Error(`no such action : ${action.type}`)
 }
 export default reducer
