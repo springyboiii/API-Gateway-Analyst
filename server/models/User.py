@@ -55,11 +55,14 @@ class User:
             "password": res["password"],
         })
 
-    def find(condition={}, projections= {}):
+    def find(condition={}, projections= {}, limit=-1):
         db = Database().getConnection() 
         col = db['user']
 
-        return col.find(condition, projections)
+        if limit == -1: 
+            return col.find(condition, projections)
+        else: 
+            return col.find(condition, projections).limit(limit)
     
     def updateOne(condition, data):
         db = Database().getConnection() 

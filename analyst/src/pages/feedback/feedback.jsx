@@ -6,6 +6,7 @@ import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
 import { getAllFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/feedbackService";
+import "./feedback.scss";
 
 import {
   CategoryScale,
@@ -41,18 +42,19 @@ function Feedback() {
   // const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
   const renderFeedbacks = () => {
     return feedbacks.map((feedback,i) => {
-      return <tr >
+      return <tr key={i} >
         {/* key={feedbackId["$oid"]}  */}
         {/* feedback["iod"]["kdsf"] */}
-      <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
-      <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{feedback["message"]}</td>
-      
+      {/* <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
+      <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{feedback["message"]}</td> */}
+      <td  >{i}</td>
+      <td >{feedback["message"]}</td>
     </tr>
     })
   };
   const renderHeader = () => {
     return <tr>
-      <th>Id</th>
+      <th>ID</th>
       <th>Feedback</th>
     </tr>
   };
@@ -107,7 +109,7 @@ function Feedback() {
       <div className="notification-container">
         {/* <Navbar /> */}
         
-          <div className="table">
+          <div className="container">
       {renderTable()}
      </div>
         </div>

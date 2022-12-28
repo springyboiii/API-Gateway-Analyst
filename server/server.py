@@ -314,6 +314,10 @@ def getAllNotification(currentUser):
     return NotificationController.getAllNotifications(currentUser)
     # return 0
 
+@app.route("/notifications/<limit>", methods=["GET"])
+@tokenRequired 
+def getSomeNotifications(currentUser, limit):
+    return NotificationController.getSomeNotifications(currentUser, int(limit))
 
 @app.route("/notifications/unread", methods=["GET"])
 @tokenRequired 
@@ -408,8 +412,8 @@ def readFromGateway():
         time.sleep(2)
 
 # uncomment below prediction sending thread to start
-# thread1 = threading.Thread(target=readFromGateway)
-# thread1.start()
+thread1 = threading.Thread(target=readFromGateway)
+thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
