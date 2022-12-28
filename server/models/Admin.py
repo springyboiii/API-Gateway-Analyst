@@ -50,16 +50,23 @@ class Admin:
 
         return result
 
-    # def findUnreadFeedbacksOfAdmin(adminId): 
-    #     db = Database().getConnection() 
-    #     col = db['admin']
+    def findUnreadFeedbacksOfAdmin(adminId): 
+        db = Database().getConnection() 
+        col = db['admin']
+        print("find unread feedbacks")
 
-    #     result = col.find({
-    #         "_id": adminId,
-    #         "feedbacks": { "$type": "array" }, "feedbacks.checked": True 
-    #     })
+        return col.find({
+            "_id": adminId
+        }, {
+            "feedbacks": {
+                "$filter": {
+                    "input": "$feedbacks", 
+                    "as": "feedback",
+                    "cond": {"$eq": ["$$feedback.checked", False]}
+                }
+            }
+        })
 
-    #     print(result.pretty())
 
 
     def findOneGetObj(condition):
@@ -78,7 +85,7 @@ class Admin:
             "password": res["password"],
         })
     
-    def insertFeedback(condition, feedbackId): 
+    def insertFeedback(condition, feedbackDetails): 
         # insert feedbackId for all admins 
         db = Database().getConnection() 
         col = db['admin']
@@ -86,10 +93,10 @@ class Admin:
         return col.update_one(condition, { "$push": {
             "feedbacks":     {
                 "$each": [{
-                    "feedbackId": feedbackId,
+                    "feedbackId": feedbackDetails["feedbackId"],
+                    "message": feedbackDetails["message"],
                     "checked": False
                 }],
-                "$position": 0 
             }
         }})
     

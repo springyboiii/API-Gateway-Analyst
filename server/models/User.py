@@ -64,6 +64,32 @@ class User:
         else: 
             return col.find(condition, projections).limit(limit)
     
+    def findUnreadNotifications(userId): 
+        db = Database().getConnection() 
+        col = db['user']
+        print("find unread notifications")
+        pipeline = [
+            {
+                "$match": {
+                    "_id": userId
+                }
+            },
+            {
+                "$project": {
+                    "notifications": {
+                        "$filter": {
+                            "input": "$notifications",
+                            "as": "notification",
+                            "cond": { "eq": ["$$notification.checked", True] } 
+                                    }
+                                }
+                
+                            }   
+            }
+        ]
+        return col.aggregate(pipeline)
+
+
     def updateOne(condition, data):
         db = Database().getConnection() 
         col = db['user']
