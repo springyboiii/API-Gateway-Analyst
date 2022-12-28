@@ -133,125 +133,112 @@ def anomaly_time_area_data():
 def user_pct_data():
     return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_user_pct', limit=1000, db_cols=db_cols)
 
-# @app.route('/user_pct_data', methods=["GET"])
-# def user_pct_data():
-#     return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_user_pct",1000)
-
 # @app.route('/system_pct_data', methods=["GET"])
 # def system_pct_data():
 #     return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_system_pct",1000)
 @app.route('/system_pct_data', methods=["POST"])
 def system_pct_data():
-    data1=request.data
-    dict_str = data1.decode("UTF-8")
-    time=dict_str[9:-2]
-    feature='system_cpu_system_pct'
-    limit=1000
-    if time=="DEFAULT" or time=="ul":
-        return DashboardController.get_frequency_line_graph(preprocessed_averaged_30_min,feature,limit)
-    elif time=="1h":
-        return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,feature,limit)
-    elif time=="2h":
-        return DashboardController.get_frequency_line_graph(preprocessed_averaged_2_hour,feature,limit)
-    elif time=="4h":
-        return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,feature,limit)
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,feature,limit)
-@app.route('/idle_pct_data', methods=["GET"])
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_system_pct', limit=1000, db_cols=db_cols)
+
+@app.route('/idle_pct_data', methods=["POST"])
 def idle_pct_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_idle_pct",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_idle_pct', limit=1000, db_cols=db_cols)
 
-@app.route('/iowait_pct_data', methods=["GET"])
+
+@app.route('/iowait_pct_data', methods=["POST"])
 def iowait_pct_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_iowait_pct",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_iowait_pct', limit=1000, db_cols=db_cols)
 
-@app.route('/softirq_pct_data', methods=["GET"])
+@app.route('/softirq_pct_data', methods=["POST"])
 def softirq_pct_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_softirq_pct",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_softirq_pct', limit=1000, db_cols=db_cols)
 
-@app.route('/total_pct_data', methods=["GET"])
+
+@app.route('/total_pct_data', methods=["POST"])
 def total_pct_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_total_pct",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_total_pct', limit=1000, db_cols=db_cols)
+
 
 # memory
-@app.route('/memory_used_pct', methods=["GET"])
+@app.route('/memory_used_pct', methods=["POST"])
 def memory_used_pct_data():
-    return DashboardController.get_frequency_line_graph(col,"system_memory_used_pct",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_memory_used_pct', limit=1000, db_cols=db_cols)
 
 
 # disk
 # system_diskio_iostat_await
-@app.route('/diskio_iostat_await', methods=["GET"])
+@app.route('/diskio_iostat_await', methods=["POST"])
 def diskio_iostat_await_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_diskio_iostat_await",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_diskio_iostat_await', limit=1000, db_cols=db_cols)
 
 # system_diskio_iostat_queue_avg_size
-@app.route('/diskio_iostat_queue_avg_size', methods=["GET"])
+@app.route('/diskio_iostat_queue_avg_size', methods=["POST"])
 def diskio_iostat_queue_avg_size_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_diskio_iostat_queue_avg_size",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_diskio_iostat_queue_avg_size', limit=1000, db_cols=db_cols)
 
 # system_diskio_iostat_read_per_sec_bytes
-@app.route('/diskio_iostat_read_per_sec_bytes', methods=["GET"])
+@app.route('/diskio_iostat_read_per_sec_bytes', methods=["POST"])
 def diskio_iostat_read_per_sec_bytes_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_diskio_iostat_read_per_sec_bytes",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_diskio_iostat_read_per_sec_bytes', limit=1000, db_cols=db_cols)
 
 # system_diskio_iostat_write_per_sec_bytes
-@app.route('/diskio_iostat_write_per_sec_bytes', methods=["GET"])
+@app.route('/diskio_iostat_write_per_sec_bytes', methods=["POST"])
 def diskio_iostat_write_per_sec_bytes_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_diskio_iostat_write_per_sec_bytes",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_diskio_iostat_write_per_sec_bytes', limit=1000, db_cols=db_cols)
 
 
 # jvm
 # jvm_metrics_gc_psms_collection_count
-@app.route('/psms_collection_count', methods=["GET"])
+@app.route('/psms_collection_count', methods=["POST"])
 def psms_collection_count_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"jvm_metrics_gc_psms_collection_count",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='jvm_metrics_gc_psms_collection_count', limit=1000, db_cols=db_cols)
 
 # jvm_metrics_gc_psms_collection_time
-@app.route('/psms_collection_time', methods=["GET"])
+@app.route('/psms_collection_time', methods=["POST"])
 def psms_collection_time_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"jvm_metrics_gc_psms_collection_time",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='jvm_metrics_gc_psms_collection_time', limit=1000, db_cols=db_cols)
 
 # jvm_metric_gc_pss_collection_count
-@app.route('/pss_collection_count', methods=["GET"])
+@app.route('/pss_collection_count', methods=["POST"])
 def pss_collection_count_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"jvm_metric_gc_pss_collection_count",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='jvm_metric_gc_pss_collection_count', limit=1000, db_cols=db_cols)
 
 # jvm_metrics_gc_pss_collection_time
-@app.route('/pss_collection_time', methods=["GET"])
+@app.route('/pss_collection_time', methods=["POST"])
 def pss_collection_time_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"jvm_metrics_gc_pss_collection_time",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='jvm_metrics_gc_pss_collection_time', limit=1000, db_cols=db_cols)
 
 
 # network
 # system_network_in_bytes
-@app.route('/network_in_bytes', methods=["GET"])
+@app.route('/network_in_bytes', methods=["POST"])
 def network_in_bytes_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_network_in_bytes",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_network_in_bytes', limit=1000, db_cols=db_cols)
 
 # system_network_in_packets
-@app.route('/network_in_packets', methods=["GET"])
+@app.route('/network_in_packets', methods=["POST"])
 def network_in_packets_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_network_in_packets",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_network_in_packets', limit=1000, db_cols=db_cols)
 
 # system_network_in_dropped
-@app.route('/network_in_dropped', methods=["GET"])
+@app.route('/network_in_dropped', methods=["POST"])
 def network_in_dropped_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_network_in_dropped",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_network_in_dropped', limit=1000, db_cols=db_cols)
 
 # system_network_out_bytes
-@app.route('/network_out_bytes', methods=["GET"])
+@app.route('/network_out_bytes', methods=["POST"])
 def network_out_bytes_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_network_out_bytes",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_network_out_bytes', limit=1000, db_cols=db_cols)
 
 # system_network_out_packets
-@app.route('/network_out_packets', methods=["GET"])
+@app.route('/network_out_packets', methods=["POST"])
 def network_out_packets_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_network_out_packets",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_network_out_packets', limit=1000, db_cols=db_cols)
 
 # system_network_out_errors
-@app.route('/network_out_errors', methods=["GET"])
+@app.route('/network_out_errors', methods=["POST"])
 def network_out_errors_data():
-    return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_network_out_errors",1000)
+    return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_network_out_errors', limit=1000, db_cols=db_cols)
 
 @app.route('/prediction_bar_data', methods=["GET"])
 def prediction_bar_data():

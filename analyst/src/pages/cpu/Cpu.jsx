@@ -76,7 +76,162 @@ function Cpu() {
         ],
       });
     });
+    axios.post("/system_pct_data", {
+      data: value,
+    }
+    ).then((response) => {
+      console.log(response);
+      const res = response.data;
+      set_system_pct_data({
+        labels: res.timestamp,
+        datasets: [
+          {
+            fill: true,
+            // label: 'system_cpu_user_pct',
+            data: res.system_cpu_system_pct,
+            borderColor: "rgb(53, 162, 235)",
+            backgroundColor: "rgba(53, 162, 235, 0.5)",
+            tension: 0.4,
+          },
+        ],
+      });
+    })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+
+    axios.post("/idle_pct_data", {
+      data: value
+    })
+      .then((response) => {
+        console.log(response);
+        const res = response.data;
+        set_idle_pct_data({
+          labels: res.timestamp,
+          datasets: [
+            {
+              fill: true,
+              // label: 'system_cpu_user_pct',
+              data: res.system_cpu_idle_pct,
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
+              tension: 0.4,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+    axios.post("/idle_pct_data", {
+      data: value
+    })
+      .then((response) => {
+        console.log(response);
+        const res = response.data;
+        set_idle_pct_data({
+          labels: res.timestamp,
+          datasets: [
+            {
+              fill: true,
+              // label: 'system_cpu_user_pct',
+              data: res.system_cpu_idle_pct,
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
+              tension: 0.4,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+    axios.post("/iowait_pct_data", {
+      data: value
+    })
+      .then((response) => {
+        console.log(response);
+        const res = response.data;
+        set_iowait_pct_data({
+          labels: res.timestamp,
+          datasets: [
+            {
+              fill: true,
+              // label: 'system_cpu_user_pct',
+              data: res.system_cpu_iowait_pct,
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
+              tension: 0.4,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+
+    axios.post("/softirq_pct_data", {
+      data: value
+    })
+      .then((response) => {
+        console.log(response);
+        const res = response.data;
+        set_softirq_pct_data({
+          labels: res.timestamp,
+          datasets: [
+            {
+              fill: true,
+              // label: 'system_cpu_user_pct',
+              data: res.system_cpu_softirq_pct,
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
+              tension: 0.4,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+
+    axios.post("/total_pct_data", {
+      data: value
+    })
+      .then((response) => {
+        console.log(response);
+        const res = response.data;
+        console.log(res.system_cpu_total_pct)
+        set_total_pct_data({
+          labels: res.timestamp,
+          datasets: [
+            {
+              fill: true,
+              // label: 'system_cpu_user_pct',
+              data: res.system_cpu_total_pct,
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
+              tension: 0.4,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+        }
+      });
     return;
+
   }
 
   useEffect(() => {
@@ -130,34 +285,32 @@ function Cpu() {
       },
     });
 
-    axios({
-      method: "GET",
-      url: "/system_pct_data",
-    })
-      .then((response) => {
-        console.log(response);
-        const res = response.data;
-        set_system_pct_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_system_pct,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "/system_pct_data",
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     const res = response.data;
+    //     set_system_pct_data({
+    //       labels: res.timestamp,
+    //       datasets: [
+    //         {
+    //           fill: true,
+    //           // label: 'system_cpu_user_pct',
+    //           data: res.system_cpu_system_pct,
+    //           borderColor: "rgb(53, 162, 235)",
+    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
+    //           tension: 0.4,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //     }
+    //   });
 
     set_system_pct_options({
       responsive: true,
@@ -178,34 +331,32 @@ function Cpu() {
       },
     });
 
-    axios({
-      method: "GET",
-      url: "/idle_pct_data",
-    })
-      .then((response) => {
-        console.log(response);
-        const res = response.data;
-        set_idle_pct_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_idle_pct,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "/idle_pct_data",
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     const res = response.data;
+    //     set_idle_pct_data({
+    //       labels: res.timestamp,
+    //       datasets: [
+    //         {
+    //           fill: true,
+    //           // label: 'system_cpu_user_pct',
+    //           data: res.system_cpu_idle_pct,
+    //           borderColor: "rgb(53, 162, 235)",
+    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
+    //           tension: 0.4,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //     }
+    //   });
 
     set_idle_pct_options({
       responsive: true,
@@ -226,34 +377,32 @@ function Cpu() {
       },
     });
 
-    axios({
-      method: "GET",
-      url: "/iowait_pct_data",
-    })
-      .then((response) => {
-        console.log(response);
-        const res = response.data;
-        set_iowait_pct_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_iowait_pct,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "/iowait_pct_data",
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     const res = response.data;
+    //     set_iowait_pct_data({
+    //       labels: res.timestamp,
+    //       datasets: [
+    //         {
+    //           fill: true,
+    //           // label: 'system_cpu_user_pct',
+    //           data: res.system_cpu_iowait_pct,
+    //           borderColor: "rgb(53, 162, 235)",
+    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
+    //           tension: 0.4,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //     }
+    //   });
 
     set_iowait_pct_options({
       responsive: true,
@@ -274,34 +423,32 @@ function Cpu() {
       },
     });
 
-    axios({
-      method: "GET",
-      url: "/softirq_pct_data",
-    })
-      .then((response) => {
-        console.log(response);
-        const res = response.data;
-        set_softirq_pct_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_softirq_pct,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "/softirq_pct_data",
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     const res = response.data;
+    //     set_softirq_pct_data({
+    //       labels: res.timestamp,
+    //       datasets: [
+    //         {
+    //           fill: true,
+    //           // label: 'system_cpu_user_pct',
+    //           data: res.system_cpu_softirq_pct,
+    //           borderColor: "rgb(53, 162, 235)",
+    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
+    //           tension: 0.4,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //     }
+    //   });
 
     set_softirq_pct_options({
       responsive: true,
@@ -322,35 +469,33 @@ function Cpu() {
       },
     });
 
-    axios({
-      method: "GET",
-      url: "/total_pct_data",
-    })
-      .then((response) => {
-        console.log(response);
-        const res = response.data;
-        console.log(res.system_cpu_total_pct)
-        set_total_pct_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_total_pct,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "/total_pct_data",
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     const res = response.data;
+    //     console.log(res.system_cpu_total_pct)
+    //     set_total_pct_data({
+    //       labels: res.timestamp,
+    //       datasets: [
+    //         {
+    //           fill: true,
+    //           // label: 'system_cpu_user_pct',
+    //           data: res.system_cpu_total_pct,
+    //           borderColor: "rgb(53, 162, 235)",
+    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
+    //           tension: 0.4,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response)
+    //     }
+    //   });
 
     set_total_pct_options({
       responsive: true,
@@ -404,7 +549,7 @@ function Cpu() {
           </div>
         </div> */}
         <div className="row dropdown-container">
-            <div className="dropdown">
+          <div className="dropdown">
             <Select
               options={options}
               defaultValue={options}
@@ -422,14 +567,13 @@ function Cpu() {
                 // console.log("select")
               }}
             /></div>
-          </div>
+        </div>
         <Line options={user_pct_options} data={user_pct_data} />
-        {/* <Line options={idle_pct_options} data={idle_pct_data} />
+        <Line options={idle_pct_options} data={idle_pct_data} />
         <Line options={iowait_pct_options} data={iowait_pct_data} />
         <Line options={system_pct_options} data={system_pct_data} />
         <Line options={softirq_pct_options} data={softirq_pct_data} />
-
-        <Line options={total_pct_options} data={total_pct_data} /> */}
+        <Line options={total_pct_options} data={total_pct_data} />
 
       </div>
     </div>

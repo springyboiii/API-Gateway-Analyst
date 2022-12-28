@@ -27,11 +27,35 @@ const Navbar = () => {
             {user?.name} - {user?.type}
             <FaCaretDown />
           </button>
-          {/* <div className={showLogout? 'dropdown' : 'show-dropdown'}> */}
-          <button className='btn' onClick={logoutUser} >
-            logout
-          </button>
+          {/* <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}> */}
+            <button className='btn' onClick={logoutUser} >
+              logout
+            </button>
           {/* </div> */}
+
+          {/* <li>
+            <img src="analyst\src\assets\images\logo.svg" class="profile" />
+            <ul>
+              <li class="sub-item">
+                <span class="material-icons-outlined"> grid_view </span>
+                <p>Dashboard</p>
+              </li>
+              <li class="sub-item">
+                <span class="material-icons-outlined">
+                  format_list_bulleted
+                </span>
+                <p>My Orders</p>
+              </li>
+              <li class="sub-item">
+                <span class="material-icons-outlined"> manage_accounts </span>
+                <p>Update Profile</p>
+              </li>
+              <li class="sub-item">
+                <span class="material-icons-outlined"> logout </span>
+                <p>Logout</p>
+              </li>
+            </ul>
+          </li> */}
 
         </div>
       </div>
