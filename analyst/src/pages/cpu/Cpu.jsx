@@ -4,7 +4,7 @@ import React from "react";
 // import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
 import Select from "react-select";
-import Wrapper from "../../assets/wrappers/JobsContainer";
+import Wrapper from "../../assets/wrappers/ChartContainer";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";

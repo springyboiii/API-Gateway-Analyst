@@ -5,6 +5,7 @@ import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+
 import {
   CategoryScale,
   LinearScale,
@@ -14,6 +15,7 @@ import {
   Filler,
 } from "chart.js";
 import Select from "react-select";
+import Wrapper from "../../assets/wrappers/ChartContainer";
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -358,59 +360,46 @@ function Disk() {
 
 
   }, []);
-  
-  return (
-    <div className="Cpu">
-      {/* <Sidebar /> */}
-      <div className="Cpu-container">
-        {/* <Navbar /> */}
-        {/* <div className="rows">
-          <div className="row">
-            <div className="area-container">
-              <Line options={diskio_iostat_await_options} data={diskio_iostat_await_data} />
-            </div>
-            <div className="area-container">
-              <Line options={diskio_iostat_queue_avg_size_options} data={diskio_iostat_queue_avg_size_data} />
-            </div>
-          </div>
 
-          <div className="row">
-            <div className="area-container">
-              <Line options={diskio_iostat_read_per_sec_bytes_options} data={diskio_iostat_read_per_sec_bytes_data} />
-            </div>
-            <div className="area-container">
-              <Line options={diskio_iostat_write_per_sec_bytes_options} data={diskio_iostat_write_per_sec_bytes_data} />
-            </div>
-          </div>
-        </div> */}
+  return (<Wrapper>
+    <div className="row dropdown-container">
+      <div className="dropdown">
+        <Select
+          options={options}
+          defaultValue={options}
+          onChange={(e) => {
+            setSelectedOption(e.value);
+            // console.log(selectedOption)
 
-        <div className="row dropdown-container">
-          <div className="dropdown">
-            <Select
-              options={options}
-              defaultValue={options}
-              onChange={(e) => {
-                setSelectedOption(e.value);
-                // console.log(selectedOption)
+            handleChange(e.value);
+            console.log("e.value")
+            console.log(e.value)
 
-                handleChange(e.value);
-                console.log("e.value")
-                console.log(e.value)
+            console.log("selectedOption")
+            console.log(selectedOption)
 
-                console.log("selectedOption")
-                console.log(selectedOption)
-
-                // console.log("select")
-              }}
-            /></div>
-        </div>
-        <Line options={diskio_iostat_await_options} data={diskio_iostat_await_data} />
-        <Line options={diskio_iostat_queue_avg_size_options} data={diskio_iostat_queue_avg_size_data} />
-        <Line options={diskio_iostat_read_per_sec_bytes_options} data={diskio_iostat_read_per_sec_bytes_data} />
-        <Line options={diskio_iostat_write_per_sec_bytes_options} data={diskio_iostat_write_per_sec_bytes_data} />
-
+            // console.log("select")
+          }}
+        />
       </div>
     </div>
+    <div className="row">
+      <div className="column">
+        <Line options={diskio_iostat_await_options} data={diskio_iostat_await_data} />
+        <Line options={diskio_iostat_queue_avg_size_options} data={diskio_iostat_queue_avg_size_data} />
+      </div>
+      <div className="column">
+        <Line options={diskio_iostat_read_per_sec_bytes_options} data={diskio_iostat_read_per_sec_bytes_data} />
+        <Line options={diskio_iostat_write_per_sec_bytes_options} data={diskio_iostat_write_per_sec_bytes_data} />
+      </div>
+
+    </div>
+  </Wrapper>
+
+
+
+
+
   );
 }
 

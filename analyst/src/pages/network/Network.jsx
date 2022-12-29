@@ -14,6 +14,7 @@ import {
   Filler,
 } from "chart.js";
 import Select from "react-select";
+import Wrapper from "../../assets/wrappers/ChartContainer";
 
 ChartJS.register(
   ArcElement,
@@ -359,64 +360,44 @@ function Network() {
 
   }, []);
   return (
-    <div className="Cpu">
-      {/* <Sidebar /> */}
-      <div className="Cpu-container">
-        {/* <Navbar /> */}
-        {/* <div className="rows">
-          <div className="row">
-            <div className="area-container">
-              <Line options={network_in_bytes_options} data={network_in_bytes_data} />
-            </div>
-            <div className="area-container">
-              <Line options={network_in_packets_options} data={network_in_packets_data} />
-            </div>
-            <div className="area-container">
-              <Line options={network_in_dropped_options} data={network_in_dropped_data} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="area-container">
-              <Line options={network_out_bytes_options} data={network_out_bytes_data} />
-            </div>
-            <div className="area-container">
-              <Line options={network_out_packets_options} data={network_out_packets_data} />
-            </div>
-            <div className="area-container">
-              <Line options={network_out_errors_options} data={network_out_errors_data} />
-            </div>
-          </div>
-        </div> */}
-        <div className="row dropdown-container">
-          <div className="dropdown">
-            <Select
-              options={options}
-              defaultValue={options}
-              onChange={(e) => {
-                setSelectedOption(e.value);
-                // console.log(selectedOption)
+    <Wrapper>
+      <div className="row dropdown-container">
+        <div className="dropdown">
+          <Select
+            options={options}
+            defaultValue={options}
+            onChange={(e) => {
+              setSelectedOption(e.value);
+              // console.log(selectedOption)
 
-                handleChange(e.value);
-                console.log("e.value")
-                console.log(e.value)
+              handleChange(e.value);
+              console.log("e.value")
+              console.log(e.value)
 
-                console.log("selectedOption")
-                console.log(selectedOption)
+              console.log("selectedOption")
+              console.log(selectedOption)
 
-                // console.log("select")
-              }}
-            />
-          </div>
+              // console.log("select")
+            }}
+          />
         </div>
-        <Line options={network_in_bytes_options} data={network_in_bytes_data} />
-        <Line options={network_in_packets_options} data={network_in_packets_data} />
-        <Line options={network_in_dropped_options} data={network_in_dropped_data} />
-        <Line options={network_out_bytes_options} data={network_out_bytes_data} />
-        <Line options={network_out_packets_options} data={network_out_packets_data} />
-        <Line options={network_out_errors_options} data={network_out_errors_data} />
+      </div>
+      <div className="row">
+        <div className="column">
+          <Line options={network_in_bytes_options} data={network_in_bytes_data} />
+          <Line options={network_in_packets_options} data={network_in_packets_data} />
+          <Line options={network_in_dropped_options} data={network_in_dropped_data} />
+        </div>
+        <div className="column">
+          <Line options={network_out_bytes_options} data={network_out_bytes_data} />
+          <Line options={network_out_packets_options} data={network_out_packets_data} />
+          <Line options={network_out_errors_options} data={network_out_errors_data} />
+        </div>
 
       </div>
-    </div>
+    </Wrapper>
+
+
   );
 }
 
