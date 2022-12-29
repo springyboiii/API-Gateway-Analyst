@@ -7,6 +7,8 @@ from models.User import User
 
 from bson.json_util import dumps 
 
+import datetime
+
 class NotificationController: 
 
     def markReadNotification(currentUser, notificationId): 
@@ -37,22 +39,26 @@ class NotificationController:
             res.status_code = 403 
             return res     
         
-        notificationIds = User.find({
-            "_id": ObjectId(currentUser["_id"])
-        }, {"notifications": 1, "_id": 0})
+        # notificationIds = User.find({
+        #     "_id": ObjectId(currentUser["_id"])
+        # }, {"notifications": 1, "_id": 0})
 
-        notificationIdObjs = notificationIds[0]["notifications"]
+        # notificationIdObjs = notificationIds[0]["notifications"]
 
-        result = []
+        # result = []
 
-        for notificationIdObj in notificationIdObjs: 
-            if notificationIdObj["checked"] == False: 
-                notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
-                # print(f"notification: {notification}")
-                notificationIdObj["message"] = notification["message"]
-                result.append({"notificationId": notificationIdObj["notificationId"], "message": notificationIdObj["message"], "checked": notificationIdObj["checked"]})
+        # for notificationIdObj in notificationIdObjs: 
+        #     if notificationIdObj["checked"] == False: 
+        #         notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
+        #         # print(f"notification: {notification}")
+        #         notificationIdObj["message"] = notification["message"]
+        #         result.append({"notificationId": notificationIdObj["notificationId"], "message": notificationIdObj["message"], "checked": notificationIdObj["checked"]})
         
-        return dumps({"unreadNotifications": result})
+        # return dumps({"unreadNotifications": result})
+
+        result = User.findUnreadNotificationsOfUser(ObjectId(currentUser["_id"]))
+        # print(dumps(result))
+        return dumps(result)
 
     def getAllNotifications(currentUser): 
         roles = Constant.getRoles()
@@ -79,22 +85,51 @@ class NotificationController:
         
         return dumps({"allNotifications": allNotificationIdObjs})
 
+    def getSomeNotifications(currentUser, limit): 
+        roles = Constant.getRoles()
+        print("limit", limit )
+        if currentUser["type"] != roles["user"]: 
+            res = jsonify("Access denied.")
+            res.status_code = 403 
+            return res 
+        
+        notificationIds = User.find({
+            "_id": ObjectId(currentUser["_id"])
+        }, {"notifications": 1, "_id": 0}, limit=limit)
+
+        notificationIdObjs = notificationIds[0]["notifications"]
+        notificationIdObjs = notificationIdObjs[:limit]
+
+        print(dumps(notificationIdObjs))
+        for notificationIdObj in notificationIdObjs: 
+            notification = Notification.findOne({"_id": notificationIdObj["notificationId"]}, {"_id": 0, "message": 1})
+            notificationIdObj["message"] = notification["message"]
+        print("finished")
+        return dumps({"notifications": notificationIdObjs})
 
     def insertNotification(anomalyType):
         anomalyTypes = Constant.getAnomalyTypes()
 
-        notificationMessage = { "message": anomalyTypes[anomalyType]}
+        currentTime = datetime.datetime.now()
+        currentTimeString = currentTime.strftime("%Y-%m-%d %H:%M:%S")
 
+        notificationDetails = { 
+            "message": anomalyTypes[anomalyType],
+            "timestamp": currentTimeString
+        }
+        
         # store notification 
-        notificationObj = Notification(notificationMessage)
+        notificationObj = Notification(notificationDetails)
         notificationId = notificationObj.save().inserted_id
         
+        notificationDetails["notificationId"] = notificationId
+
         # store notification in all users
         users = User.find(projections = {"_id": 1})
 
         for user in users: 
             # print(user)
-            User.insertNotification({"_id": user.get("_id")}, notificationId)
+            User.insertNotification({"_id": user.get("_id")}, notificationDetails)
 
         return 1 
 

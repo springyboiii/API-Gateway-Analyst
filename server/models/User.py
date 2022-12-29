@@ -55,12 +55,34 @@ class User:
             "password": res["password"],
         })
 
-    def find(condition={}, projections= {}):
+    def find(condition={}, projections= {}, limit=-1):
         db = Database().getConnection() 
         col = db['user']
 
-        return col.find(condition, projections)
+        if limit == -1: 
+            return col.find(condition, projections)
+        else: 
+            return col.find(condition, projections).limit(limit)
     
+    def findUnreadNotificationsOfUser(userId): 
+        db = Database().getConnection() 
+        col = db['user']
+        print("find unread notifications")
+        
+        result = col.find({
+            "_id": userId
+        }, {
+            "notifications": {
+                "$filter": {
+                    "input": "$notifications",
+                    "as": "notification",
+                    "cond": {"$eq": ["$$notification.checked", False]}
+                }
+            }
+        })
+        return result
+
+
     def updateOne(condition, data):
         db = Database().getConnection() 
         col = db['user']
@@ -69,18 +91,18 @@ class User:
             "name": data["name"]
         }})
 
-    def insertNotification(condition, notificationId): 
+    def insertNotification(condition, notificationDetails): 
         db = Database().getConnection() 
         col = db['user']
-
 
         return col.update_one(condition, { "$push": {
             "notifications":     {
                 "$each": [{
-                    "notificationId": notificationId,
+                    "notificationId": notificationDetails["notificationId"],
+                    "timestamp": notificationDetails["timestamp"],
+                    "message": notificationDetails["message"],
                     "checked": False
                 }],
-                "$position": 0 
             }
         }})
     

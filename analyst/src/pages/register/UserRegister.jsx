@@ -30,7 +30,7 @@ const UserRegister = () => {
 
         const { name, email, password } = values
         if (!email || !password || !name) {
-            displayAlert()
+            // displayAlert()
             return
         }
         const currentUser = { name, email, password }
@@ -47,12 +47,12 @@ const UserRegister = () => {
 
     }
     // useEffect(() => {
-    //     if (user) {
+        
     //       setTimeout(() => {
-    //         navigate('/login')
-    //       }, 3000)
-    //     }
-    //   }, [user, navigate])
+    //         navigate('/register-user')
+    //       }, 2000)
+        
+    //   }, [navigate])
 
     return (
         <Wrapper className="full-page">

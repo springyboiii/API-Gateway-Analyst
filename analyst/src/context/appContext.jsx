@@ -6,11 +6,16 @@ import {
     LOGIN_USER_SUCCESS,
     LOGOUT_USER,
     TOGGLE_SIDEBAR,
+    REGISTER_ADMIN_BEGIN,
+    REGISTER_ADMIN_SUCCESS,
+    REGISTER_ADMIN_ERROR,
 } from './actions'
 
 import axios from 'axios'
 import reducer from './reducer'
 import jwtDecode from 'jwt-decode'
+import { postUser } from "../services/userService"
+
 
 const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
@@ -92,7 +97,7 @@ const AppProvider = ({ children }) => {
     const registerAdmin = async (currentUser) => {
         // console.log(currentUser)
 
-        dispatch({ type: REGISTER_USER_BEGIN })
+        dispatch({ type: REGISTER_ADMIN_BEGIN })
         try {
             const response = await axios.post('/admins', currentUser)
             console.log(response)
@@ -100,16 +105,18 @@ const AppProvider = ({ children }) => {
             const user = { name, email }
             // const { user, token, location } = response.data
             dispatch({
-                type: REGISTER_USER_SUCCESS,
+                type: REGISTER_ADMIN_SUCCESS,
                 payload: { user }
 
             })
             // local storage
             // addUserToLocalStorage(user, token, location)
         } catch (error) {
+            console.log("error")
+            console.log(error)
             console.log(error.response)
             dispatch({
-                type: REGISTER_USER_ERROR,
+                type: REGISTER_ADMIN_ERROR,
                 payload: { msg: error.response },
             })
         }
@@ -121,24 +128,32 @@ const AppProvider = ({ children }) => {
 
         dispatch({ type: REGISTER_USER_BEGIN })
         try {
-            setJwt(state.token)
-            const response = await axios.post('users', currentUser)
-            console.log(response)
-            const { name, email } = currentUser
-            const user = { name, email }
-            // const { user, token, location } = response.data
-            dispatch({
-                type: REGISTER_USER_SUCCESS,
-                payload: { user }
+            // setJwt(state.token)
+            // const response = await axios.post('users', currentUser)
+            // console.log(response)
+            // const { name, email } = currentUser
+            // const user = { name, email }
 
-            })
+            // const { user, token, location } = response.data
+
+            postUser(currentUser)
+
+            
             // local storage
             // addUserToLocalStorage(user, token, location)
         } catch (error) {
+            console.log("error")
+            console.log(error)
             console.log(error.response)
             dispatch({
                 type: REGISTER_USER_ERROR,
                 payload: { msg: error.response },
+            })
+        } finally{
+            dispatch({
+                type: REGISTER_USER_SUCCESS,
+                payload: { user }
+
             })
         }
         clearAlert()

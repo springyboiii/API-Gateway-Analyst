@@ -1,10 +1,11 @@
 import React from "react";
-import Sidebar from "../../components/sidebar/Sidebar";
+// import Sidebar from "../../components/sidebar/Sidebar";
 // import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+
 import {
   CategoryScale,
   LinearScale,
@@ -13,6 +14,9 @@ import {
   Title,
   Filler,
 } from "chart.js";
+import Select from "react-select";
+import Wrapper from "../../assets/wrappers/ChartContainer";
+
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -26,21 +30,27 @@ ChartJS.register(
   Filler
 );
 function Memory() {
-  const [user_pct_data, set_user_pct_data] = useState({
+  const [memory_used_pct_data, set_memory_used_pct_data] = useState({
     datasets: [],
   });
-  const [user_pct_options, set_user_pct_options] = useState({});
-  
+  const [memory_used_pct_options, set_memory_used_pct_options] = useState({});
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: "/memory_used_pct",
+  const options = [
+    { value: "DEFAULT", label: "30m" },
+    { value: "1h", label: "1h " },
+    { value: "2h", label: "2h" },
+    { value: "4h", label: "4h " },
+  ];
+  const [selectedOption, setSelectedOption] = useState("30m");
+
+  const handleChange = (value) => {
+    axios.post("/memory_used_pct", {
+      data: value
     })
       .then((response) => {
         console.log(response);
         const res = response.data;
-        set_user_pct_data({
+        set_memory_used_pct_data({
           labels: res.timestamp,
           datasets: [
             {
@@ -57,12 +67,14 @@ function Memory() {
       .catch((error) => {
         if (error.response) {
           console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
         }
       });
+    return;
+  }
+  useEffect(() => {
+    handleChange(null)
 
-    set_user_pct_options({
+    set_memory_used_pct_options({
       responsive: true,
       plugins: {
         legend: {
@@ -75,8 +87,8 @@ function Memory() {
       },
       scales: {
         y: {
-          suggestedMin: 0,
-          suggestedMax: 1,
+          // suggestedMin: 0,
+          // suggestedMax: 1,
         },
       },
     });
@@ -85,21 +97,33 @@ function Memory() {
 
   }, []);
   return (
-    <div className="Cpu">
-      {/* <Sidebar /> */}
-      <div className="Cpu-container">
-        {/* <Navbar /> */}
-        <div className="rows">
-          <div className="row">
-            <div className="area-container">
-              <Line options={user_pct_options} data={user_pct_data} />
-            </div>
-            
-          </div>
+    <Wrapper>
+      <div className="row dropdown-container">
+        <div className="dropdown">
+          <Select
+            options={options}
+            defaultValue={options}
+            onChange={(e) => {
+              setSelectedOption(e.value);
+              handleChange(e.value);
+              console.log("e.value")
+              console.log(e.value)
 
+              console.log("selectedOption")
+              console.log(selectedOption)
+            }}
+          />
         </div>
       </div>
-    </div>
+      <div className="row">
+        {/* <div className="column"> */}
+          <Line options={memory_used_pct_options} data={memory_used_pct_data} />
+        {/* </div> */}
+
+      </div>
+    </Wrapper>
+
+
   );
 }
 
