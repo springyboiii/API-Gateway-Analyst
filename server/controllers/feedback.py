@@ -59,28 +59,32 @@ class FeedbackController:
             res.status_code = 403 
             return res 
 
-        unreadFeedbackIds = Admin.find({
-            "_id": ObjectId(currentUser["_id"]),
-        }, {"feedbacks": 1, "_id": 0})
+        # unreadFeedbackIds = Admin.find({
+        #     "_id": ObjectId(currentUser["_id"]),
+        # }, {"feedbacks": 1, "_id": 0})
                 
-        listUnreadFeedbackIds = list(unreadFeedbackIds)
+        # listUnreadFeedbackIds = list(unreadFeedbackIds)
 
-        result = []
+        # result = []
 
-        if len(listUnreadFeedbackIds) > 0: 
+        # if len(listUnreadFeedbackIds) > 0: 
 
-            unreadFeedbackIdObjs = listUnreadFeedbackIds[0]["feedbacks"]
+        #     unreadFeedbackIdObjs = listUnreadFeedbackIds[0]["feedbacks"]
 
-            for unreadFeedbackIdObj in unreadFeedbackIdObjs: 
-                if unreadFeedbackIdObj["checked"] == False: 
-                    feedback = Feedback.findOne({"_id": unreadFeedbackIdObj["feedbackId"]}, {"_id":0, "message": 1})
+        #     for unreadFeedbackIdObj in unreadFeedbackIdObjs: 
+        #         if unreadFeedbackIdObj["checked"] == False: 
+        #             feedback = Feedback.findOne({"_id": unreadFeedbackIdObj["feedbackId"]}, {"_id":0, "message": 1})
 
-                    unreadFeedbackIdObj["message"] = feedback["message"]
-                    result.append({"feedbackId": unreadFeedbackIdObj["feedbackId"], "message": feedback["message"], "checked":  unreadFeedbackIdObj["checked"]})
+        #             unreadFeedbackIdObj["message"] = feedback["message"]
+        #             result.append({"feedbackId": unreadFeedbackIdObj["feedbackId"], "message": feedback["message"], "checked":  unreadFeedbackIdObj["checked"]})
             
-            return dumps({"unreadFeedbacks": result})
-        else:
-            return jsonify({"unreadFeedbacks": []})
+        #     return dumps({"unreadFeedbacks": result})
+        # else:
+        #     return jsonify({"unreadFeedbacks": []})
+
+        result = Admin.findUnreadFeedbacksOfAdmin(ObjectId(currentUser["_id"]))
+
+        return dumps(result)
 
     def insertFeedback(currentUser, request):
         roles = Constant.getRoles()
@@ -108,11 +112,16 @@ class FeedbackController:
         feedbackObj = Feedback(data)
         feedbackId = feedbackObj.save().inserted_id 
 
+        feedbackDetails = {
+            "feedbackId": feedbackId,
+            "message": feedbackObj.message
+        }
+
         # store to feedbackAdmin as well
         admins = Admin.find(projections={})
         for admin in admins: 
-            print(admin)
-            Admin.insertFeedback({"_id":admin.get("_id")}, feedbackId)
+            # print(admin)
+            Admin.insertFeedback({"_id":admin.get("_id")}, feedbackDetails)
 
         res = jsonify("feedback added successfully")
         res.status_code = 200         
