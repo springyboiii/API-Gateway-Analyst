@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../../components/sidebar/Sidebar";
+// import Sidebar from "../../components/sidebar/Sidebar";
 // import Navbar from "../../components/navbar/Navbar";
 import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -140,24 +140,27 @@ function Memory() {
           </div>
 
         </div> */}
-        <div className="dropdown">
-          <Select
-            options={options}
-            defaultValue={options}
-            onChange={(e) => {
-              setSelectedOption(e.value);
-              // console.log(selectedOption)
+        <div className="row dropdown-container">
+          <div className="dropdown">
+            <Select
+              options={options}
+              defaultValue={options}
+              onChange={(e) => {
+                setSelectedOption(e.value);
+                // console.log(selectedOption)
 
-              handleChange(e.value);
-              console.log("e.value")
-              console.log(e.value)
+                handleChange(e.value);
+                console.log("e.value")
+                console.log(e.value)
 
-              console.log("selectedOption")
-              console.log(selectedOption)
+                console.log("selectedOption")
+                console.log(selectedOption)
 
-              // console.log("select")
-            }}
-          /></div>
+                // console.log("select")
+              }}
+            />
+          </div>
+        </div>
         <Line options={user_pct_options} data={user_pct_data} />
 
       </div>

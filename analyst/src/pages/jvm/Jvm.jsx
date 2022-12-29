@@ -14,7 +14,7 @@ import {
   Filler,
 } from "chart.js";
 import Select from "react-select";
-
+import '../cpu/Cpu'
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -341,26 +341,9 @@ function Jvm() {
       {/* <Sidebar /> */}
       <div className="Cpu-container">
         {/* <Navbar /> */}
-        {/* <div className="rows">
-          <div className="row">
-            <div className="area-container">
-              <Line options={psms_collection_count_options} data={psms_collection_count_data} />
-            </div>
-            <div className="area-container">
-              <Line options={psms_collection_time_options} data={psms_collection_time_data} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="area-container">
-              <Line options={pss_collection_count_options} data={pss_collection_count_data} />
-            </div>
-            <div className="area-container">
-              <Line options={pss_collection_time_options} data={pss_collection_time_data} />
-            </div>
-          </div>
-        </div> */}
+       
         <div className="row dropdown-container">
-          <div className="dropdown">
+          <div className="select-dropdown">
             <Select
               options={options}
               defaultValue={options}
@@ -379,10 +362,27 @@ function Jvm() {
               }}
             /></div>
         </div>
-
-        <Line options={psms_collection_count_options} data={psms_collection_count_data} />
+ <div className="rows">
+          <div className="row">
+            <div className="area-container">
+              <Line options={psms_collection_count_options} data={psms_collection_count_data} />
+            </div>
+            <div className="area-container">
+              <Line options={psms_collection_time_options} data={psms_collection_time_data} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="area-container">
+              {/* <Line options={pss_collection_count_options} data={pss_collection_count_data} /> */}
+            </div>
+            <div className="area-container">
+              <Line options={pss_collection_time_options} data={pss_collection_time_data} />
+            </div>
+          </div>
+        </div>
+        {/* <Line options={psms_collection_count_options} data={psms_collection_count_data} />
         <Line options={psms_collection_time_options} data={psms_collection_time_data} />
-        <Line options={pss_collection_time_options} data={pss_collection_time_data} />
+        <Line options={pss_collection_time_options} data={pss_collection_time_data} /> */}
 
       </div>
     </div>
