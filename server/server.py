@@ -75,6 +75,19 @@ def getTestData():
 def getPreprocessedDataCount():
     return DataController.getPreprocessedDataCount(db)
 
+@app.route("/preprocessed/max/<colName>", methods=["GET"])
+def getPreprocessedDataMaxOfCol(colName):
+    return DataController.getPreprocessedDataMaxOfCol(colName)
+
+@app.route("/preprocessed/min/<colName>", methods=["GET"])
+def getPreprocessedDataMinOfCol(colName):
+    print("get min of a col")
+    return DataController.getPreprocessedDataMinOfCol(colName)
+
+@app.route("/preprocessed/avg/<colName>", methods=["GET"])
+def getPreprocessedDataAvgOfCol(colName):
+    return DataController.getPreprocessedDataAvgOfCol(colName)
+
 @app.route('/preprocessed', methods=["GET"])
 def getPreprocessedData():
     return DataController.getPreprocessedData(db)
