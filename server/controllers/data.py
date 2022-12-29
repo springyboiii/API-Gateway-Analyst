@@ -29,3 +29,7 @@ class DataController():
     def getPreprocessedDataAvgOfCol(colName):
         outputs = DataModel.getPreprocessedDataAvgOfCol(colName)
         return dumps(outputs)
+    
+    def getPreprocessedDataAvgOf(colName, type): 
+        outputs = DataModel.getPreprocessedDataAvgOf(colName, type)
+        return dumps(outputs)
