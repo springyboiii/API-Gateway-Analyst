@@ -118,17 +118,17 @@ def anomaly_type_doughnut():
 def scenario_doughnut():
     return DashboardController.scenario_doughnut(col)
 
-@app.route('/prediction_normal_anomaly_doughnut_data', methods=["GET"])
-def normal_anomaly_doughnut():
+@app.route('/prediction/normal_anomaly_doughnut_data', methods=["GET"])
+def prediction_normal_anomaly_doughnut():
     return DashboardController.prediction_normal_anomaly_doughnut_data()
 
-@app.route('/anomaly_type_doughnut_data', methods=["GET"])
-def anomaly_type_doughnut():
-    return DashboardController.anomaly_type_doughnut(col)
+@app.route('/prediction/anomaly_type_doughnut_data', methods=["GET"])
+def prediction_anomaly_type_doughnut():
+    return DashboardController.prediction_anomaly_type_doughnut()
 
-@app.route('/scenario_doughnut_data', methods=["GET"])
-def scenario_doughnut():
-    return DashboardController.scenario_doughnut(col)
+@app.route('/prediction/scenario_doughnut_data', methods=["GET"])
+def prediction_scenario_doughnut():
+    return DashboardController.prediction_scenario_doughnut()
 
 
 #need to change graph

@@ -12,6 +12,9 @@ import { Doughnut } from "react-chartjs-2";
 import axios from "axios";
 // import * as React from 'react';
 // import Select from '@mui/material/Select';
+
+import { getPredictionNormalAnomalyDoughnutData, getPredictionAnomalyTypeDoughnutData, getPredictionScenarioDoughnutData } from "../../services/predictionService";
+
 import Select from "react-select";
 
 import io from "socket.io-client";
@@ -225,6 +228,41 @@ const ExploratoryAnalysis = ({socket}) => {
       },
     });
 
+    getPredictionNormalAnomalyDoughnutData()
+      .then((response) => {
+        const res = response.data;
+        set_prediction_normal_anomaly_doughnut_data({
+          labels: ["Normal", "Anomaly"],
+          datasets: [
+            {
+              // label: "# of Votes",
+              data: [res.normal, res.anomaly],
+              backgroundColor: [
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 99, 132, 1)",
+              ],
+              //   borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+              borderWidth: 1,
+            },
+          ],
+        });
+      })
+    
+    set_prediction_normal_anomaly_doughnut_options({
+      responsive: true,
+      maintainAspectRatio: false,
+      
+      plugins: {
+        legend: { display: false, position: position },
+          
+        title: {
+          display: true,
+          text: "Anomaly vs Normal",
+          position: "bottom",
+        },
+      },
+    });
+
     //  Anomaly Types Doughnut chart setup using useeffect
     axios({
       method: "GET",
@@ -278,6 +316,68 @@ const ExploratoryAnalysis = ({socket}) => {
       });
 
     set_anomaly_type_doughnut_options({
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false, position: position },
+
+        title: {
+          display: true,
+          text: "Anomaly types",
+          position: "bottom",
+        },
+      },
+    });
+
+    getPredictionAnomalyTypeDoughnutData()
+      .then((response) => {
+        const res = response.data;
+        set_prediction_anomaly_type_doughnut_data({
+          labels: [
+            "Type 1",
+            "Type 2",
+            "Type 3",
+            "Type 4",
+            "Type 5",
+            "Type 6",
+            "Type 7",
+          ],
+          datasets: [
+            {
+              // label: "# of Votes",
+              data: [
+                res.type1,
+                res.type2,
+                res.type3,
+                res.type4,
+                res.type5,
+                res.type6,
+                res.type7,
+              ],
+              backgroundColor: [
+                "rgba(32, 133, 236)",
+                "rgba(114, 180, 235)",
+                "rgba(10, 65, 122)",
+                "rgba(132, 100, 160)",
+                "rgba(206, 169, 188)",
+                "rgba(186, 199, 193)",
+                "rgba(238, 130, 238, 1)",
+              ],
+              // borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+              borderWidth: 1,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      })
+    
+    set_prediction_anomaly_type_doughnut_options({
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
@@ -366,23 +466,50 @@ const ExploratoryAnalysis = ({socket}) => {
       },
     });
 
-    axios({
-      method: "GET",
-      url: "/prediction_normal_anomaly_doughnut_data",
-    })
+    getPredictionScenarioDoughnutData()
       .then((response) => {
         const res = response.data;
-        set_normal_anomaly_doughnut_data({
-          labels: ["Normal", "Anomaly"],
+        set_prediction_scenario_doughnut_data({
+          labels: [
+            "Scenario 1",
+            "Scenario 2",
+            "Scenario 3",
+            "Scenario 4",
+            "Scenario 5",
+            "Scenario 6",
+            "Scenario 7",
+            "Scenario 8",
+            "Scenario 9",
+            "Scenario 10",
+          ],
           datasets: [
             {
               // label: "# of Votes",
-              data: [res.normal, res.anomaly],
-              backgroundColor: [
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 99, 132, 1)",
+              data: [
+                res.scenario1,
+                res.scenario2,
+                res.scenario3,
+                res.scenario4,
+                res.scenario5,
+                res.scenario6,
+                res.scenario7,
+                res.scenario8,
+                res.scenario9,
+                res.scenario10,
               ],
-              //   borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+              backgroundColor: [
+                "rgba(32, 133, 236)",
+                "rgba(114, 180, 235)",
+                "rgba(10, 65, 122)",
+                "rgba(132, 100, 160)",
+                "rgba(206, 169, 188)",
+                "rgba(186, 199, 193)",
+                "rgba(238, 130, 238, 1)",
+                "rgba(190, 97, 202)",
+                "rgba(55, 123, 43)",
+                "rgba(244, 122, 31)",
+              ],
+              // borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
               borderWidth: 1,
             },
           ],
@@ -394,7 +521,51 @@ const ExploratoryAnalysis = ({socket}) => {
           console.log(error.response.status);
           console.log(error.response.headers);
         }
-      });
+      })
+    
+    set_prediction_scenario_doughnut_options({
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false, position: position },
+
+        title: {
+          display: true,
+          text: "Scenarios",
+          position: "bottom",
+        },
+      },
+    })
+
+    // axios({
+    //   method: "GET",
+    //   url: "/prediction_normal_anomaly_doughnut_data",
+    // })
+    //   .then((response) => {
+    //     const res = response.data;
+    //     set_normal_anomaly_doughnut_data({
+    //       labels: ["Normal", "Anomaly"],
+    //       datasets: [
+    //         {
+    //           // label: "# of Votes",
+    //           data: [res.normal, res.anomaly],
+    //           backgroundColor: [
+    //             "rgba(54, 162, 235, 1)",
+    //             "rgba(255, 99, 132, 1)",
+    //           ],
+    //           //   borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+    //           borderWidth: 1,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //       console.log(error.response.status);
+    //       console.log(error.response.headers);
+    //     }
+    //   });
 
 
 
@@ -663,6 +834,33 @@ const ExploratoryAnalysis = ({socket}) => {
               <Doughnut
                 data={scenario_doughnut_data}
                 options={scenario_doughnut_options}
+              />
+            </div>
+            {/* <div className="doughnut-container">
+              <Doughnut
+                data={jvm_metrics_memory_heap_memory_usage_used_data}
+                options={jvm_metrics_memory_heap_memory_usage_used_options}
+              />
+            </div> */}
+          </div>
+
+          <div className="row">
+            <div className="doughnut-container">
+              <Doughnut
+                data={prediction_normal_anomaly_doughnut_data}
+                options={prediction_prediction_normal_anomaly_doughnut_options}
+              />
+            </div>
+            <div className="type_doughnut-container doughnut-container">
+              <Doughnut
+                data={prediction_anomaly_type_doughnut_data}
+                options={prediction_anomaly_type_doughnut_options}
+              />
+            </div>
+            <div className="doughnut-container">
+              <Doughnut
+                data={prediction_scenario_doughnut_data}
+                options={prediction_scenario_doughnut_options}
               />
             </div>
             {/* <div className="doughnut-container">
