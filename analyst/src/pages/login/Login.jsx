@@ -71,13 +71,13 @@ const Login = () => {
                <button type="submit" className="btn btn-block" disabled={isLoading}>
                     submit
                 </button>
-                <p>
+                {/* <p>
                     Not a member?
                     <button type="button" onClick={onClick}
                         className='member-btn'>
                         Register
                     </button>
-                </p>
+                </p> */}
             </form>
         </Wrapper>
     )

@@ -480,16 +480,16 @@ const ExploratoryAnalysis = ({socket}) => {
         //  }
         //  console.log(bgcolor_bar_data)
         set_prediction_bar_data({
-          labels: res.timestamp,
+          labels: res.timestamp.reverse(),
           datasets: [
             {
               barPercentage: 1,
               categoryPercentage: 1,
               // axis:"y",
               label: "Real time prediction",
-              data: res.dummy,
+              data: res.dummy.reverse(),
               // data:[0,1,1,0,1,0],
-              backgroundColor: res.bgcolor,
+              backgroundColor: res.bgcolor.reverse(),
               // [
               //   "rgba(54, 162, 235, 1)",
               //   "rgba(255, 99, 132, 1)",
