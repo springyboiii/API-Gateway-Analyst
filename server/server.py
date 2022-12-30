@@ -85,13 +85,22 @@ def getPreprocessedDataMinOfCol(colName):
     print("get min of a col")
     return DataController.getPreprocessedDataMinOfCol(colName)
 
-@app.route("/preprocessed/avg/<colName>", methods=["GET"])
-def getPreprocessedDataAvgOfCol(colName):
-    return DataController.getPreprocessedDataAvgOfCol(colName)
+# @app.route("/preprocessed/avg/<colName>", methods=["GET"])
+# def getPreprocessedDataAvgOfCol(colName):
+#     return DataController.getPreprocessedDataAvgOfCol(colName)
 
-@app.route("/preprocessed/avg/<colName>/<type>", methods=["GET"])
-def getPreprocessedDataAvgOf(colName, type):
-    return DataController.getPreprocessedDataAvgOf(colName, type)
+@app.route("/preprocessed/avg", methods=["GET"])
+def getPreprocessedDataAvgOf():
+    colName = request.args.get("colName")
+    cat = request.args.get("cat")
+
+    print(cat, type(cat))
+
+    if cat is None: 
+        return DataController.getPreprocessedDataAvgOfCol(colName) 
+    else:
+        return DataController.getPreprocessedDataAvgOf(colName, cat)  
+            
 
 @app.route('/preprocessed', methods=["GET"])
 def getPreprocessedData():
