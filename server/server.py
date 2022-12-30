@@ -112,23 +112,6 @@ def anomaly_time_area_data():
         return DashboardController.get_frequency_line_graph(preprocessed_4_hour,"total_anomalies",1000)
     return DashboardController.get_frequency_line_graph(preprocessed_4_hour,"total_anomalies",1000)
 
-# cpu
-# @app.route('/user_pct_data', methods=["POST"])
-# def user_pct_data():
-#     data1=request.data
-#     dict_str = data1.decode("UTF-8")
-#     time=dict_str[9:-2]
-#     if time=="DEFAULT" or time=="ul":
-#         print("30m")
-#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_30_min,"system_cpu_user_pct",1000)
-#     elif time=="1h":
-#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_1_hour,"system_cpu_user_pct",1000)
-#     elif time=="2h":
-#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_2_hour,"system_cpu_user_pct",1000)
-#     elif time=="4h":
-#         return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,"system_cpu_user_pct",1000)
-#     return DashboardController.get_frequency_line_graph(preprocessed_averaged_4_hour,"system_cpu_user_pct",1000)
-
 @app.route('/user_pct_data', methods=["POST"])
 def user_pct_data():
     return DashboardController.get_avg_line_chart_diff_int(request=request, feature='system_cpu_user_pct', limit=1000, db_cols=db_cols)

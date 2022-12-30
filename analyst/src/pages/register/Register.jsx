@@ -51,7 +51,7 @@ const Register = () => {
         <Wrapper className="full-page">
             <form className="form" onSubmit={onSubmit}>
                 {/* <Logo /> */}
-                <h3>Register</h3>
+                <h3>Register Admin</h3>
                 {showAlert && <Alert />}
                 {/* name input */}
 
