@@ -51,13 +51,16 @@ function Cpu() {
   const [total_pct_options, set_total_pct_options] = useState({});
 
   const options = [
-    { value: "DEFAULT", label: "30m" },
-    { value: "1h", label: "1h " },
-    { value: "2h", label: "2h" },
     { value: "4h", label: "4h " },
-  ];
+    { value: "2h", label: "2h" },
+    { value: "DEFAULT", label: "1h " },
+    { value: "30m", label: "30m" },
 
-  const [selectedOption, setSelectedOption] = useState("30m");
+
+  ];
+  // const defaultOption = "1h";
+
+  const [selectedOption, setSelectedOption] = useState();
   const [avg_user_pct, set_avg_user_pct] = useState();
   const [avg_system_pct, set_avg_system_pct] = useState();
   const [avg_idle_pct, set_avg_idle_pct] = useState();
