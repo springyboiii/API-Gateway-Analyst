@@ -117,6 +117,20 @@ def anomaly_type_doughnut():
 @app.route('/scenario_doughnut_data', methods=["GET"])
 def scenario_doughnut():
     return DashboardController.scenario_doughnut(col)
+
+@app.route('/prediction/normal_anomaly_doughnut_data', methods=["GET"])
+def prediction_normal_anomaly_doughnut():
+    return DashboardController.prediction_normal_anomaly_doughnut_data()
+
+@app.route('/prediction/anomaly_type_doughnut_data', methods=["GET"])
+def prediction_anomaly_type_doughnut():
+    return DashboardController.prediction_anomaly_type_doughnut()
+
+@app.route('/prediction/scenario_doughnut_data', methods=["GET"])
+def prediction_scenario_doughnut():
+    return DashboardController.prediction_scenario_doughnut()
+
+
 #need to change graph
 @app.route('/jvm_metrics_memory_heap_memory_usage_used_data', methods=["GET"])
 def jvm_metrics_memory_heap_memory_usage_used():
@@ -422,8 +436,8 @@ def readFromGateway():
         time.sleep(2)
 
 # uncomment below prediction sending thread to start
-thread1 = threading.Thread(target=readFromGateway)
-thread1.start()
+# thread1 = threading.Thread(target=readFromGateway)
+# thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
