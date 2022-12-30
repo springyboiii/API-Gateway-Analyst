@@ -320,7 +320,8 @@ function Cpu() {
       const {data: normal_value} = await getAvgOfPreprocessedCol("system_cpu_user_pct");
       console.log("result", normal_value[0]["avgValue"])
       const {data: anomaly_value} = await getAvgOfPreprocessedColAnomalies("system_cpu_user_pct");
-      console.log("result", anomaly_value[0]["avgValue"])
+  
+     console.log("result", anomaly_value[0]["avgValue"])
       const {data: non_anomaly_value} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_user_pct");
       console.log("result", non_anomaly_value[0]["avgValue"])
   }
