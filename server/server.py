@@ -77,6 +77,7 @@ def getPreprocessedDataCount():
 
 @app.route("/preprocessed/max/<colName>", methods=["GET"])
 def getPreprocessedDataMaxOfCol(colName):
+    print("asdasdasdasds")
     return DataController.getPreprocessedDataMaxOfCol(colName)
 
 @app.route("/preprocessed/min/<colName>", methods=["GET"])

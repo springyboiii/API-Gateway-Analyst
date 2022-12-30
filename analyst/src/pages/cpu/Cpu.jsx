@@ -8,6 +8,8 @@ import Wrapper from "../../assets/wrappers/ChartContainer";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import { getMinOfPreprocessedCol,getMaxOfPreprocessedCol } from "../../services/dataService";
+
 import {
   CategoryScale,
   LinearScale,
@@ -210,7 +212,7 @@ function Cpu() {
       .then((response) => {
         console.log(response);
         const res = response.data;
-        console.log(res.system_cpu_total_pct)
+        // console.log(res.system_cpu_total_pct)
         set_total_pct_data({
           labels: res.timestamp,
           datasets: [
@@ -233,11 +235,31 @@ function Cpu() {
     return;
 
   }
+  const [min_user_pct, set_min_user_pct] = useState();
 
   useEffect(() => {
     handleChange(null)
+    async function fetchdata() {
+      const {data: allNotifications} = await getMaxOfPreprocessedCol("system_cpu_user_pct");
+      console.log("inaisws")
+      console.log(allNotifications[0]);
+      set_min_user_pct(allNotifications[0]["maxValue"])
 
+    
+  }
+  fetchdata()
     set_user_pct_options({
+      annotation: {
+        annotations: [{
+            type: 'line',
+            mode: 'horizontal',
+            scaleID: 'y-axis-0',
+            value: 2.5,
+            borderColor: 'tomato',
+            borderWidth: 1
+        }],
+        drawTime: "afterDraw" // (default)
+    },
       responsive: true,
       plugins: {
         legend: {
@@ -254,6 +276,7 @@ function Cpu() {
           suggestedMax: 1,
         },
       },
+      
     });
 
     set_system_pct_options({
