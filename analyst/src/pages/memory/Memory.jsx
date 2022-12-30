@@ -17,6 +17,7 @@ import {
 import Select from "react-select";
 import Wrapper from "../../assets/wrappers/ChartContainer";
 import DataService from '../../services/dataService.js'
+import { getMinOfPreprocessedCol,getMaxOfPreprocessedCol ,getAvgOfPreprocessedCol, getAvgOfPreprocessedColAnomalies, getAvgOfPreprocessedColNonAnomalies} from "../../services/dataService";
 
 ChartJS.register(
   ArcElement,
@@ -53,7 +54,12 @@ function Memory() {
   ];
   const [selectedOption, setSelectedOption] = useState("30m");
   const [dataValues, setDataValues] = useState(initialDataState);
+  const [avg_memory_used_pct_data, set_avg_memory_used_pct_data] = useState();
 
+  const [avg_memory_used_pct_data_ano, set_avg_memory_used_pct_data_ano] = useState();
+
+ const avg_color="rgba(56, 231, 19, 0.8)";
+ const avg_color_ano="rgba(230, 0, 0, 0.8)";
   const handleChange = (value) => {
     axios.post("/memory_used_pct", {
       data: value
@@ -61,9 +67,33 @@ function Memory() {
       .then((response) => {
         console.log(response);
         const res = response.data;
+        var thresholdHighArray = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct_data);
+        var thresholdHighArrayAno = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct_data_ano);
+
         set_memory_used_pct_data({
           labels: res.timestamp,
           datasets: [
+            {
+              fill: false,
+              label: 'Average normal',
+              data: thresholdHighArray,
+              borderColor: avg_color,
+              backgroundColor: avg_color,
+              pointRadius: 1,
+              pointHoverRadius:5,
+  
+              tension: 0.4,
+            },
+            {
+              fill: false,
+              label: 'Average anomaly',
+              data: thresholdHighArrayAno,
+              borderColor: avg_color_ano,
+              backgroundColor: avg_color_ano,
+              pointRadius: 1,
+              pointHoverRadius:5,
+              tension: 0.4,
+            },
             {
               fill: true,
               // label: 'system_memory_used_pct',
@@ -84,6 +114,15 @@ function Memory() {
   }
   useEffect(() => {
     handleChange(null)
+    async function fetchdata() {
+      const {data: allNotifications} = await getAvgOfPreprocessedColNonAnomalies("system_memory_used_pct");
+      set_avg_memory_used_pct_data(allNotifications[0]["avgValue"])
+
+
+      const {data: allNotificationsAno} = await getAvgOfPreprocessedColAnomalies("system_memory_used_pct");
+      set_avg_memory_used_pct_data_ano(allNotificationsAno[0]["avgValue"])
+    }
+    fetchdata()
 
     set_memory_used_pct_options({
       responsive: true,
