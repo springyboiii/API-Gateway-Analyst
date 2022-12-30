@@ -400,16 +400,16 @@ const ExploratoryAnalysis = ({socket}) => {
         const res = response.data;
         set_scenario_doughnut_data({
           labels: [
-            "Scenario 1",
-            "Scenario 2",
-            "Scenario 3",
-            "Scenario 4",
-            "Scenario 5",
-            "Scenario 6",
-            "Scenario 7",
-            "Scenario 8",
-            "Scenario 9",
-            "Scenario 10",
+            "1 - High CPU usage due to mediation",
+            "2 - High Memory usage due to mediation",
+            "3 - High disk I/O due to mediation",
+            "4 - Increased load (numbers of users)",
+            "5 - Increased load (throughput)",
+            "6 - Long response time in back-end services",
+            "7 - Increased message size",
+            "8 - Failure in back-end services",
+            "9 - Increased load (throughput)",
+            "10 - Increased message size",
           ],
           datasets: [
             {
@@ -471,16 +471,16 @@ const ExploratoryAnalysis = ({socket}) => {
         const res = response.data;
         set_prediction_scenario_doughnut_data({
           labels: [
-            "Scenario 1",
-            "Scenario 2",
-            "Scenario 3",
-            "Scenario 4",
-            "Scenario 5",
-            "Scenario 6",
-            "Scenario 7",
-            "Scenario 8",
-            "Scenario 9",
-            "Scenario 10",
+            "1 - High CPU usage due to mediation",
+            "2 - High Memory usage due to mediation",
+            "3 - High disk I/O due to mediation",
+            "4 - Increased load (numbers of users)",
+            "5 - Increased load (throughput)",
+            "6 - Long response time in back-end services",
+            "7 - Increased message size",
+            "8 - Failure in back-end services",
+            "9 - Increased load (throughput)",
+            "10 - Increased message size",
           ],
           datasets: [
             {
