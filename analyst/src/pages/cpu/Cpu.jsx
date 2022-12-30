@@ -51,12 +51,10 @@ function Cpu() {
   const [total_pct_options, set_total_pct_options] = useState({});
 
   const options = [
-    { value: "4h", label: "4h " },
+    { value: "DEFAULT", label: "30m" },
+    { value: "1h", label: "1h " },
     { value: "2h", label: "2h" },
-    { value: "DEFAULT", label: "1h " },
-    { value: "30m", label: "30m" },
-
-
+    { value: "4h", label: "4h " },
   ];
   // const defaultOption = "1h";
 
