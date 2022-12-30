@@ -41,10 +41,10 @@ function Jvm() {
   });
   const [psms_collection_time_options, set_psms_collection_time_options] = useState({});
 
-  const [pss_collection_count_data, set_pss_collection_count_data] = useState({
-    datasets: [],
-  });
-  const [pss_collection_count_options, set_pss_collection_count_options] = useState({});
+  // const [pss_collection_count_data, set_pss_collection_count_data] = useState({
+  //   datasets: [],
+  // });
+  // const [pss_collection_count_options, set_pss_collection_count_options] = useState({});
 
   const [pss_collection_time_data, set_pss_collection_time_data] = useState({
     datasets: [],
@@ -217,33 +217,33 @@ function Jvm() {
       });
 
 
-    axios.post("/pss_collection_count", {
-      data: value
-    })
-      .then((response) => {
-        console.log(response);
-        const res = response.data;
-        set_pss_collection_count_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'jvm_metric_gc_pss_collection_count',
-              data: res.jvm_metric_gc_pss_collection_count,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
+    // axios.post("/pss_collection_count", {
+    //   data: value
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     const res = response.data;
+    //     set_pss_collection_count_data({
+    //       labels: res.timestamp,
+    //       datasets: [
+    //         {
+    //           fill: true,
+    //           // label: 'jvm_metric_gc_pss_collection_count',
+    //           data: res.jvm_metric_gc_pss_collection_count,
+    //           borderColor: "rgb(53, 162, 235)",
+    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
+    //           tension: 0.4,
+    //         },
+    //       ],
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //       console.log(error.response.status);
+    //       console.log(error.response.headers);
+    //     }
+    //   });
 
 
     return;
@@ -310,24 +310,24 @@ function Jvm() {
     });
 
 
-    set_pss_collection_count_options({
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "top",
-        },
-        title: {
-          display: true,
-          text: "jvm_metric_gc_pss_collection_count",
-        },
-      },
-      scales: {
-        y: {
-          suggestedMin: 0,
-          suggestedMax: 0.1,
-        },
-      },
-    });
+    // set_pss_collection_count_options({
+    //   responsive: true,
+    //   plugins: {
+    //     legend: {
+    //       position: "top",
+    //     },
+    //     title: {
+    //       display: true,
+    //       text: "jvm_metric_gc_pss_collection_count",
+    //     },
+    //   },
+    //   scales: {
+    //     y: {
+    //       suggestedMin: 0,
+    //       suggestedMax: 0.1,
+    //     },
+    //   },
+    // });
 
 
 
@@ -344,8 +344,8 @@ function Jvm() {
       },
       scales: {
         y: {
-          suggestedMin: 0,
-          suggestedMax: 0.1,
+          // suggestedMin: 0,
+          // suggestedMax: 0.1,
         },
       },
     });
