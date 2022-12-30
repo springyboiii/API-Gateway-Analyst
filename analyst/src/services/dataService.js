@@ -11,9 +11,9 @@ export function getMaxOfPreprocessedCol(colName){
     return http.get(`${apiEndPoint}/max/${colName}`)
 }
 
-// export function getAvgOfPreprocessedCol(colName){
-//     return http.get(`${apiEndPoint}/avg/${colName}`)
-// }
+export function getAvgOfPreprocessedCol(colName){
+    return http.get(`${apiEndPoint}/avg?colName=${colName}`)
+}
 
 export function getAvgOfPreprocessedColAnomalies(colName){
     return http.get(`${apiEndPoint}/avg?colName=${colName}&cat=1`)
