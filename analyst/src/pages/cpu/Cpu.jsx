@@ -8,6 +8,8 @@ import Wrapper from "../../assets/wrappers/ChartContainer";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import { getMinOfPreprocessedCol,getMaxOfPreprocessedCol ,getAvgOfPreprocessedCol} from "../../services/dataService";
+
 import {
   CategoryScale,
   LinearScale,
@@ -56,23 +58,46 @@ function Cpu() {
   ];
 
   const [selectedOption, setSelectedOption] = useState("30m");
+  const [avg_user_pct, set_avg_user_pct] = useState();
+  const [avg_system_pct, set_avg_system_pct] = useState();
+  const [avg_idle_pct, set_avg_idle_pct] = useState();
+  const [avg_softirq_pct, set_avg_softirq_pct] = useState();
+  const [avg_iowait_pct, set_avg_iowait_pct] = useState();
 
+  const [avg_total_pct, set_avg_total_pct] = useState();
+ const avg_color="rgba(56, 231, 19, 0.8)";
+ 
   const handleChange = (value) => {
     axios.post("/user_pct_data", {
       data: value,
     }).then((response) => {
       console.log(response.data)
+      var thresholdHighArray = new Array(response.data.system_cpu_user_pct.length).fill(avg_user_pct);
+
       set_user_pct_data({
         labels: response.data.timestamp,
         datasets: [
           {
+            fill: false,
+            label: 'Average',
+            data: thresholdHighArray,
+            borderColor: avg_color,
+            backgroundColor: avg_color,
+            pointRadius: 1,
+            pointHoverRadius:5,
+            tension: 0.4,
+          },
+          {
             fill: true,
-            // label: 'system_cpu_user_pct',
+            label: 'user_pct',
             data: response.data.system_cpu_user_pct,
             borderColor: "rgb(53, 162, 235)",
             backgroundColor: "rgba(53, 162, 235, 0.5)",
+            pointRadius: 1,
+            pointHoverRadius:5,
             tension: 0.4,
           },
+          
         ],
       });
     });
@@ -82,15 +107,30 @@ function Cpu() {
     ).then((response) => {
       console.log(response);
       const res = response.data;
+      var thresholdHighArray = new Array(response.data.system_cpu_system_pct.length).fill(avg_system_pct);
+
       set_system_pct_data({
         labels: res.timestamp,
         datasets: [
           {
+            fill: false,
+            label: 'Average',
+            data: thresholdHighArray,
+            borderColor: avg_color,
+            backgroundColor: avg_color,
+            pointRadius: 1,
+            pointHoverRadius:5,
+
+            tension: 0.4,
+          },
+          {
             fill: true,
-            // label: 'system_cpu_user_pct',
+            label: 'system_pct',
             data: res.system_cpu_system_pct,
             borderColor: "rgb(53, 162, 235)",
             backgroundColor: "rgba(53, 162, 235, 0.5)",
+            pointRadius: 1,
+            pointHoverRadius:5,
             tension: 0.4,
           },
         ],
@@ -108,12 +148,25 @@ function Cpu() {
       .then((response) => {
         console.log(response);
         const res = response.data;
+        var thresholdHighArray = new Array(response.data.system_cpu_idle_pct.length).fill(avg_idle_pct);
+        console.log(thresholdHighArray)
         set_idle_pct_data({
           labels: res.timestamp,
           datasets: [
             {
+              fill: false,
+              label: 'Average',
+              data: thresholdHighArray,
+              borderColor: avg_color,
+              backgroundColor: avg_color,
+              pointRadius: 1,
+              pointHoverRadius:5,
+  
+              tension: 0.4,
+            },
+            {
               fill: true,
-              // label: 'system_cpu_user_pct',
+              label: 'idle_pct',
               data: res.system_cpu_idle_pct,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -127,43 +180,32 @@ function Cpu() {
           console.log(error.response);
         }
       });
-    axios.post("/idle_pct_data", {
-      data: value
-    })
-      .then((response) => {
-        console.log(response);
-        const res = response.data;
-        set_idle_pct_data({
-          labels: res.timestamp,
-          datasets: [
-            {
-              fill: true,
-              // label: 'system_cpu_user_pct',
-              data: res.system_cpu_idle_pct,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgba(53, 162, 235, 0.5)",
-              tension: 0.4,
-            },
-          ],
-        });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-        }
-      });
+   
     axios.post("/iowait_pct_data", {
       data: value
     })
       .then((response) => {
         console.log(response);
         const res = response.data;
+        var thresholdHighArray = new Array(response.data.system_cpu_iowait_pct.length).fill(avg_iowait_pct);
+
         set_iowait_pct_data({
           labels: res.timestamp,
           datasets: [
             {
+              fill: false,
+              label: 'Average',
+              data: thresholdHighArray,
+              borderColor: avg_color,
+              backgroundColor: avg_color,
+              pointRadius: 1,
+              pointHoverRadius:5,
+  
+              tension: 0.4,
+            },
+            {
               fill: true,
-              // label: 'system_cpu_user_pct',
+              label: 'iowait_pct',
               data: res.system_cpu_iowait_pct,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -184,12 +226,25 @@ function Cpu() {
       .then((response) => {
         console.log(response);
         const res = response.data;
+        var thresholdHighArray = new Array(response.data.system_cpu_softirq_pct.length).fill(avg_softirq_pct);
+
         set_softirq_pct_data({
           labels: res.timestamp,
           datasets: [
             {
+              fill: false,
+              label: 'Average',
+              data: thresholdHighArray,
+              borderColor: avg_color,
+              backgroundColor:avg_color,
+              pointRadius: 1,
+              pointHoverRadius:5,
+  
+              tension: 0.4,
+            },
+            {
               fill: true,
-              // label: 'system_cpu_user_pct',
+              label: 'softirq_pct',
               data: res.system_cpu_softirq_pct,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -210,13 +265,24 @@ function Cpu() {
       .then((response) => {
         console.log(response);
         const res = response.data;
-        console.log(res.system_cpu_total_pct)
+        var thresholdHighArray = new Array(response.data.system_cpu_total_pct.length).fill(avg_total_pct);
         set_total_pct_data({
           labels: res.timestamp,
           datasets: [
             {
+              fill: false,
+              label: 'Average',
+              data: thresholdHighArray,
+              borderColor: avg_color,
+              backgroundColor: avg_color,
+              pointRadius: 1,
+              pointHoverRadius:5,
+  
+              tension: 0.4,
+            },
+            {
               fill: true,
-              // label: 'system_cpu_user_pct',
+              label: 'total_pct',
               data: res.system_cpu_total_pct,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -234,10 +300,31 @@ function Cpu() {
 
   }
 
-  useEffect(() => {
-    handleChange(null)
 
+
+  useEffect(() => {
+    async function fetchdata() {
+      const {data: allNotifications} = await getAvgOfPreprocessedCol("system_cpu_user_pct");
+      set_avg_user_pct(allNotifications[0]["avgValue"])
+      const {data: system_pct} = await getAvgOfPreprocessedCol("system_cpu_system_pct");
+      set_avg_system_pct(system_pct[0]["avgValue"])
+      const {data: idle_pct} = await getAvgOfPreprocessedCol("system_cpu_idle_pct");
+      set_avg_idle_pct(idle_pct[0]["avgValue"])
+      const {data: softirq_pct} = await getAvgOfPreprocessedCol("system_cpu_softirq_pct");
+      set_avg_softirq_pct(softirq_pct[0]["avgValue"])
+      const {data: total_pct} = await getAvgOfPreprocessedCol("system_cpu_total_pct");
+      set_avg_total_pct(total_pct[0]["avgValue"])
+      const {data: iowait_pct} = await getAvgOfPreprocessedCol("system_cpu_iowait_pct");
+      set_avg_iowait_pct(iowait_pct[0]["avgValue"])
+
+    
+  }
+
+  fetchdata()
+
+  
     set_user_pct_options({
+      
       responsive: true,
       plugins: {
         legend: {
@@ -247,13 +334,21 @@ function Cpu() {
           display: true,
           text: "system_cpu_user_pct",
         },
+        tooltips: {
+          mode: 'index',
+          intersect: true
+        },
+       
       },
+      
       scales: {
         y: {
           suggestedMin: 0,
           suggestedMax: 1,
         },
       },
+     
+      
     });
 
     set_system_pct_options({
@@ -351,6 +446,7 @@ function Cpu() {
       },
     });
 
+    handleChange(null)
 
 
   }, []);

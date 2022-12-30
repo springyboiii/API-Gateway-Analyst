@@ -80,7 +80,7 @@ const reducer = (state, action) => {
             isLoading: false,
             showAlert: true,
             alertType: 'success',
-            alertText: 'User Logined !',
+            alertText: 'Login Successful !',
             user: action.payload.user,
             token: action.payload.token,
         }
