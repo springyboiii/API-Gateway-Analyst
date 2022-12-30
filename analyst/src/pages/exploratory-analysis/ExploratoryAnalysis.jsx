@@ -848,7 +848,7 @@ const ExploratoryAnalysis = ({socket}) => {
           <div className="row">
           <div className="text">Predicted</div>
 
-            <div className="doughnut-container">
+            <div className="doughnut-container predicted-doughnut">
               <Doughnut
                 data={prediction_normal_anomaly_doughnut_data}
                 options={prediction_prediction_normal_anomaly_doughnut_options}
