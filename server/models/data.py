@@ -68,11 +68,11 @@ class DataModel():
         ])
         return result
     
-    def getPreprocessedDataAvgOf(colName, type): 
+    def getPreprocessedDataAvgOf(colName, cat): 
         db = Database().getConnection()
         col = db["preprocessed_10_sec"]
-        print(f"type: {type}")
-        if int(type) == 0:
+        print(f"cat: {cat}, {type(cat)}")
+        if int(cat) == 0:
             result = col.aggregate([
                 {
                     "$match": { "scenario": 0}
