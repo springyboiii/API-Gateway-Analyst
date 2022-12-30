@@ -54,6 +54,23 @@ const ExploratoryAnalysis = ({socket}) => {
   const [scenario_doughnut_options, set_scenario_doughnut_options] = useState(
     {}
   );
+
+  const [prediction_normal_anomaly_doughnut_data, set_prediction_normal_anomaly_doughnut_data] =
+  useState({ datasets: [] });
+  const [prediction_prediction_normal_anomaly_doughnut_options, set_prediction_normal_anomaly_doughnut_options] =
+    useState({});
+  const [prediction_anomaly_type_doughnut_data, set_prediction_anomaly_type_doughnut_data] = useState(
+    { datasets: [] }
+  );
+  const [prediction_anomaly_type_doughnut_options, set_prediction_anomaly_type_doughnut_options] =
+    useState({});
+  const [prediction_scenario_doughnut_data, set_prediction_scenario_doughnut_data] = useState({
+    datasets: [],
+  });
+  const [prediction_scenario_doughnut_options, set_prediction_scenario_doughnut_options] = useState(
+    {}
+  );
+
   const [
     jvm_metrics_memory_heap_memory_usage_used_data,
     set_jvm_metrics_memory_heap_memory_usage_used_data,
@@ -348,6 +365,39 @@ const ExploratoryAnalysis = ({socket}) => {
         },
       },
     });
+
+    axios({
+      method: "GET",
+      url: "/prediction_normal_anomaly_doughnut_data",
+    })
+      .then((response) => {
+        const res = response.data;
+        set_normal_anomaly_doughnut_data({
+          labels: ["Normal", "Anomaly"],
+          datasets: [
+            {
+              // label: "# of Votes",
+              data: [res.normal, res.anomaly],
+              backgroundColor: [
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 99, 132, 1)",
+              ],
+              //   borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+              borderWidth: 1,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+
+
+
     //jvm_memory_used
     axios({
       method: "GET",

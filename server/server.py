@@ -117,6 +117,20 @@ def anomaly_type_doughnut():
 @app.route('/scenario_doughnut_data', methods=["GET"])
 def scenario_doughnut():
     return DashboardController.scenario_doughnut(col)
+
+@app.route('/prediction_normal_anomaly_doughnut_data', methods=["GET"])
+def normal_anomaly_doughnut():
+    return DashboardController.prediction_normal_anomaly_doughnut_data()
+
+@app.route('/anomaly_type_doughnut_data', methods=["GET"])
+def anomaly_type_doughnut():
+    return DashboardController.anomaly_type_doughnut(col)
+
+@app.route('/scenario_doughnut_data', methods=["GET"])
+def scenario_doughnut():
+    return DashboardController.scenario_doughnut(col)
+
+
 #need to change graph
 @app.route('/jvm_metrics_memory_heap_memory_usage_used_data', methods=["GET"])
 def jvm_metrics_memory_heap_memory_usage_used():
