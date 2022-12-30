@@ -47,14 +47,20 @@ const linksAdmin = [
       icon: <ImProfile />,
     },
     {
-      id: 7,
+      id: 8,
       text: 'Register User',
       path: 'register-user',
       icon: <ImProfile />,
     },
-    
     {
-      id: 8,
+
+      id: 7,
+      text: 'notification',
+      path: 'notification',
+      icon: <ImProfile />,
+    },
+    {
+      id: 9,
       text: 'Feedbacks',
       path: 'feedback',
       icon: <ImProfile />,
@@ -104,7 +110,12 @@ const linksUser = [
     path: 'notification',
     icon: <ImProfile />,
   },
-
+  {
+    id: 8,
+    text: 'Feedbacks',
+    path: 'feedback',
+    icon: <ImProfile />,
+  },
  
 ]
   

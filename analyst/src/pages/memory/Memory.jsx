@@ -16,6 +16,7 @@ import {
 } from "chart.js";
 import Select from "react-select";
 import Wrapper from "../../assets/wrappers/ChartContainer";
+import DataService from '../../services/dataService.js'
 
 ChartJS.register(
   ArcElement,
@@ -29,6 +30,15 @@ ChartJS.register(
 
   Filler
 );
+
+const initialDataState = {
+  min: null,
+  max: null,
+  avgAnomally: null,
+  avgNormal: null,
+  avg: null,
+}
+
 function Memory() {
   const [memory_used_pct_data, set_memory_used_pct_data] = useState({
     datasets: [],
@@ -42,6 +52,7 @@ function Memory() {
     { value: "4h", label: "4h " },
   ];
   const [selectedOption, setSelectedOption] = useState("30m");
+  const [dataValues, setDataValues] = useState(initialDataState);
 
   const handleChange = (value) => {
     axios.post("/memory_used_pct", {
