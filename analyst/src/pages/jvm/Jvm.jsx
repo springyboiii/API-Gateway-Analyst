@@ -77,8 +77,8 @@ function Jvm() {
       .then((response) => {
         console.log(response);
         const res = response.data;
-        var thresholdHighArray = new Array(response.data.system_cpu_user_pct.length).fill(avg_psms_collection_count);
-        var thresholdHighArrayAno = new Array(response.data.system_cpu_user_pct.length).fill(avg_psms_collection_count_ano);
+        var thresholdHighArray = new Array(response.data.jvm_metrics_gc_psms_collection_count.length).fill(avg_psms_collection_count);
+        var thresholdHighArrayAno = new Array(response.data.jvm_metrics_gc_psms_collection_count.length).fill(avg_psms_collection_count_ano);
         set_psms_collection_count_data({
           labels: res.timestamp,
           datasets: [
@@ -125,14 +125,34 @@ function Jvm() {
       .then((response) => {
         console.log(response);
         const res = response.data;
-        var thresholdHighArray = new Array(response.data.system_cpu_user_pct.length).fill(avg_psms_collection_time);
-        var thresholdHighArrayAno = new Array(response.data.system_cpu_user_pct.length).fill(avg_psms_collection_time_ano);
+        var thresholdHighArray = new Array(response.data.jvm_metrics_gc_psms_collection_time.length).fill(avg_psms_collection_time);
+        var thresholdHighArrayAno = new Array(response.data.jvm_metrics_gc_psms_collection_time.length).fill(avg_psms_collection_time_ano);
         set_psms_collection_time_data({
           labels: res.timestamp,
           datasets: [
             {
+              fill: false,
+              label: 'Average normal',
+              data: thresholdHighArray,
+              borderColor: avg_color,
+              backgroundColor: avg_color,
+              pointRadius: 1,
+              pointHoverRadius: 5,
+              tension: 0.4,
+            },
+            {
+              fill: false,
+              label: 'Average anomaly',
+              data: thresholdHighArrayAno,
+              borderColor: avg_color_ano,
+              backgroundColor: avg_color_ano,
+              pointRadius: 1,
+              pointHoverRadius: 5,
+              tension: 0.4,
+            },
+            {
               fill: true,
-              // label: 'jvm_metrics_gc_psms_collection_time',
+              label: 'jvm_metrics_gc_psms_collection_time',
               data: res.jvm_metrics_gc_psms_collection_time,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -154,8 +174,8 @@ function Jvm() {
       .then((response) => {
         console.log(response);
         const res = response.data;
-        var thresholdHighArray = new Array(response.data.system_cpu_user_pct.length).fill(avg_pss_collection_time);
-        var thresholdHighArrayAno = new Array(response.data.system_cpu_user_pct.length).fill(avg_pss_collection_time_ano);
+        var thresholdHighArray = new Array(response.data.jvm_metrics_gc_pss_collection_time.length).fill(avg_pss_collection_time);
+        var thresholdHighArrayAno = new Array(response.data.jvm_metrics_gc_pss_collection_time.length).fill(avg_pss_collection_time_ano);
         set_pss_collection_time_data({
           labels: res.timestamp,
           datasets: [
@@ -181,7 +201,7 @@ function Jvm() {
             },
             {
               fill: true,
-              // label: 'jvm_metrics_gc_pss_collection_time',
+              label: 'jvm_metrics_gc_pss_collection_time',
               data: res.jvm_metrics_gc_pss_collection_time,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -230,25 +250,21 @@ function Jvm() {
   }
   useEffect(() => {
     async function fetchdata() {
-      const { data: allNotifications } = await getAvgOfPreprocessedColNonAnomalies("system_cpu_user_pct");
-      set_avg_psms_collection_count(allNotifications[0]["avgValue"])
-      // console.log(allNotifications[0]["avgValue"])
 
-      const { data: system_pct } = await getAvgOfPreprocessedColNonAnomalies("system_cpu_system_pct");
-      set_avg_psms_collection_time(system_pct[0]["avgValue"])
-      const { data: idle_pct } = await getAvgOfPreprocessedColNonAnomalies("system_cpu_idle_pct");
-      set_avg_pss_collection_time(idle_pct[0]["avgValue"])
-      const { data: softirq_pct } = await getAvgOfPreprocessedColNonAnomalies("system_cpu_softirq_pct");
+      const { data: jvm_metrics_gc_psms_collection_count } = await getAvgOfPreprocessedColNonAnomalies("jvm_metrics_gc_psms_collection_count");
+      set_avg_psms_collection_count(jvm_metrics_gc_psms_collection_count[0]["avgValue"])
+      const { data: jvm_metrics_gc_psms_collection_time } = await getAvgOfPreprocessedColNonAnomalies("jvm_metrics_gc_psms_collection_time");
+      set_avg_psms_collection_time(jvm_metrics_gc_psms_collection_time[0]["avgValue"])
+      const { data: jvm_metrics_gc_pss_collection_time } = await getAvgOfPreprocessedColNonAnomalies("system_cpu_idle_pct");
+      set_avg_pss_collection_time(jvm_metrics_gc_pss_collection_time[0]["avgValue"])
       
 
-      const { data: allNotificationsAno } = await getAvgOfPreprocessedColAnomalies("system_cpu_user_pct");
-      set_avg_psms_collection_count_ano(allNotificationsAno[0]["avgValue"])
-      // console.log(allNotificationsAno[0]["avgValue"])
-      const { data: system_pct_ano } = await getAvgOfPreprocessedColAnomalies("system_cpu_system_pct");
-      set_avg_psms_collection_time_ano(system_pct_ano[0]["avgValue"])
-      const { data: idle_pct_ano } = await getAvgOfPreprocessedColAnomalies("system_cpu_idle_pct");
-      set_avg_pss_collection_time_ano(idle_pct_ano[0]["avgValue"])
-      const { data: softirq_pctidle_pct_ano } = await getAvgOfPreprocessedColAnomalies("system_cpu_softirq_pct");
+      const { data: jvm_metrics_gc_psms_collection_count_ano } = await getAvgOfPreprocessedColAnomalies("jvm_metrics_gc_psms_collection_count");
+      set_avg_psms_collection_count_ano(jvm_metrics_gc_psms_collection_count_ano[0]["avgValue"])
+      const { data: jvm_metrics_gc_psms_collection_time_ano } = await getAvgOfPreprocessedColAnomalies("jvm_metrics_gc_psms_collection_time");
+      set_avg_psms_collection_time_ano(jvm_metrics_gc_psms_collection_time_ano[0]["avgValue"])
+      const { data: jvm_metrics_gc_pss_collection_time_ano } = await getAvgOfPreprocessedColAnomalies("system_cpu_idle_pct");
+      set_avg_pss_collection_time_ano(jvm_metrics_gc_pss_collection_time_ano[0]["avgValue"])
     
     }
 
