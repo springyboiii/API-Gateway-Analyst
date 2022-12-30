@@ -41,7 +41,7 @@ const UserRegister = () => {
             await postUser(user)
         }
         isnertUser(currentUser)
-
+        setValues(initialState)
         
         // console.log(values)
 
