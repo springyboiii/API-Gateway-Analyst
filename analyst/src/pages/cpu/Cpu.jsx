@@ -8,7 +8,7 @@ import Wrapper from "../../assets/wrappers/ChartContainer";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
-import { getMinOfPreprocessedCol,getMaxOfPreprocessedCol ,getAvgOfPreprocessedCol} from "../../services/dataService";
+import { getAvgOfPreprocessedColAnomalies,getAvgOfPreprocessedColNonAnomalies ,getAvgOfPreprocessedCol} from "../../services/dataService";
 
 import {
   CategoryScale,
@@ -63,9 +63,17 @@ function Cpu() {
   const [avg_idle_pct, set_avg_idle_pct] = useState();
   const [avg_softirq_pct, set_avg_softirq_pct] = useState();
   const [avg_iowait_pct, set_avg_iowait_pct] = useState();
-
   const [avg_total_pct, set_avg_total_pct] = useState();
+
+  const [avg_user_pct_ano, set_avg_user_pct_ano] = useState();
+  const [avg_system_pct_ano, set_avg_system_pct_ano] = useState();
+  const [avg_idle_pct_ano, set_avg_idle_pct_ano] = useState();
+  const [avg_softirq_pct_ano, set_avg_softirq_pct_ano] = useState();
+  const [avg_iowait_pct_ano, set_avg_iowait_pct_ano] = useState();
+  const [avg_total_pct_ano, set_avg_total_pct_ano] = useState();
+
  const avg_color="rgba(56, 231, 19, 0.8)";
+ const avg_color_ano="rgba(230, 0, 0, 0.8)";
  
   const handleChange = (value) => {
     axios.post("/user_pct_data", {
@@ -73,7 +81,8 @@ function Cpu() {
     }).then((response) => {
       console.log(response.data)
       var thresholdHighArray = new Array(response.data.system_cpu_user_pct.length).fill(avg_user_pct);
-
+      var thresholdHighArrayAno = new Array(response.data.system_cpu_user_pct.length).fill(avg_user_pct_ano);
+      console.log(thresholdHighArrayAno)
       set_user_pct_data({
         labels: response.data.timestamp,
         datasets: [
@@ -83,6 +92,16 @@ function Cpu() {
             data: thresholdHighArray,
             borderColor: avg_color,
             backgroundColor: avg_color,
+            pointRadius: 1,
+            pointHoverRadius:5,
+            tension: 0.4,
+          },
+          {
+            fill: false,
+            label: 'Average',
+            data: thresholdHighArrayAno,
+            borderColor: avg_color_ano,
+            backgroundColor: avg_color_ano,
             pointRadius: 1,
             pointHoverRadius:5,
             tension: 0.4,
@@ -316,6 +335,19 @@ function Cpu() {
       set_avg_total_pct(total_pct[0]["avgValue"])
       const {data: iowait_pct} = await getAvgOfPreprocessedCol("system_cpu_iowait_pct");
       set_avg_iowait_pct(iowait_pct[0]["avgValue"])
+
+      const {data: allNotifications_ano} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_user_pct");
+      set_avg_user_pct_ano(allNotifications_ano[0]["avgValue"])
+      const {data: system_pct_ano} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_system_pct");
+      set_avg_system_pct_ano(system_pct_ano[0]["avgValue"])
+      const {data: idle_pct_ano} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_idle_pct");
+      set_avg_idle_pct_ano(idle_pct_ano[0]["avgValue"])
+      const {data: softirq_pct_ano} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_softirq_pct");
+      set_avg_softirq_pct_ano(softirq_pct_ano[0]["avgValue"])
+      const {data: total_pct_ano} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_total_pct");
+      set_avg_total_pct_ano(total_pct_ano[0]["avgValue"])
+      const {data: iowait_pct_ano} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_iowait_pct");
+      set_avg_iowait_pct_ano(iowait_pct_ano[0]["avgValue"])
 
     
   }
