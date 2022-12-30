@@ -89,6 +89,10 @@ def getPreprocessedDataMinOfCol(colName):
 def getPreprocessedDataAvgOfCol(colName):
     return DataController.getPreprocessedDataAvgOfCol(colName)
 
+@app.route("/preprocessed/avg/<colName>/<type>", methods=["GET"])
+def getPreprocessedDataAvgOf(colName, type):
+    return DataController.getPreprocessedDataAvgOf(colName, type)
+
 @app.route('/preprocessed', methods=["GET"])
 def getPreprocessedData():
     return DataController.getPreprocessedData(db)

@@ -18,6 +18,7 @@ def testValidAdmin():
         }
 
     result = AdminSchema().validate(adminDetails)
+    print(result)
     assert result == {}
 
 @pytest.mark.parametrize(

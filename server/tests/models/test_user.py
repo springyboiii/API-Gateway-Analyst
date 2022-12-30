@@ -1,6 +1,10 @@
 import sys 
 import pytest
-sys.path.append("/home/chathuwa/Desktop/api-gateway-analyst/API-Gateway-Analyst/server")
+import os 
+from dotenv import load_dotenv
+load_dotenv()
+
+sys.path.append(os.getenv("SERVER_PATH"))
 
 from models.User import User, UserSchema 
 
