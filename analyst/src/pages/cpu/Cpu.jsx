@@ -335,7 +335,7 @@ function Cpu() {
           datasets: [
             {
               fill: false,
-              label: 'Average',
+              label: 'Average normal',
               data: thresholdHighArray,
               borderColor: avg_color,
               backgroundColor: avg_color,
