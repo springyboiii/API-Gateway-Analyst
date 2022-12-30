@@ -16,9 +16,9 @@ export function getAvgOfPreprocessedCol(colName){
 }
 
 export function getAvgOfPreprocessedColAnomalies(colName){
-    return http.get(`${apiEndPoint}/avg?colName=${colName}&cat=1`)
+    return http.get(`${apiEndPoint}/avg?colName=${colName}&category=1`)
 }
 
 export function getAvgOfPreprocessedColNonAnomalies(colName){
-    return http.get(`${apiEndPoint}/avg?colName=${colName}&cat=0`)
+    return http.get(`${apiEndPoint}/avg?colName=${colName}&category=0`)
 }

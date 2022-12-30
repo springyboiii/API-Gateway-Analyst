@@ -92,7 +92,7 @@ def getPreprocessedDataMinOfCol(colName):
 @app.route("/preprocessed/avg", methods=["GET"])
 def getPreprocessedDataAvgOf():
     colName = request.args.get("colName")
-    cat = request.args.get("cat")
+    cat = request.args.get("category")
 
     print(cat, type(cat))
 
