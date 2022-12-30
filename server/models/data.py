@@ -1,5 +1,7 @@
 from flask_pymongo import ObjectId
 
+from util.database import Database
+
 class DataModel():
     def instertData(db, data):
         col = db["predictions"]
@@ -34,7 +36,70 @@ class DataModel():
         }
         
         return doc
+    
+    def getPreprocessedDataMaxOfCol(colName):
+        db = Database().getConnection()
+        col = db["preprocessed_10_sec"]
+
+        result = col.aggregate([
+            {"$group": {"_id": None, "maxValue": {"$max": f"${colName}"}}}
+        ])
+        return result 
+    
+    def getPreprocessedDataMinOfCol(colName):
+        db = Database().getConnection()
+        col = db["preprocessed_10_sec"]
+
+        print(f"inside model: get min of col- {colName}")
+
+        result = col.aggregate([
+            {"$group": {"_id": None, "minValue": {"$min": f"${colName}"}}}
+        ])
+
+        print(f"result: {result}")
+        return result
+    
+    def getPreprocessedDataAvgOfCol(colName): 
+        db = Database().getConnection()
+        col = db["preprocessed_10_sec"]
+
+        result = col.aggregate([
+            {"$group": {"_id": None, "avgValue": {"$avg": f"${colName}"}}}
+        ])
+        return result
+    
+    def getPreprocessedDataAvgOf(colName, type): 
+        db = Database().getConnection()
+        col = db["preprocessed_10_sec"]
+        print(f"type: {type}")
+        if int(type) == 0:
+            result = col.aggregate([
+                {
+                    "$match": { "scenario": 0}
+                },
+                {
+                    "$group": {
+                        "_id": None,
+                        "avgValue": {"$avg": f"${colName}"}
+                    }
+                }
+            ])
+        else:
+            result = col.aggregate([
+                {
+                    "$match": { "scenario": {"$ne": 0}}
+                },
+                {
+                    "$group": {
+                        "_id": None,
+                        "avgValue": {"$avg": f"${colName}"}
+                    }
+                }
+            ])
+        return result
+
         
+
     def getSingleTestData(db):
         col = db["test_cpu"] 
         data = col.find_one()

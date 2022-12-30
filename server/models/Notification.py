@@ -35,7 +35,7 @@ class Notification:
         return col.find(condition, projections)
 
 class NotificationSchema(Schema): 
-    timestamp = fields.String(validate=validate.Length(min=3), required=True)
+    timestamp = fields.DateTime( required=True)
     message = fields.String(validate=validate.Length(min=3), required=True)
     
         
