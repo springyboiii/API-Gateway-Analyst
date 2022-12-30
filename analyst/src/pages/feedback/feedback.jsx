@@ -117,31 +117,30 @@ function Feedback() {
 
   return (
     <div>
-      <div className="notification">
-        {/* <Sidebar /> */}
-        <div className="notification-container">
-          {/* <Navbar /> */}
+      <div className={user.type === "ADMIN" ? 'show-feedbacks' : 'feedbacks'}>
+        <div className="notification">
+          {/* <Sidebar /> */}
+          <div className="notification-container">
+            {/* <Navbar /> */}
 
-          <div className="container">
-            {renderTable()}
+            <div className="container">
+              {renderTable()}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className={user.type === "ADMIN" ? 'feedback-form' : 'feedback-form show-feedback-form'} >
-        <div>
-          <form className='form' onSubmit={onSubmit}>
-            <FormRow
-              type='text'
-              name='feedback'
-              value={newFeedback}
-              handleChange={handleChange}
-            />
-            <button type='submit' className='btn btn-block' >submit</button>
-          </form>
-        </div>
       </div>
-
+      <div className={user.type === "ADMIN" ? 'feedback-form' : 'show-feedback-form'} >
+        <form className='form' onSubmit={onSubmit}>
+          <FormRow
+            type='text'
+            name='FeedBack'
+            value={newFeedback}
+            handleChange={handleChange}
+          />
+          <button type='submit' className='btn btn-block' >submit</button>
+        </form>
+      </div>
     </div>
   );
 }
