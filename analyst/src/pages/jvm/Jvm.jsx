@@ -42,10 +42,10 @@ function Jvm() {
   });
   const [psms_collection_time_options, set_psms_collection_time_options] = useState({});
 
-  const [pss_collection_count_data, set_pss_collection_count_data] = useState({
-    datasets: [],
-  });
-  const [pss_collection_count_options, set_pss_collection_count_options] = useState({});
+  // const [pss_collection_count_data, set_pss_collection_count_data] = useState({
+  //   datasets: [],
+  // });
+  // const [pss_collection_count_options, set_pss_collection_count_options] = useState({});
 
   const [pss_collection_time_data, set_pss_collection_time_data] = useState({
     datasets: [],
@@ -63,10 +63,12 @@ function Jvm() {
   const [avg_psms_collection_count, set_avg_psms_collection_count] = useState();
   const [avg_psms_collection_time, set_avg_psms_collection_time] = useState();
   const [avg_pss_collection_time, set_avg_pss_collection_time] = useState();
+
   const [avg_psms_collection_count_ano, set_avg_psms_collection_count_ano] = useState();
   const [avg_psms_collection_time_ano, set_avg_psms_collection_time_ano] = useState();
   const [avg_pss_collection_time_ano, set_avg_pss_collection_time_ano] = useState();
   
+
 
  const avg_color="rgba(56, 231, 19, 0.8)";
  const avg_color_ano="rgba(230, 0, 0, 0.8)";
@@ -119,6 +121,7 @@ function Jvm() {
       //   }
       // });
 
+
     axios.post("/psms_collection_time", {
       data: value
     })
@@ -127,6 +130,7 @@ function Jvm() {
         const res = response.data;
         var thresholdHighArray = new Array(response.data.jvm_metrics_gc_psms_collection_time.length).fill(avg_psms_collection_time);
       var thresholdHighArrayAno = new Array(response.data.jvm_metrics_gc_psms_collection_time.length).fill(avg_psms_collection_time_ano);
+
         set_psms_collection_time_data({
           labels: res.timestamp,
           datasets: [{
@@ -149,6 +153,26 @@ function Jvm() {
             pointHoverRadius:5,
             tension: 0.4,
           },
+            {
+              fill: false,
+              label: 'Average normal',
+              data: thresholdHighArray,
+              borderColor: avg_color,
+              backgroundColor: avg_color,
+              pointRadius: 1,
+              pointHoverRadius: 5,
+              tension: 0.4,
+            },
+            {
+              fill: false,
+              label: 'Average anomaly',
+              data: thresholdHighArrayAno,
+              borderColor: avg_color_ano,
+              backgroundColor: avg_color_ano,
+              pointRadius: 1,
+              pointHoverRadius: 5,
+              tension: 0.4,
+            },
             {
               fill: true,
               label: 'jvm_metrics_gc_psms_collection_time',
@@ -174,7 +198,9 @@ function Jvm() {
         console.log(response);
         const res = response.data;
         var thresholdHighArray = new Array(response.data.jvm_metrics_gc_pss_collection_time.length).fill(avg_pss_collection_time);
+
       var thresholdHighArrayAno = new Array(response.data.jvm_metrics_gc_pss_collection_time.length).fill(avg_pss_collection_time_ano);
+
         set_pss_collection_time_data({
           labels: res.timestamp,
           datasets: [
@@ -185,7 +211,9 @@ function Jvm() {
               borderColor: avg_color,
               backgroundColor: avg_color,
               pointRadius: 1,
+
               pointHoverRadius:5,
+
               tension: 0.4,
             },
             {
@@ -195,7 +223,9 @@ function Jvm() {
               borderColor: avg_color_ano,
               backgroundColor: avg_color_ano,
               pointRadius: 1,
+
               pointHoverRadius:5,
+
               tension: 0.4,
             },
             {
@@ -222,12 +252,15 @@ function Jvm() {
     //   .then((response) => {
     //     console.log(response);
     //     const res = response.data;
+
     //     var thresholdHighArray = new Array(response.data.jvm_metric_gc_pss_collection_count.length).fill(avg_psms_collection_count);
     //   var thresholdHighArrayAno = new Array(response.data.jvm_metric_gc_pss_collection_count.length).fill(avg_psms_collection_count_ano);
+
     //     set_pss_collection_count_data({
     //       labels: res.timestamp,
     //       datasets: [
     //         {
+
             //   fill: false,
             //   label: 'Average normal',
             //   data: thresholdHighArray,
@@ -267,13 +300,16 @@ function Jvm() {
       // });
 
 
+
     return;
   }
   useEffect(() => {
+
     handleChange(null)
     async function fetchdata() {
       const {data: jvm_metrics_gc_psms_collection_time} = await getAvgOfPreprocessedColNonAnomalies("jvm_metrics_gc_psms_collection_time");
       set_avg_psms_collection_time(jvm_metrics_gc_psms_collection_time[0]["avgValue"])
+
 
 
       const {data: jvm_metrics_gc_psms_collection_timeAno} = await getAvgOfPreprocessedColAnomalies("jvm_metrics_gc_psms_collection_time");
@@ -334,53 +370,25 @@ function Jvm() {
       },
     });
 
-    // axios({
-    //   method: "GET",
-    //   url: "/pss_collection_count",
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     const res = response.data;
-    //     set_pss_collection_count_data({
-    //       labels: res.timestamp,
-    //       datasets: [
-    //         {
-    //           fill: true,
-    //           // label: 'jvm_metric_gc_pss_collection_count',
-    //           data: res.jvm_metric_gc_pss_collection_count,
-    //           borderColor: "rgb(53, 162, 235)",
-    //           backgroundColor: "rgba(53, 162, 235, 0.5)",
-    //           tension: 0.4,
-    //         },
-    //       ],
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response);
-    //       console.log(error.response.status);
-    //       console.log(error.response.headers);
-    //     }
-    //   });
 
-    set_pss_collection_count_options({
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "top",
-        },
-        title: {
-          display: true,
-          text: "jvm_metric_gc_pss_collection_count",
-        },
-      },
-      scales: {
-        y: {
-          suggestedMin: 0,
-          suggestedMax: 0.1,
-        },
-      },
-    });
+    // set_pss_collection_count_options({
+    //   responsive: true,
+    //   plugins: {
+    //     legend: {
+    //       position: "top",
+    //     },
+    //     title: {
+    //       display: true,
+    //       text: "jvm_metric_gc_pss_collection_count",
+    //     },
+    //   },
+    //   scales: {
+    //     y: {
+    //       suggestedMin: 0,
+    //       suggestedMax: 0.1,
+    //     },
+    //   },
+    // });
 
 
 
@@ -397,11 +405,14 @@ function Jvm() {
       },
       scales: {
         y: {
-          suggestedMin: 0,
-          suggestedMax: 0.1,
+          // suggestedMin: 0,
+          // suggestedMax: 0.1,
         },
       },
     });
+
+    handleChange(null)
+
 
 
   }, []);

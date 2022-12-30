@@ -18,14 +18,14 @@ const Login = () => {
 
     const [values, setValues] = useState(initialState)
 
-    const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
+    const {user ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
-    const onClick = (e) => {
-        navigate('/register')
-    }
+    // const onClick = (e) => {
+    //     navigate('/register')
+    // }
     const onSubmit = async (e) => {
         e.preventDefault()
         const { email, password } = values

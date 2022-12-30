@@ -17,7 +17,7 @@ import {
 import Select from "react-select";
 import Wrapper from "../../assets/wrappers/ChartContainer";
 import DataService from '../../services/dataService.js'
-import { getMinOfPreprocessedCol,getMaxOfPreprocessedCol ,getAvgOfPreprocessedCol, getAvgOfPreprocessedColAnomalies, getAvgOfPreprocessedColNonAnomalies} from "../../services/dataService";
+import { getMinOfPreprocessedCol, getMaxOfPreprocessedCol, getAvgOfPreprocessedCol, getAvgOfPreprocessedColAnomalies, getAvgOfPreprocessedColNonAnomalies } from "../../services/dataService";
 
 ChartJS.register(
   ArcElement,
@@ -53,22 +53,21 @@ function Memory() {
     { value: "4h", label: "4h " },
   ];
   const [selectedOption, setSelectedOption] = useState("30m");
-  const [dataValues, setDataValues] = useState(initialDataState);
-  const [avg_memory_used_pct_data, set_avg_memory_used_pct_data] = useState();
+  const [avg_memory_used_pct, set_avg_memory_used_pct] = useState();
+  const [avg_memory_used_pct_ano, set_avg_memory_used_pct_ano] = useState();
 
-  const [avg_memory_used_pct_data_ano, set_avg_memory_used_pct_data_ano] = useState();
+  const avg_color = "rgba(56, 231, 19, 0.8)";
+  const avg_color_ano = "rgba(230, 0, 0, 0.8)";
 
- const avg_color="rgba(56, 231, 19, 0.8)";
- const avg_color_ano="rgba(230, 0, 0, 0.8)";
   const handleChange = (value) => {
     axios.post("/memory_used_pct", {
       data: value
     })
       .then((response) => {
         console.log(response);
+        var thresholdHighArray = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct);
+        var thresholdHighArrayAno = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct_ano);
         const res = response.data;
-        var thresholdHighArray = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct_data);
-        var thresholdHighArrayAno = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct_data_ano);
 
         set_memory_used_pct_data({
           labels: res.timestamp,
@@ -80,8 +79,7 @@ function Memory() {
               borderColor: avg_color,
               backgroundColor: avg_color,
               pointRadius: 1,
-              pointHoverRadius:5,
-  
+              pointHoverRadius: 5,
               tension: 0.4,
             },
             {
@@ -91,12 +89,12 @@ function Memory() {
               borderColor: avg_color_ano,
               backgroundColor: avg_color_ano,
               pointRadius: 1,
-              pointHoverRadius:5,
+              pointHoverRadius: 5,
               tension: 0.4,
             },
             {
               fill: true,
-              // label: 'system_memory_used_pct',
+              label: 'system_memory_used_pct',
               data: res.system_memory_used_pct,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -114,16 +112,7 @@ function Memory() {
   }
   useEffect(() => {
     handleChange(null)
-    async function fetchdata() {
-      const {data: allNotifications} = await getAvgOfPreprocessedColNonAnomalies("system_memory_used_pct");
-      set_avg_memory_used_pct_data(allNotifications[0]["avgValue"])
-
-
-      const {data: allNotificationsAno} = await getAvgOfPreprocessedColAnomalies("system_memory_used_pct");
-      set_avg_memory_used_pct_data_ano(allNotificationsAno[0]["avgValue"])
-    }
-    fetchdata()
-
+    
     set_memory_used_pct_options({
       responsive: true,
       plugins: {
@@ -142,8 +131,15 @@ function Memory() {
         },
       },
     });
+    async function fetchdata() {
+      const { data: system_memory_used_pct } = await getAvgOfPreprocessedColNonAnomalies("system_memory_used_pct");
+      set_avg_memory_used_pct(system_memory_used_pct[0]["avgValue"])
 
+      const { data: system_memory_used_pct_ano } = await getAvgOfPreprocessedColAnomalies("system_memory_used_pct");
+      set_avg_memory_used_pct_ano(system_memory_used_pct_ano[0]["avgValue"])
 
+    }
+    fetchdata()
 
   }, []);
   return (
@@ -167,7 +163,7 @@ function Memory() {
       </div>
       <div className="row">
         {/* <div className="column"> */}
-          <Line options={memory_used_pct_options} data={memory_used_pct_data} />
+        <Line options={memory_used_pct_options} data={memory_used_pct_data} />
         {/* </div> */}
 
       </div>

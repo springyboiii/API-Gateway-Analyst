@@ -56,8 +56,9 @@ function Cpu() {
     { value: "2h", label: "2h" },
     { value: "4h", label: "4h " },
   ];
+  // const defaultOption = "1h";
 
-  const [selectedOption, setSelectedOption] = useState("30m");
+  const [selectedOption, setSelectedOption] = useState();
   const [avg_user_pct, set_avg_user_pct] = useState();
   const [avg_system_pct, set_avg_system_pct] = useState();
   const [avg_idle_pct, set_avg_idle_pct] = useState();
