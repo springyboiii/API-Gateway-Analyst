@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
 import { getAllFeedbacks, getUnreadFeedbacks, postFeedback, markFeedbackRead } from "../../services/feedbackService";
 import "./feedback.scss";
-
+import FormRow from '../../components/FormRow/FormRow'
 import {
   CategoryScale,
   LinearScale,
@@ -31,25 +31,26 @@ ChartJS.register(
 
 
 function Feedback() {
+  const { user } = useAppContext();
   const [notification, set_notification] = useState({
     datasets: [],
   });
 
   const [feedbacks, setFeedbacks] = useState([]);
+  const [newFeedback, setNewFeedback] = useState("");
 
-
-//   const [user_pct_options, set_user_pct_options] = useState({});
+  //   const [user_pct_options, set_user_pct_options] = useState({});
   // const {user, token ,loginUser, isLoading, showAlert, displayAlert } = useAppContext()
   const renderFeedbacks = () => {
-    return feedbacks.map((feedback,i) => {
+    return feedbacks.map((feedback, i) => {
       return <tr key={i} >
         {/* key={feedbackId["$oid"]}  */}
         {/* feedback["iod"]["kdsf"] */}
-      {/* <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
+        {/* <td  style={{ padding: '10px', borderRight: '1px solid black ',textAlign:'center',width:"10%" }}>{i}</td>
       <td style={{ padding: '10px', alignContent:'center',width:"70%",textAlign:'left' }}>{feedback["message"]}</td> */}
-      <td  >{i}</td>
-      <td >{feedback["message"]}</td>
-    </tr>
+        <td  >{i}</td>
+        <td >{feedback["message"]}</td>
+      </tr>
     })
   };
   const renderHeader = () => {
@@ -62,20 +63,31 @@ function Feedback() {
     return (
       <table>
         <tbody>
-        {renderHeader()}
+          {renderHeader()}
 
           {renderFeedbacks()}
         </tbody>
       </table>
     )
   };
+  const handleChange = (e) => {
+    setNewFeedback(e.target.value)
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    
+    const feedbackmessage={'message': newFeedback}
+    console.log()
+    await postFeedback(feedbackmessage)
+    setNewFeedback("")
+}
 
   useEffect(() => {
-    
-      async function fetchdata() {
-        const {data: allFeedbacks} = await getAllFeedbacks();
-        console.log(allFeedbacks);
-        setFeedbacks((feedbacks) => [...feedbacks, ...allFeedbacks["feedbacks"]])
+
+    async function fetchdata() {
+      const { data: allFeedbacks } = await getAllFeedbacks();
+      console.log(allFeedbacks);
+      setFeedbacks((feedbacks) => [...feedbacks, ...allFeedbacks["feedbacks"]])
 
       // }
       // fetchdata()
@@ -92,7 +104,7 @@ function Feedback() {
       // }
       // readFeedback()
     }
-          fetchdata()
+    fetchdata()
 
   }, []);
 
@@ -104,16 +116,36 @@ function Feedback() {
 
 
   return (
-    <div className="notification">
-      {/* <Sidebar /> */}
-      <div className="notification-container">
-        {/* <Navbar /> */}
-        
+    <div>
+      <div className="notification">
+        {/* <Sidebar /> */}
+        <div className="notification-container">
+          {/* <Navbar /> */}
+
           <div className="container">
-      {renderTable()}
-     </div>
+            {renderTable()}
+          </div>
         </div>
       </div>
+      <div>
+
+      </div>
+      {/* <div className={user.type == "USER" ? 'feedback-form' : 'show-feedback-form'} >
+
+
+      </div> */}
+      <div>
+        <form className='form' onSubmit={onSubmit}>
+          <FormRow
+            type='text'
+            name='feedback'
+            value={newFeedback}
+            handleChange={handleChange}
+          />
+          <button type='submit' className='btn btn-block' >submit</button>
+        </form>
+      </div>
+    </div>
   );
 }
 
