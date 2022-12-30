@@ -477,12 +477,14 @@ function Cpu() {
         <div className="column">
           <Line options={user_pct_options} data={user_pct_data} />
           <Line options={idle_pct_options} data={idle_pct_data} />
-          <Line options={iowait_pct_options} data={iowait_pct_data} />
+          <Line options={total_pct_options} data={total_pct_data} />
+
         </div>
         <div className="column">
           <Line options={system_pct_options} data={system_pct_data} />
           <Line options={softirq_pct_options} data={softirq_pct_data} />
-          <Line options={total_pct_options} data={total_pct_data} />
+          <Line options={iowait_pct_options} data={iowait_pct_data} />
+
         </div>
 
       </div>
