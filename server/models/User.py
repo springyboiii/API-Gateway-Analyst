@@ -9,7 +9,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from util.database import Database
-from util.Constant import Constant  
+from util.Constant import Constant 
+
+from models.Notification import NotificationSchema
 
 class User:
     def __init__(self, userDetails):
@@ -133,10 +135,12 @@ class User:
 
 
 class UserSchema(Schema):
-
+    _id = fields.String()
     name = fields.String(validate=validate.Length(min=3), required=True)
     password = fields.String(required=True)
     email = fields.Email(required=True)
+    notifications = fields.List(fields.Nested(NotificationSchema))
+
     
     @validates("password")
     def validatePassword(self, value):

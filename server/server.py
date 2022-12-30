@@ -75,6 +75,23 @@ def getTestData():
 def getPreprocessedDataCount():
     return DataController.getPreprocessedDataCount(db)
 
+@app.route("/preprocessed/max/<colName>", methods=["GET"])
+def getPreprocessedDataMaxOfCol(colName):
+    return DataController.getPreprocessedDataMaxOfCol(colName)
+
+@app.route("/preprocessed/min/<colName>", methods=["GET"])
+def getPreprocessedDataMinOfCol(colName):
+    print("get min of a col")
+    return DataController.getPreprocessedDataMinOfCol(colName)
+
+@app.route("/preprocessed/avg/<colName>", methods=["GET"])
+def getPreprocessedDataAvgOfCol(colName):
+    return DataController.getPreprocessedDataAvgOfCol(colName)
+
+@app.route("/preprocessed/avg/<colName>/<type>", methods=["GET"])
+def getPreprocessedDataAvgOf(colName, type):
+    return DataController.getPreprocessedDataAvgOf(colName, type)
+
 @app.route('/preprocessed', methods=["GET"])
 def getPreprocessedData():
     return DataController.getPreprocessedData(db)
@@ -395,8 +412,8 @@ def readFromGateway():
         time.sleep(2)
 
 # uncomment below prediction sending thread to start
-thread1 = threading.Thread(target=readFromGateway)
-thread1.start()
+# thread1 = threading.Thread(target=readFromGateway)
+# thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
