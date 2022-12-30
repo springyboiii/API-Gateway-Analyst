@@ -4,6 +4,8 @@ import pymongo
 import random
 import numpy as np
 
+from models.Prediction import PredictionModel
+
 class DashboardController():
     def normal_anomaly_doughnut(col):
         normal_count = col.count_documents({"type": 0})
@@ -26,6 +28,26 @@ class DashboardController():
             result["scenario" +
                    str(scenario)] = col.count_documents({"scenario": scenario})
 
+        return result
+
+    def prediction_normal_anomaly_doughnut_data():
+        normol_count = PredictionModel.countDocuments({"type": 0})
+        total_count = PredictionModel.countDocumentsEstimated()
+
+        result = {"normal": normol_count, "anomaly": total_count - normol_count}
+        return result 
+    
+    def prediction_anomaly_type_doughnut():
+        result = dict()
+        for type in range(1, 8):
+            result["type"+str(type)] = PredictionModel.countDocuments({"type": type})
+        return result
+    
+    def prediction_scenario_doughnut():
+        result = dict()
+        for scenario in range(1, 11):
+            result["scenario" +
+                   str(scenario)] = PredictionModel.countDocuments({"scenario": scenario})
         return result
 
     def jvm_metrics_memory_heap_memory_usage_used(col):

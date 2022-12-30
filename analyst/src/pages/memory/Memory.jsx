@@ -5,7 +5,6 @@ import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
-import { getMinOfPreprocessedCol, getMaxOfPreprocessedCol, getAvgOfPreprocessedCol, getAvgOfPreprocessedColAnomalies, getAvgOfPreprocessedColNonAnomalies } from "../../services/dataService";
 
 import {
   CategoryScale,
@@ -18,6 +17,7 @@ import {
 import Select from "react-select";
 import Wrapper from "../../assets/wrappers/ChartContainer";
 import DataService from '../../services/dataService.js'
+import { getMinOfPreprocessedCol, getMaxOfPreprocessedCol, getAvgOfPreprocessedCol, getAvgOfPreprocessedColAnomalies, getAvgOfPreprocessedColNonAnomalies } from "../../services/dataService";
 
 ChartJS.register(
   ArcElement,
@@ -59,7 +59,6 @@ function Memory() {
   const avg_color = "rgba(56, 231, 19, 0.8)";
   const avg_color_ano = "rgba(230, 0, 0, 0.8)";
 
-
   const handleChange = (value) => {
     axios.post("/memory_used_pct", {
       data: value
@@ -69,6 +68,7 @@ function Memory() {
         var thresholdHighArray = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct);
         var thresholdHighArrayAno = new Array(response.data.system_memory_used_pct.length).fill(avg_memory_used_pct_ano);
         const res = response.data;
+
         set_memory_used_pct_data({
           labels: res.timestamp,
           datasets: [
@@ -112,7 +112,7 @@ function Memory() {
   }
   useEffect(() => {
     handleChange(null)
-
+    
     set_memory_used_pct_options({
       responsive: true,
       plugins: {
