@@ -75,12 +75,12 @@ function Feedback() {
   };
   const onSubmit = async (e) => {
     e.preventDefault()
-    
-    const feedbackmessage={'message': newFeedback}
+
+    const feedbackmessage = { 'message': newFeedback }
     console.log()
     await postFeedback(feedbackmessage)
     setNewFeedback("")
-}
+  }
 
   useEffect(() => {
 
@@ -127,24 +127,21 @@ function Feedback() {
           </div>
         </div>
       </div>
-      <div>
 
+      <div className={user.type === "ADMIN" ? 'feedback-form' : 'feedback-form show-feedback-form'} >
+        <div>
+          <form className='form' onSubmit={onSubmit}>
+            <FormRow
+              type='text'
+              name='feedback'
+              value={newFeedback}
+              handleChange={handleChange}
+            />
+            <button type='submit' className='btn btn-block' >submit</button>
+          </form>
+        </div>
       </div>
-      {/* <div className={user.type == "USER" ? 'feedback-form' : 'show-feedback-form'} >
 
-
-      </div> */}
-      <div>
-        <form className='form' onSubmit={onSubmit}>
-          <FormRow
-            type='text'
-            name='feedback'
-            value={newFeedback}
-            handleChange={handleChange}
-          />
-          <button type='submit' className='btn btn-block' >submit</button>
-        </form>
-      </div>
     </div>
   );
 }

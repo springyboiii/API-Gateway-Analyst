@@ -70,3 +70,11 @@ tbody {
 	left: 60%;
 	transform: translate(-50%, -50%);
 }
+.feedback-form{
+	display: none;
+    position: absolute;
+}
+.show-feedback-form{
+	display: block;
+    position: absolute;
+}
