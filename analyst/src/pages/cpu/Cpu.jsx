@@ -323,21 +323,26 @@ function Cpu() {
 
   useEffect(() => {
     async function fetchdata() {
-      // const {data: allNotifications} = await getAvgOfPreprocessedCol("system_cpu_user_pct");
-      // set_avg_user_pct(allNotifications[0]["avgValue"])
-      // const {data: system_pct} = await getAvgOfPreprocessedCol("system_cpu_system_pct");
+      const {data: allNotifications} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_user_pct");
+      set_avg_user_pct(allNotifications[0]["avgValue"])
+      // console.log(allNotifications[0]["avgValue"])
+
+      // const {data: system_pct} = await getAvgOfPreprocessedColAnomalies("system_cpu_system_pct");
       // set_avg_system_pct(system_pct[0]["avgValue"])
-      // const {data: idle_pct} = await getAvgOfPreprocessedCol("system_cpu_idle_pct");
+      // const {data: idle_pct} = await getAvgOfPreprocessedColAnomalies("system_cpu_idle_pct");
       // set_avg_idle_pct(idle_pct[0]["avgValue"])
-      // const {data: softirq_pct} = await getAvgOfPreprocessedCol("system_cpu_softirq_pct");
+      // const {data: softirq_pct} = await getAvgOfPreprocessedColAnomalies("system_cpu_softirq_pct");
       // set_avg_softirq_pct(softirq_pct[0]["avgValue"])
-      // const {data: total_pct} = await getAvgOfPreprocessedCol("system_cpu_total_pct");
+      // const {data: total_pct} = await getAvgOfPreprocessedColAnomalies("system_cpu_total_pct");
       // set_avg_total_pct(total_pct[0]["avgValue"])
-      // const {data: iowait_pct} = await getAvgOfPreprocessedCol("system_cpu_iowait_pct");
+      // const {data: iowait_pct} = await getAvgOfPreprocessedColAnomalies("system_cpu_iowait_pct");
       // set_avg_iowait_pct(iowait_pct[0]["avgValue"])
 
+      const {data: allNotificationsAno} = await getAvgOfPreprocessedColAnomalies("system_cpu_user_pct");
+      set_avg_user_pct_ano(allNotificationsAno[0]["avgValue"])
+      // console.log(allNotificationsAno[0]["avgValue"])
       const {data: normal_value} = await getAvgOfPreprocessedCol("system_cpu_user_pct");
-      console.log("result", normal_value[0]["avgValue"])
+      // console.log("result", normal_value[0]["avgValue"])
       const {data: anomaly_value} = await getAvgOfPreprocessedColAnomalies("system_cpu_user_pct");
       console.log("result", anomaly_value[0]["avgValue"])
       const {data: non_anomaly_value} = await getAvgOfPreprocessedColNonAnomalies("system_cpu_user_pct");
