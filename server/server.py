@@ -85,13 +85,22 @@ def getPreprocessedDataMinOfCol(colName):
     print("get min of a col")
     return DataController.getPreprocessedDataMinOfCol(colName)
 
-@app.route("/preprocessed/avg/<colName>", methods=["GET"])
-def getPreprocessedDataAvgOfCol(colName):
-    return DataController.getPreprocessedDataAvgOfCol(colName)
+# @app.route("/preprocessed/avg/<colName>", methods=["GET"])
+# def getPreprocessedDataAvgOfCol(colName):
+#     return DataController.getPreprocessedDataAvgOfCol(colName)
 
-@app.route("/preprocessed/avg/<colName>/<type>", methods=["GET"])
-def getPreprocessedDataAvgOf(colName, type):
-    return DataController.getPreprocessedDataAvgOf(colName, type)
+@app.route("/preprocessed/avg", methods=["GET"])
+def getPreprocessedDataAvgOf():
+    colName = request.args.get("colName")
+    cat = request.args.get("category")
+
+    print(cat, type(cat))
+
+    if cat is None: 
+        return DataController.getPreprocessedDataAvgOfCol(colName) 
+    else:
+        return DataController.getPreprocessedDataAvgOf(colName, cat)  
+            
 
 @app.route('/preprocessed', methods=["GET"])
 def getPreprocessedData():
@@ -413,8 +422,8 @@ def readFromGateway():
         time.sleep(2)
 
 # uncomment below prediction sending thread to start
-# thread1 = threading.Thread(target=readFromGateway)
-# thread1.start()
+thread1 = threading.Thread(target=readFromGateway)
+thread1.start()
 
 if __name__ == "__main__":
     print("Starting Python Flask Server for API Gateway Analyst")
