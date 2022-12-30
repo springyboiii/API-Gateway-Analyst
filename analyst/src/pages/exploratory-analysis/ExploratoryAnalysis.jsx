@@ -98,7 +98,7 @@ const ExploratoryAnalysis = ({socket}) => {
                 datasets: [
                   {
                     fill: true,
-                    // label: 'system_cpu_user_pct',
+                    label: 'Count',
                     data: response.data.total_anomalies,
                     borderColor: "rgb(53, 162, 235)",
                     backgroundColor: "rgba(53, 162, 235, 0.5)",
